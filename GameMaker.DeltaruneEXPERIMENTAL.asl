@@ -80,7 +80,6 @@ startup
 
     vars.resetVars = (Action)(() => 
     {
-        vars.chapter = 0;
         vars.tempVar = 0;
         vars.forceSplit = false;
         vars.DebugPrint("All variables have been reset to initial state");
@@ -204,6 +203,7 @@ startup
 exit 
 {
     vars.resetVars();
+    vars.chapter = 0;
 }
 
 init
