@@ -132,6 +132,7 @@ startup
     settings.Add("Ch2_ArcadeGameText",   false, "Arcade Game (textbox close)");
     settings.Add("Ch2_ArcadeGameLeave",  false, "Arcade Game (room change)");
     settings.Add("Ch2_DJFight",           true, "End DJ battle");
+    settings.Add("Ch2_DJShopRoom",        false, "Enter DJ Shop Room");
     settings.Add("Ch2_CyberFields_Exit",  true, "Exit Cyber Fields");
     settings.Add("Ch2_TrashZoneWarp",     true, "Trash Zone Warp");
     settings.Add("Ch2_MansionWarp",       true, "Mansion Warp");
@@ -270,6 +271,7 @@ init
         {"Ch2_ArcadeGameText",   new object[] {false, null,                                          "room_dw_cyber_queen_boxing_ch2",       -1, -1,  6}},
         {"Ch2_ArcadeGameLeave",  new object[] {false, "room_dw_cyber_queen_boxing_ch2",              "room_dw_cyber_musical_door_ch2",       -1, -1,  0}},
         {"Ch2_DJFight",          new object[] {false, null,                                          "room_dw_cyber_music_final_ch2",         1,  0,  0}},
+        {"Ch2_DJShopRoom",       new object[] {false, "room_dw_cyber_musical_door_ch2",              "room_dw_cyber_musical_shop_ch2",       -1, -1,  0}},
         {"Ch2_CyberFields_Exit", new object[] {false, null,                                          "room_dw_cyber_rollercoaster_ch2",      -1, -1,  7}},
         {"Ch2_TrashZoneWarp",    new object[] {false, "room_dw_cyber_musical_door_ch2",              "room_dw_city_intro_ch2",               -1, -1,  0}},
         {"Ch2_MansionWarp",      new object[] {false, "room_dw_mansion_entrance_ch2",                "room_dw_mansion_fire_paintings_ch2",   -1, -1,  3}},
