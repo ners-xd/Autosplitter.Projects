@@ -132,7 +132,7 @@ startup
     settings.Add("Ch2_ArcadeGameText",   false, "Arcade Game (textbox close)");
     settings.Add("Ch2_ArcadeGameLeave",  false, "Arcade Game (room change)");
     settings.Add("Ch2_DJFight",           true, "End DJ battle");
-    settings.Add("Ch2_DJShopRoom",        false, "Enter DJ Shop Room");
+    settings.Add("Ch2_DJShopRoom",       false, "Enter DJ Shop Room");
     settings.Add("Ch2_CyberFields_Exit",  true, "Exit Cyber Fields");
     settings.Add("Ch2_TrashZoneWarp",     true, "Trash Zone Warp");
     settings.Add("Ch2_MansionWarp",       true, "Mansion Warp");
