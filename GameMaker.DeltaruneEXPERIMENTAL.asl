@@ -136,6 +136,7 @@ startup
     settings.Add("Ch2_CyberFields_Exit",  true, "Exit Cyber Fields");
     settings.Add("Ch2_TrashZoneWarp",     true, "Trash Zone Warp");
     settings.Add("Ch2_MansionWarp",       true, "Mansion Warp");
+    settings.Add("Ch2_Mouse2Puzzle",     false, "Exit Mouse 2 Puzzle room");
     settings.Add("Ch2_BerdlyLeave",       true, "Exit Berdly 2 room (Main Route)");
     settings.Add("Ch2_SpamtonLeave",     false, "Exit Spamton room");
     settings.Add("Ch2_CyberCity_Exit",    true, "Exit Cyber City (captured by Queen)");
@@ -276,6 +277,7 @@ init
         {"Ch2_TrashZoneWarp",    new object[] {false, "room_dw_cyber_musical_door_ch2",              "room_dw_city_intro_ch2",               -1, -1,  0}},
         {"Ch2_MansionWarp",      new object[] {false, "room_dw_mansion_entrance_ch2",                "room_dw_mansion_fire_paintings_ch2",   -1, -1,  3}},
         {"Ch2_FreezeRing",       new object[] {false, null,                                          "room_dw_city_big_2_ch2",               -1, -1,  8}},
+        {"Ch2_Mouse2Puzzle",     new object[] {false, "room_dw_city_mice2_ch2",                      "room_dw_city_cheesemaze_ch2",          -1, -1,  0}},
         {"Ch2_SGBerdly",         new object[] {false, null,                                          "room_dw_city_berdly_ch2",              -1, -1,  9}},
         {"Ch2_BerdlyLeave",      new object[] {false, "room_dw_city_berdly_ch2",                     "room_dw_city_traffic_4_ch2",           -1, -1,  0}},
         {"Ch2_SpamtonLeave",     new object[] {false, "room_dw_city_spamton_alley_ch2",              "room_dw_city_traffic_4_ch2",           -1, -1,  0}},
