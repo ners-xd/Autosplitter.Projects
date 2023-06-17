@@ -414,9 +414,6 @@ onStart
 
 reset 
 {
-    if(!timer.IsGameTimePaused) 
-        return false;
-
     if(old.room != current.room && current.roomName == "PLACE_CONTACT_ch1") 
     {
         vars.DebugPrint("RESET (Start Room for Chapter 1 detected)");
