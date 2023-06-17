@@ -58,7 +58,7 @@ startup
     vars.ACContinueRooms = new[,]
     {
         {null, null},                            //
-        {null, null},                            //
+        {"PLACE_MENU_ch1", "PLACE_CONTACT_ch1"}, // Chapter 1
         {"PLACE_MENU_ch2", "room_krisroom_ch2"}, // Chapter 1 -> 2
         {null, null},                            // Chapter 2 -> 3
         {null, null},                            // Chapter 3 -> 4
@@ -69,7 +69,7 @@ startup
     vars.OSTRooms = new[,]
     {
         {null, null},                         //
-        {"PLACE_LOGO_ch1", "room_ed_ch1"},    // Chapter 1
+        {"PLACE_LOGO_ch1",    "room_ed_ch1"}, // Chapter 1
         {"room_torhouse_ch2", "room_ed_ch2"}, // Chapter 2
         {null, null},                         // Chapter 3
         {null, null},                         // Chapter 4
