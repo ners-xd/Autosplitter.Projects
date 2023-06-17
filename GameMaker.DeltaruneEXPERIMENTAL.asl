@@ -318,55 +318,58 @@ update
         string chapterStr = ("_ch" + ch);
         if(!current.roomName.EndsWith(chapterStr)) current.roomName += chapterStr; 
 
-        if(version != "CH1 SURVEY_PROGRAM")
+        string or = old.roomName, cr = current.roomName;
+        bool endCondition = false;
+        switch(ch)
         {
-            string or = old.roomName, cr = current.roomName;
-            bool endCondition = false;
-            switch(ch)
-            {
-                case 1: endCondition = ((old.textboxMsg == @"＊ (ねむることにした)/%" || old.textboxMsg == @"* (You decided to go to bed.)/%") && current.textboxMsg == null); break;
-                case 2: endCondition = ((old.textboxMsg == @"\E1＊ …ふたりとも　もう&　 ねむってしまったのね。/%" || old.textboxMsg == @"\E1* ... they're already&||asleep.../%") && current.textboxMsg == null); break;
-                /*
-                case 3: break;
-                case 4: break;
-                case 5: break;
-                case 6: break;
-                case 7: break;
-                */
-            }
-            if(endCondition)
-            {
-                if(settings["AC_PauseTimer"] && !settings["AC_PauseTimerOST"])
-                {
-                    vars.DebugPrint("ALL CHAPTERS: Chapter " + ch + " ended, timer paused");
-                    timer.IsGameTimePaused = true;
-                    vars.resetSplits();
-                }
-                vars.forceSplit = settings["Ch" + ch + "_Ending"];
-            }
-
-            else if(or == vars.OSTRooms[ch, 0] && cr == vars.OSTRooms[ch, 1] && !timer.IsGameTimePaused)
-            {
-                if(settings["AC_PauseTimerOST"])
-                {
-                    vars.DebugPrint("(OST%) ALL CHAPTERS: Chapter " + ch + " ended, timer paused");
-                    timer.IsGameTimePaused = true;
-                    vars.resetSplits();
-                }
-                vars.forceSplit = settings["Ch" + ch + "_EndingOST"];      
-            }
-
-            if(or == vars.ACContinueRooms[ch, 0] && cr == vars.ACContinueRooms[ch, 1] && timer.IsGameTimePaused)
-            {
-                if(settings["AC_PauseTimer"])
-                {
-                    vars.DebugPrint("ALL CHAPTERS: Chapter " + ch + " started, timer resumed");
-                    timer.IsGameTimePaused = false;
-                }
-                vars.forceSplit = settings["AC_Continue"];
-            }
+            case 1: 
+                if(version == "CH1 SURVEY_PROGRAM")
+                    endCondition = (((old.finalTextboxHalt == 2 && current.finalTextboxHalt != 2) || (old.finalTextboxHalt2 == 2 && current.finalTextboxHalt2 != 2)) && current.choicer == 0 && current.plot == 251);
+                else
+                    endCondition = ((old.textboxMsg == @"＊ (ねむることにした)/%" || old.textboxMsg == @"* (You decided to go to bed.)/%") && current.textboxMsg == null);
+                break;
+            case 2: 
+                endCondition = ((old.textboxMsg == @"\E1＊ …ふたりとも　もう&　 ねむってしまったのね。/%" || old.textboxMsg == @"\E1* ... they're already&||asleep.../%") && current.textboxMsg == null); 
+                break;
+            /*
+            case 3: break;
+            case 4: break;
+            case 5: break;
+            case 6: break;
+            case 7: break;
+            */
         }
-        else if(((old.finalTextboxHalt == 2 && current.finalTextboxHalt != 2) || (old.finalTextboxHalt2 == 2 && current.finalTextboxHalt2 != 2)) && current.choicer == 0 && current.plot == 251) vars.forceSplit = true; // SURVEY_PROGRAM end split
+        if(endCondition)
+        {
+            if(settings["AC_PauseTimer"] && !settings["AC_PauseTimerOST"])
+            {
+                vars.DebugPrint("ALL CHAPTERS: Chapter " + ch + " ended, timer paused");
+                timer.IsGameTimePaused = true;
+                vars.resetSplits();
+            }
+            vars.forceSplit = settings["Ch" + ch + "_Ending"];
+        }
+
+        else if(or == vars.OSTRooms[ch, 0] && cr == vars.OSTRooms[ch, 1] && !timer.IsGameTimePaused)
+        {
+            if(settings["AC_PauseTimerOST"])
+            {
+                vars.DebugPrint("(OST%) ALL CHAPTERS: Chapter " + ch + " ended, timer paused");
+                timer.IsGameTimePaused = true;
+                vars.resetSplits();
+            }
+            vars.forceSplit = settings["Ch" + ch + "_EndingOST"];      
+        }
+
+        if(or == vars.ACContinueRooms[ch, 0] && cr == vars.ACContinueRooms[ch, 1] && timer.IsGameTimePaused)
+        {
+            if(settings["AC_PauseTimer"])
+            {
+                vars.DebugPrint("ALL CHAPTERS: Chapter " + ch + " started, timer resumed");
+                timer.IsGameTimePaused = false;
+            }
+            vars.forceSplit = settings["AC_Continue"];
+        }
     }
 
     if(old.room != current.room)
