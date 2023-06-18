@@ -361,9 +361,9 @@ update
             vars.forceSplit = settings["Ch" + ch + "_EndingOST"];      
         }
 
-        if(or == vars.ACContinueRooms[ch, 0] && cr == vars.ACContinueRooms[ch, 1] && timer.IsGameTimePaused)
+        if(or == vars.ACContinueRooms[ch, 0] && cr == vars.ACContinueRooms[ch, 1])
         {
-            if(settings["AC_PauseTimer"])
+            if(timer.IsGameTimePaused)
             {
                 vars.DebugPrint("ALL CHAPTERS: Chapter " + ch + " started, timer resumed");
                 timer.IsGameTimePaused = false;
