@@ -350,9 +350,9 @@ update
             vars.forceSplit = settings["Ch" + ch + "_Ending"];
         }
 
-        else if(or == vars.OSTRooms[ch, 0] && cr == vars.OSTRooms[ch, 1] && !timer.IsGameTimePaused)
+        else if(or == vars.OSTRooms[ch, 0] && cr == vars.OSTRooms[ch, 1])
         {
-            if(settings["AC_PauseTimerOST"])
+            if(settings["AC_PauseTimerOST"] && !timer.IsGameTimePaused)
             {
                 vars.DebugPrint("(OST%) ALL CHAPTERS: Chapter " + ch + " ended, timer paused");
                 timer.IsGameTimePaused = true;
