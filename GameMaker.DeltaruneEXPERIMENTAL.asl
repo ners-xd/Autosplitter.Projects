@@ -368,7 +368,7 @@ update
                 vars.DebugPrint("ALL CHAPTERS: Chapter " + ch + " started, timer resumed");
                 timer.IsGameTimePaused = false;
             }
-            vars.forceSplit = settings["AC_Continue"];
+            vars.forceSplit = (settings["AC_Continue"] && old.namerEvent != 75); // The namerEvent check is in place so that it wouldn't split when starting Chapter 2 from a fresh savefile with this setting enabled
         }
     }
 
