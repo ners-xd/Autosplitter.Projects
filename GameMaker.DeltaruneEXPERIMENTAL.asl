@@ -361,14 +361,11 @@ update
             vars.forceSplit = settings["Ch" + ch + "_EndingOST"];      
         }
 
-        if(or == vars.ACContinueRooms[ch, 0] && cr == vars.ACContinueRooms[ch, 1])
+        if(or == vars.ACContinueRooms[ch, 0] && cr == vars.ACContinueRooms[ch, 1] && timer.IsGameTimePaused)
         {
-            if(timer.IsGameTimePaused)
-            {
-                vars.DebugPrint("ALL CHAPTERS: Chapter " + ch + " started, timer resumed");
-                timer.IsGameTimePaused = false;
-            }
-            vars.forceSplit = (settings["AC_Continue"] && old.namerEvent != 75); // The namerEvent check is in place so that it wouldn't split when starting Chapter 2 from a fresh savefile with this setting enabled
+            vars.DebugPrint("ALL CHAPTERS: Chapter " + ch + " started, timer resumed");
+            timer.IsGameTimePaused = false;
+            vars.forceSplit = settings["AC_Continue"];
         }
     }
 
