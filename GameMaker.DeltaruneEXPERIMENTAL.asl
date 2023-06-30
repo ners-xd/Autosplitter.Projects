@@ -10,7 +10,7 @@ state("Deltarune", "CH1 SURVEY_PROGRAM")
     double finalTextboxHalt  : 0x48BDEC, 0x98, 0x60, 0x10, 0x274, 0x0;
     double finalTextboxHalt2 : 0x48BDEC, 0x9C, 0x60, 0x10, 0x274, 0x0;
 
-    float kingPos : 0x48BDEC, 0x60, 0xB4;
+    float kingPos : 0x6AEB80, 0x4, 0x178, 0x80, 0xC8, 0x8, 0xB4;
 }
 
 state("Deltarune", "CH1-2 v1.08 - v1.10")
@@ -24,7 +24,7 @@ state("Deltarune", "CH1-2 v1.08 - v1.10")
     double freezeRingTimer  : 0x43DE48, 0xC18, 0xC,   0x24, 0x10, 0xC0,  0x0;
     double snowgrave        : 0x6EF220, 0xF4,  0x24,  0x5C, 0x20, 0x24,  0x10, 0x120, 0x0;
     double loadedDiskGreyBG : 0x43DE48, 0xA60, 0xC,   0x24, 0x10, 0x3D8, 0x0;
-    
+
     float kingPos : 0x6F1394, 0x4, 0x140, 0x68, 0x3C, 0x8, 0xB0;
 
     string128 textboxMsg : 0x6FCE4C, 0x8,  0x144, 0x24, 0x10, 0x5A0, 0x0, 0x0, 0x0;
@@ -42,7 +42,7 @@ state("Deltarune", "CH1-2 v1.12 - v1.15")
     double freezeRingTimer  : 0x43FE48, 0xC20, 0xC,   0x144, 0x24, 0x10, 0x120, 0x0;
     double snowgrave        : 0x43FE48, 0x330, 0xC,   0x144, 0x24, 0x10, 0x18C, 0x0;
     double loadedDiskGreyBG : 0x6F0B48, 0x10C, 0x504, 0x20,  0x24, 0x10, 0x0,   0x0;
-    
+
     float kingPos : 0x6F2CBC, 0x4, 0x140, 0x68, 0x3C, 0x8, 0xB0;
 
     string128 textboxMsg : 0x6FE774, 0x8,  0x144, 0x144, 0x140, 0x24, 0x10, 0x0, 0x0, 0x0, 0x0;
@@ -51,6 +51,7 @@ state("Deltarune", "CH1-2 v1.12 - v1.15")
 
 startup
 {
+    refreshRate = 30;
     vars.DebugPrint = (Action<string>)((text) => { print("[DELTARUNE] " + text); });
     vars.tempVar = 0;
     vars.forceSplit = false;
@@ -78,14 +79,14 @@ startup
         {null, null}                          // Chapter 7
     };
 
-    vars.resetVars = (Action)(() => 
+    vars.resetVars = (Action)(() =>
     {
         vars.tempVar = 0;
         vars.forceSplit = false;
         vars.DebugPrint("All variables have been reset to initial state");
     });
 
-    vars.resetSplits = (Action)(() => 
+    vars.resetSplits = (Action)(() =>
     {
         foreach(string split in vars.splits.Keys) vars.splits[split][0] = false;
         vars.DebugPrint("All splits have been reset to initial state");
@@ -96,10 +97,15 @@ startup
     settings.CurrentDefaultParent = "AC";
 
     settings.Add("AC_PauseTimer", true, "Pause timer between chapters");
-      settings.SetToolTip("AC_PauseTimer", "This setting pauses the timer when you end a chapter and resumes it when you continue from a previous save in the next chapter.\n\nNOTE: For this to work, Game Time must be enabled\n(you will be asked if you want to enable it by turning on this setting and opening the game if the timer isn't already running, or you can just do it yourself :keuchrCar:)");
+      settings.SetToolTip("AC_PauseTimer",
+        "This setting pauses the timer when you end a chapter and resumes it when you continue from a previous save in the next chapter.\n\n"
+        + "NOTE: For this to work, Game Time must be enabled\n"
+        + "(you will be asked if you want to enable it by turning on this setting and opening the game if the timer isn't already running, or you can just do it yourself)");
     settings.Add("AC_PauseTimerOST", false, "(OST%) Pause timer between chapters");
-      settings.SetToolTip("AC_PauseTimerOST", "This setting is the same as the above one, however it pauses the timer when the credits songs start playing instead.\nUseful for OST%. NOTE: Enabling this will override the above setting (you can not have both activated at once).");
-    settings.Add("AC_Continue", false, "Split on starting a chapter from a previous savefile");
+      settings.SetToolTip("AC_PauseTimerOST",
+        "This setting is the same as the above one, however it pauses the timer when the credits songs start playing instead.\n"
+        + "Useful for OST%. NOTE: Enabling this will override the above setting (you can not have both activated at once).");
+    settings.Add("AC_Continue", false, "Split on starting a chapter from a previous save file");
     settings.CurrentDefaultParent = null;
     // -------------------------------------------------------------------------------------------
     settings.Add("Ch1", false, "Chapter 1: The Beginning");
@@ -140,7 +146,7 @@ startup
     settings.Add("Ch2_BerdlyLeave",       true, "Exit Berdly 2 room (Main Route)");
     settings.Add("Ch2_SpamtonLeave",     false, "Exit Spamton room");
     settings.Add("Ch2_CyberCity_Exit",    true, "Exit Cyber City (captured by Queen)");
-    settings.Add("Ch2_Mansion_Entrance", false, "Enter Mansion (entrance savepoint room)");
+    settings.Add("Ch2_Mansion_Entrance", false, "Enter Mansion (entrance save point room)");
     settings.Add("Ch2_AcidLake_Enter",    true, "Enter Acid Lake");
     settings.Add("Ch2_AcidLake_Exit",     true, "Exit Acid Lake");
     settings.Add("Ch2_Queen",             true, "Exit Queen room");
@@ -166,35 +172,35 @@ startup
     /*
     settings.Add("Ch3", false, "Chapter 3: Home Sweet Home");
     settings.CurrentDefaultParent = "Ch3";
-    
+
     settings.Add("Ch3_Ending",     true, "Ending");
     settings.Add("Ch3_EndingOST", false, "Ending (OST%)");
     settings.CurrentDefaultParent = null;
     // -------------------------------------------------------------------------------------------
     settings.Add("Ch4", false, "Chapter 4: Sending Prayers");
     settings.CurrentDefaultParent = "Ch4";
-    
+
     settings.Add("Ch4_Ending",     true, "Ending");
     settings.Add("Ch4_EndingOST", false, "Ending (OST%)");
     settings.CurrentDefaultParent = null;
     // -------------------------------------------------------------------------------------------
     settings.Add("Ch5", false, "Chapter 5: The Prophecy");
     settings.CurrentDefaultParent = "Ch5";
-    
+
     settings.Add("Ch5_Ending",     true, "Ending");
     settings.Add("Ch5_EndingOST", false, "Ending (OST%)");
-    settings.CurrentDefaultParent = null; 
+    settings.CurrentDefaultParent = null;
     // -------------------------------------------------------------------------------------------
     settings.Add("Ch6", false, "Chapter 6: Lost in Thought");
     settings.CurrentDefaultParent = "Ch6";
-    
+
     settings.Add("Ch6_Ending",     true, "Ending");
     settings.Add("Ch6_EndingOST", false, "Ending (OST%)");
-    settings.CurrentDefaultParent = null; 
+    settings.CurrentDefaultParent = null;
     // -------------------------------------------------------------------------------------------
     settings.Add("Ch7", false, "Chapter 7: Don't Forget");
     settings.CurrentDefaultParent = "Ch7";
-    
+
     settings.Add("Ch7_Ending",     true, "Ending");
     settings.Add("Ch7_EndingOST", false, "Ending (OST%)");
     settings.CurrentDefaultParent = null;
@@ -202,7 +208,7 @@ startup
     // -------------------------------------------------------------------------------------------
 }
 
-exit 
+exit
 {
     vars.resetVars();
     vars.chapter = 0;
@@ -218,7 +224,7 @@ init
     Func<int, string, IntPtr> scan = (o, sig) =>
     {
         IntPtr ptr = scanner.Scan(new SigScanTarget(o, sig) { OnFound = (p, s, addr) => p.ReadPointer(addr) });
-        if(ptr == IntPtr.Zero) throw new NullReferenceException("Sigscanning failed!");
+        if(ptr == IntPtr.Zero) throw new NullReferenceException("Signature scanning failed!");
         return ptr;
     };
     IntPtr ptrRoomArray = scan(2, "8B 3D ???????? 2B EF");
@@ -293,21 +299,22 @@ init
         {"Ch2_SGSpamtonNEO_End", new object[] {false, null,                                          "room_dw_mansion_fountain_ch2",          1,  0,  0}},
         {"Ch2_Fountain_Exit",    new object[] {false, "room_dw_mansion_fountain_ch2",                "room_lw_computer_lab_ch2",             -1, -1,  0}}
     };
-    
-    if(version != "CH1 SURVEY_PROGRAM" && timer.CurrentPhase == TimerPhase.NotRunning && timer.CurrentTimingMethod == TimingMethod.RealTime && (settings["AC_PauseTimer"] || settings["AC_PauseTimerOST"])) 
+
+    if(version != "CH1 SURVEY_PROGRAM" && timer.CurrentPhase == TimerPhase.NotRunning && timer.CurrentTimingMethod == TimingMethod.RealTime
+        && (settings["AC_PauseTimer"] || settings["AC_PauseTimerOST"]))
     {
         var message = MessageBox.Show
         (
             "LiveSplit uses Game Time for this game. Would you like to change the current timing method to Game Time instead of Real Time?",
             "LiveSplit | DELTARUNE All Chapters", MessageBoxButtons.YesNo, MessageBoxIcon.Question
         );
-        
-        if(message == DialogResult.Yes) 
+
+        if(message == DialogResult.Yes)
             timer.CurrentTimingMethod = TimingMethod.GameTime;
     }
 }
 
-update 
+update
 {
     current.room = game.ReadValue<int>((IntPtr)vars.ptrRoomId);
     current.roomName = vars.getRoomName();
@@ -316,20 +323,20 @@ update
     {
         int ch = vars.chapter;
         string chapterStr = ("_ch" + ch);
-        if(!current.roomName.EndsWith(chapterStr)) current.roomName += chapterStr; 
+        if(!current.roomName.EndsWith(chapterStr)) current.roomName += chapterStr;
 
         string or = old.roomName, cr = current.roomName;
         bool endCondition = false;
         switch(ch)
         {
-            case 1: 
+            case 1:
                 if(version == "CH1 SURVEY_PROGRAM")
                     endCondition = (((old.finalTextboxHalt == 2 && current.finalTextboxHalt != 2) || (old.finalTextboxHalt2 == 2 && current.finalTextboxHalt2 != 2)) && current.choicer == 0 && current.plot == 251);
                 else
                     endCondition = ((old.textboxMsg == @"＊ (ねむることにした)/%" || old.textboxMsg == @"* (You decided to go to bed.)/%") && current.textboxMsg == null);
                 break;
-            case 2: 
-                endCondition = ((old.textboxMsg == @"\E1＊ …ふたりとも　もう&　 ねむってしまったのね。/%" || old.textboxMsg == @"\E1* ... they're already&||asleep.../%") && current.textboxMsg == null); 
+            case 2:
+                endCondition = ((old.textboxMsg == @"\E1＊ …ふたりとも　もう&　 ねむってしまったのね。/%" || old.textboxMsg == @"\E1* ... they're already&||asleep.../%") && current.textboxMsg == null);
                 break;
             /*
             case 3: break;
@@ -358,7 +365,7 @@ update
                 timer.IsGameTimePaused = true;
                 vars.resetSplits();
             }
-            vars.forceSplit = settings["Ch" + ch + "_EndingOST"];      
+            vars.forceSplit = settings["Ch" + ch + "_EndingOST"];
         }
 
         if(or == vars.ACContinueRooms[ch, 0] && cr == vars.ACContinueRooms[ch, 1] && timer.IsGameTimePaused)
@@ -388,9 +395,9 @@ update
     }
 }
 
-start 
+start
 {
-    if(old.room != current.room && current.roomName == "PLACE_CONTACT_ch1") 
+    if(old.room != current.room && current.roomName == "PLACE_CONTACT_ch1")
     {
         vars.DebugPrint("START (Start Room for Chapter 1 detected)");
         return true;
@@ -398,8 +405,8 @@ start
 
     else if(version != "CH1 SURVEY_PROGRAM" && old.namerEvent == 74 && current.namerEvent == 75)
     {
-        vars.DebugPrint("START (Start Event for Chapter " + vars.chapter + " detected)"); 
-        return true; 
+        vars.DebugPrint("START (Start Event for Chapter " + vars.chapter + " detected)");
+        return true;
     }
 }
 
@@ -409,9 +416,9 @@ onStart
     timer.IsGameTimePaused = false; // split times not showing up with Game Time
 }
 
-reset 
+reset
 {
-    if(old.room != current.room && current.roomName == "PLACE_CONTACT_ch1") 
+    if(old.room != current.room && current.roomName == "PLACE_CONTACT_ch1")
     {
         vars.DebugPrint("RESET (Start Room for Chapter 1 detected)");
         return true;
@@ -419,18 +426,18 @@ reset
 
     else if(version != "CH1 SURVEY_PROGRAM" && old.namerEvent == 74 && current.namerEvent == 75)
     {
-        vars.DebugPrint("RESET (Start Event for Chapter " + vars.chapter + " detected)"); 
-        return true; 
+        vars.DebugPrint("RESET (Start Event for Chapter " + vars.chapter + " detected)");
+        return true;
     }
 }
 
-onReset 
+onReset
 {
     vars.resetVars();
     vars.resetSplits();
 }
 
-split 
+split
 {
     if(vars.forceSplit)
     {
@@ -439,22 +446,22 @@ split
     }
 
     int done      = 0,
-        oldroom   = 1,
-        newroom   = 2,
-        oldfight  = 3,
-        newfight  = 4,
+        oldRoom   = 1,
+        newRoom   = 2,
+        oldFight  = 3,
+        newFight  = 4,
         condition = 5;
-    
-    foreach(string splitKey in vars.splits.Keys) 
+
+    foreach(string splitKey in vars.splits.Keys)
     {
         if((!settings[splitKey] || vars.splits[splitKey][done]) ||
-           (vars.splits[splitKey][oldroom] != null && old.roomName != vars.splits[splitKey][oldroom]) ||
-           (vars.splits[splitKey][newroom] != null && current.roomName != vars.splits[splitKey][newroom]) ||
-           (vars.splits[splitKey][oldfight] != -1 && old.fight != vars.splits[splitKey][oldfight]) ||
-           (vars.splits[splitKey][newfight] != -1 && current.fight != vars.splits[splitKey][newfight])) continue;
+           (vars.splits[splitKey][oldRoom] != null && old.roomName != vars.splits[splitKey][oldRoom]) ||
+           (vars.splits[splitKey][newRoom] != null && current.roomName != vars.splits[splitKey][newRoom]) ||
+           (vars.splits[splitKey][oldFight] != -1 && old.fight != vars.splits[splitKey][oldFight]) ||
+           (vars.splits[splitKey][newFight] != -1 && current.fight != vars.splits[splitKey][newFight])) continue;
 
         bool pass = false;
-        switch((int)vars.splits[splitKey][condition]) 
+        switch((int)vars.splits[splitKey][condition])
         {
             case 0:
                 pass = true;
@@ -477,17 +484,14 @@ split
                 break;
 
             case 4: // Ch1_Jevil_EndBattle
-                if(version == "CH1 SURVEY_PROGRAM") 
+                if(version == "CH1 SURVEY_PROGRAM")
                     pass = (current.jevilDance == 4 || current.jevilDance2 == 4);
-                else 
+                else
                     pass = (current.sound == "snd_spare_ch1" || current.topEnemyHP <= 0);
                 break;
 
             case 5: // Ch1_King_EndBattle
-                if(version == "CH1 SURVEY_PROGRAM")
-                    pass = (Math.Round(old.kingPos) == 1028 && Math.Round(current.kingPos) == 1024);
-                else
-                    pass = (old.kingPos == 680 && current.kingPos >= 1020 && current.kingPos <= 1030);
+                pass = (old.kingPos == 680 && current.kingPos >= 1020 && current.kingPos <= 1030);
                 break;
 
             case 6: // Ch2_ArcadeGameText
