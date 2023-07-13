@@ -1,0 +1,106 @@
+{
+  "splits": [
+    {
+      "name": "Acorn Room Exit",
+      "activators": [
+        {
+          "type": "transition",
+          "map": null,
+          "from": 2,
+          "to": 1,
+          "event": null,
+          "page": null,
+          "line": null,
+          "id": null,
+          "value": null,
+          "any": null,
+          "common": null
+        }
+      ],
+      "start": false
+    },    
+    {
+      "name": "Day 1 Sleep",
+      "activators": [
+        {
+          "type": "event",
+          "map": null,
+          "from": null,
+          "to": null,
+          "event": 10,
+          "page": null,
+          "line": 3,
+          "id": null,
+          "value": null,
+          "any": null,
+          "common": true
+        }
+      ],
+      "start": false
+    },
+    {
+      "name": "Enter Lambchop Butchery",
+      "activators": [
+        {
+          "type": "transition",
+          "map": null,
+          "from": 7,
+          "to": 10,
+          "event": null,
+          "page": null,
+          "line": null,
+          "id": null,
+          "value": null,
+          "any": null,
+          "common": null
+        }
+      ],
+      "start": false
+    },  
+    {
+      "name": "Wrong Ending",
+      "activators": [
+        {
+          "type": "event",
+          "map": 7,
+          "from": null,
+          "to": null,
+          "event": 4,
+          "page": 7,
+          "line": 41,
+          "id": null,
+          "value": null,
+          "any": null,
+          "common": false
+        }
+      ],
+      "start": false
+    },
+    {
+      "name": "True Ending",
+      "activators": [
+        {
+          "type": "event",
+          "map": 1,
+          "from": null,
+          "to": null,
+          "event": 21,
+          "page": 1,
+          "line": 158,
+          "id": null,
+          "value": null,
+          "any": null,
+          "common": false
+        }
+      ],
+      "start": false
+    }
+  ],
+  "defaults": {
+    "Acorn Room Exit": true,
+    "Day 1 Sleep": true,
+    "Enter Lambchop Butchery": true,
+    "Wrong Ending": true,
+    "True Ending": true
+  }
+}
