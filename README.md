@@ -4,4 +4,4 @@ RPG Maker MV autosplitters use [samjones246's plugin](https://github.com/samjone
 
 I've also contributed to a couple of other people's autosplitters, namely:
 - Tenebrosful's [DELTARUNE Chapter 1&2 (GameMaker) autosplitter](https://github.com/Tenebrosful/DELTARUNE-Livesplit.Autosplitter);
-- cccarl / SunglassesEmoji's [OneShot 2016 (RPG Maker XP) autosplitter](https://github.com/cccarl/OneShot-ASL).
+- cccarl / SunglassesEmoji's [OneShot 2014/2016 (RPG Maker 2003/XP) autosplitter](https://github.com/cccarl/OneShot-ASL).
