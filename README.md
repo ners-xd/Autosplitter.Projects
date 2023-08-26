@@ -1,4 +1,4 @@
-# LiveSplit AutoSplitters by NERS
+# LiveSplit Autosplitters by NERS
 This is where I upload my LiveSplit autosplitters.
 RPG Maker MV autosplitters use [samjones246's plugin](https://github.com/samjones246/rpgmmv-livesplit/blob/master/js/plugins/LiveSplit.js) so rename them to Autosplitter.json and put them in your game's folder.
 
