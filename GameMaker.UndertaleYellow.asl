@@ -68,12 +68,12 @@ init
 
             vars.splits = new Dictionary<string, object[]>()
             {
-            // Object variables in order: done, old room, new room, special condition
-            {"F_Neutral",   new object[] {false, -1, 235, 1}},
-            // {"F_Pacifist",  new object[] {false, -1, -1, 2}}, // obj_newhome_03_dialogue_postfight_flowey.message_current == 8
-            // {"F_FPacifist", new object[] {false, -1, -1, 3}}, // obj_heart_battle_fighting_parent.walk_speed <= 0
-            {"F_Genocide",  new object[] {false, -1, 268, 4}},
-            {"F_Rope",      new object[] {false, -1, 13,  5}}
+                // Object variables in order: done, old room, new room, special condition
+                {"F_Neutral",   new object[] {false, -1, 235, 1}},
+                // {"F_Pacifist",  new object[] {false, -1, -1, 2}}, // obj_newhome_03_dialogue_postfight_flowey.message_current == 8
+                // {"F_FPacifist", new object[] {false, -1, -1, 3}}, // obj_heart_battle_fighting_parent.walk_speed <= 0
+                {"F_Genocide",  new object[] {false, -1, 268, 4}},
+                {"F_Rope",      new object[] {false, -1, 13,  5}}
             };
             break;
 
