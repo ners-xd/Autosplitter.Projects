@@ -2,18 +2,18 @@
 
 state("Undertale Yellow", "v1.1")
 {
-	// Static
-	int room : 0xA3FCF4;
+    // Static
+    int room : 0xA3FCF4;
 
-	// Global
-	double dialogueOpen : 0x82FC70, 0x48, 0x10, 0x90, 0x5D0; // Maybe will be needed? Maybe not? I don't know but it sounds useful so I'm keeping it for now lol
+    // Global
+    double dialogueOpen : 0x82FC70, 0x48, 0x10, 0x90, 0x5D0; // Maybe will be needed? Maybe not? I don't know but it sounds useful so I'm keeping it for now lol
 
-	// Self
-	double startFade1	   : 0x802990, 0x10,  0xD8,  0x48,  0x10,  0x0,  0x0;
-	double startFade2	   : 0x802990, 0x18,  0xD8,  0x48,  0x10,  0x0,  0x0;
+    // Self
+    double startFade1      : 0x802990, 0x10,  0xD8,  0x48,  0x10,  0x0,  0x0;
+	double startFade2      : 0x802990, 0x18,  0xD8,  0x48,  0x10,  0x0,  0x0;
 	double neutralEndScene : 0x802990, 0x758, 0x8,   0xE0,  0x1A0, 0x48, 0x10, 0x60, 0x0;
-	double genoEndScene	   : 0x802990, 0x860, 0x1C0, 0x1C0, 0x38,  0x48, 0x10, 0x60, 0x0;
-	double ropeWaiter	   : 0xA60DA0, 0x0,   0x198, 0x48,  0x10,  0xE0, 0x0;
+	double genoEndScene    : 0x802990, 0x860, 0x1C0, 0x1C0, 0x38,  0x48, 0x10, 0x60, 0x0;
+	double ropeWaiter      : 0xA60DA0, 0x0,   0x198, 0x48,  0x10,  0xE0, 0x0;
 }
 
 state("Undertale Yellow", "Demo")
@@ -32,7 +32,7 @@ state("Undertale Yellow", "Demo")
 
 startup
 {
-	refreshRate = 30;
+    refreshRate = 30;
 
     settings.Add("F", true, "Full Game Splits");
     settings.CurrentDefaultParent = "F";
@@ -41,7 +41,7 @@ startup
     // settings.Add("F_Pacifist",  true, "True Pacifist Ending");   To do
     // settings.Add("F_FPacifist", true, "Flawed Pacifist Ending"); To do
     settings.Add("F_Genocide",  true, "Genocide Ending");
-	settings.Add("F_Rope",      true, "Rope Ending");
+    settings.Add("F_Rope",      true, "Rope Ending");
 
     settings.CurrentDefaultParent = null;
     settings.Add("D", true, "Demo Splits");
@@ -50,7 +50,7 @@ startup
     settings.Add("D_Flowey", 	  true, "Exit Flowey Room");
     settings.Add("D_Decibat", 	  true, "Exit Decibat Room");
     settings.Add("D_WallNumbers", true, "Wall Numbers");
-	settings.Add("D_GoldenPear",  true, "Golden Pear");
+    settings.Add("D_GoldenPear",  true, "Golden Pear");
     settings.Add("D_Ending",      true, "Ending");
 }
 
@@ -64,21 +64,21 @@ init
 	switch(hash)
 	{
 		case "2610A3F58304DE377DA56C221FC68D6B":
-			version = "v1.1";
+		    version = "v1.1";
 
 		    vars.splits = new Dictionary<string, object[]>()
 		    {
-			    // Object variables in order: done, old room, new room, special condition
-			    {"F_Neutral",   new object[] {false, -1, 235, 1}},
-			    // {"F_Pacifist",  new object[] {false, -1, -1, 2}}, // obj_newhome_03_dialogue_postfight_flowey.message_current == 8
-			    // {"F_FPacifist", new object[] {false, -1, -1, 3}}, // obj_heart_battle_fighting_parent.walk_speed <= 0
-			    {"F_Genocide",  new object[] {false, -1, 268, 4}},
+			// Object variables in order: done, old room, new room, special condition
+			{"F_Neutral",   new object[] {false, -1, 235, 1}},
+			// {"F_Pacifist",  new object[] {false, -1, -1, 2}}, // obj_newhome_03_dialogue_postfight_flowey.message_current == 8
+			// {"F_FPacifist", new object[] {false, -1, -1, 3}}, // obj_heart_battle_fighting_parent.walk_speed <= 0
+			{"F_Genocide",  new object[] {false, -1, 268, 4}},
 		        {"F_Rope",      new object[] {false, -1, 13,  5}}
 		    };
-			break;
+		    break;
 
 		case "37F685EAF7A6A8D84585D63957D96BA0":
-			version = "Demo";
+		    version = "Demo";
 
 		    vars.splits = new Dictionary<string, object[]>()
 		    {
@@ -88,7 +88,7 @@ init
 		        {"D_GoldenPear",  new object[] {false, -1, 40, 420}}, // gold
 		        {"D_Ending",      new object[] {false, 41, 56,   0}}
 		    };
-			break;
+		    break;
 	}
 
 	print("[Undertale Yellow] Version: " + version + " (" + hash + ")");
@@ -114,10 +114,10 @@ reset
 
 onReset
 {
-    foreach(string split in vars.splits.Keys) 
-    	vars.splits[split][0] = false;
+	foreach(string split in vars.splits.Keys) 
+		vars.splits[split][0] = false;
     	
-    print("[Undertale Yellow] All splits have been reset to initial state");
+	print("[Undertale Yellow] All splits have been reset to initial state");
 }
 
 update
@@ -162,8 +162,8 @@ split
             	pass = (old.tinyPuzzle == 1 && current.tinyPuzzle == 0);
             	break;
 
-           	case 420: // D_GoldenPear
-           		pass = (old.pearFlag == 0 && current.pearFlag == 1);
+			case 420: // D_GoldenPear
+	 			pass = (old.pearFlag == 0 && current.pearFlag == 1);
            		break;
         }
 
