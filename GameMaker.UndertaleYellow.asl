@@ -5,15 +5,14 @@ state("Undertale Yellow", "v1.1")
     // Static
     int room : 0xA3FCF4;
 
-    // Global
-    double dialogueOpen : 0x82FC70, 0x48, 0x10, 0x90, 0x5D0; // Maybe will be needed? Maybe not? I don't know but it sounds useful so I'm keeping it for now lol
-
     // Self
-    double startFade1      : 0x802990, 0x10,  0xD8,  0x48,  0x10,  0x0,  0x0;
-    double startFade2      : 0x802990, 0x18,  0xD8,  0x48,  0x10,  0x0,  0x0;
-    double neutralEndScene : 0x802990, 0x758, 0x8,   0xE0,  0x1A0, 0x48, 0x10, 0x60, 0x0;
-    double genoEndScene    : 0x802990, 0x860, 0x1C0, 0x1C0, 0x38,  0x48, 0x10, 0x60, 0x0;
-    double ropeWaiter      : 0xA60DA0, 0x0,   0x198, 0x48,  0x10,  0xE0, 0x0;
+    double startFade1       : 0x802990, 0x10,  0xD8,  0x48,  0x10,  0x0,  0x0;
+    double startFade2       : 0x802990, 0x18,  0xD8,  0x48,  0x10,  0x0,  0x0;
+    double neutralEndScene  : 0x802990, 0x758, 0x8,   0xE0,  0x1A0, 0x48, 0x10, 0x60, 0x0;
+    double pacifistEndScene : 0xA60DA0, 0x20,  0x1A0, 0x1A0, 0x48,  0x10, 0x60, 0x0;
+    double soulSpeed        : 0xA60DA0, 0x0,   0x48,  0x10,  0x170, 0x380;
+    double genoEndScene     : 0x802990, 0x860, 0x1C0, 0x1C0, 0x38,  0x48, 0x10, 0x60, 0x0;
+    double ropeWaiter       : 0xA60DA0, 0x0,   0x198, 0x48,  0x10,  0xE0, 0x0;
 }
 
 state("Undertale Yellow", "Demo")
@@ -38,8 +37,8 @@ startup
     settings.CurrentDefaultParent = "F";
 
     settings.Add("F_Neutral",   true, "Neutral Ending");
-    // settings.Add("F_Pacifist",  true, "True Pacifist Ending");   To do
-    // settings.Add("F_FPacifist", true, "Flawed Pacifist Ending"); To do
+    settings.Add("F_Pacifist",  true, "True Pacifist Ending");
+    settings.Add("F_FPacifist", true, "Flawed Pacifist Ending");
     settings.Add("F_Genocide",  true, "Genocide Ending");
     settings.Add("F_Rope",      true, "Rope Ending");
 
@@ -70,8 +69,8 @@ init
             {
                 // Object variables in order: done, old room, new room, special condition
                 {"F_Neutral",   new object[] {false, -1, 235, 1}},
-                // {"F_Pacifist",  new object[] {false, -1, -1, 2}}, // obj_newhome_03_dialogue_postfight_flowey.message_current == 8
-                // {"F_FPacifist", new object[] {false, -1, -1, 3}}, // obj_heart_battle_fighting_parent.walk_speed <= 0
+                {"F_Pacifist",  new object[] {false, -1, 255, 2}},
+                {"F_FPacifist", new object[] {false, -1, 180, 3}},
                 {"F_Genocide",  new object[] {false, -1, 268, 4}},
                 {"F_Rope",      new object[] {false, -1, 13,  5}}
             };
@@ -82,11 +81,11 @@ init
 
             vars.splits = new Dictionary<string, object[]>()
             {
-                {"D_Flowey",      new object[] {false, 14, 16,   0}},
-                {"D_Decibat",     new object[] {false, 24, 25,   0}},
-                {"D_WallNumbers", new object[] {false, -1, 15,  69}}, // comedy
-                {"D_GoldenPear",  new object[] {false, -1, 40, 420}}, // gold
-                {"D_Ending",      new object[] {false, 41, 56,   0}}
+                {"D_Flowey",      new object[] {false, 14, 16, 0}},
+                {"D_Decibat",     new object[] {false, 24, 25, 0}},
+                {"D_WallNumbers", new object[] {false, -1, 15, 6}},
+                {"D_GoldenPear",  new object[] {false, -1, 40, 7}},
+                {"D_Ending",      new object[] {false, 41, 56, 0}}
             };
             break;
     }
@@ -150,6 +149,14 @@ split
                 pass = (old.neutralEndScene == 4 && current.neutralEndScene == 5);
                 break;
 
+            case 2: // F_Pacifist
+                pass = (old.pacifistEndScene == 259 && current.pacifistEndScene == 260);
+                break;
+
+            case 3: // F_FPacifist
+                pass = (old.soulSpeed == 1 && current.soulSpeed == 0);
+                break;
+
             case 4: // F_Genocide
                 pass = (old.genoEndScene == 35 && current.genoEndScene == 36);
                 break;
@@ -158,11 +165,11 @@ split
                 pass = (old.ropeWaiter == 1 && current.ropeWaiter == 2);
                 break;
 
-            case 69: // D_WallNumbers
+            case 6: // D_WallNumbers
                 pass = (old.tinyPuzzle == 1 && current.tinyPuzzle == 0);
                 break;
 
-            case 420: // D_GoldenPear
+            case 7: // D_GoldenPear
                 pass = (old.pearFlag == 0 && current.pearFlag == 1);
                 break;
         }
