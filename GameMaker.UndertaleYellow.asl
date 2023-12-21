@@ -32,6 +32,7 @@ state("Undertale Yellow", "Demo")
 startup
 {
     refreshRate = 30;
+    vars.barrier = false;
 
     settings.Add("F", true, "Full Game Splits");
     settings.CurrentDefaultParent = "F";
@@ -143,6 +144,7 @@ reset
 
 onReset
 {
+    vars.barrier = false;
     foreach(string split in vars.splits.Keys) 
         vars.splits[split][0] = false;
         
@@ -151,8 +153,11 @@ onReset
 
 update
 {
-    if(old.room != current.room) 
+    if(old.room != current.room)
+    {
+        if(old.room == 269 && current.room == 180) vars.barrier = true;
         print("[Undertale Yellow] Room: " + old.room + " -> " + current.room);
+    }
 }
 
 split
@@ -184,7 +189,7 @@ split
                 break;
 
             case 3: // F_FPacifist
-                pass = (old.soulSpeed == 1 && current.soulSpeed == 0);
+                pass = (vars.barrier == true && old.soulSpeed == 1 && current.soulSpeed == 0); // Sometimes this split would trigger in any random battle so I added the extra variable
                 break;
 
             case 4: // F_Genocide
@@ -192,7 +197,7 @@ split
                 break;
 
             case 5: // F_Rope
-                pass = (current.ropeWaiter >= 2);
+                pass = (current.ropeWaiter == 2 || current.ropeWaiter == 3); // The split should trigger when this hits 2, however because of the automasher sometimes the autosplitter doesn't pick it up; and the pointer sometimes goes to very high values so it triggers for no reason when entering the room
                 break;
 
             case 6: // D_WallNumbers
