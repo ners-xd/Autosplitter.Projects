@@ -46,11 +46,11 @@ startup
     settings.Add("D", true, "Demo Splits");
     settings.CurrentDefaultParent = "D";
 
-    settings.Add("D_Flowey",      true, "Exit Flowey Room");
-    settings.Add("D_Decibat",     true, "Exit Decibat Room");
-    settings.Add("D_WallNumbers", true, "Wall Numbers");
-    settings.Add("D_GoldenPear",  true, "Golden Pear");
-    settings.Add("D_Ending",      true, "Ending");
+    settings.Add("D_Flowey",      false, "Exit Flowey Room");
+    settings.Add("D_Decibat",     false, "Exit Decibat Room");
+    settings.Add("D_WallNumbers", false, "Wall Numbers");
+    settings.Add("D_GoldenPear",  false, "Golden Pear");
+    settings.Add("D_Ending",       true, "Ending");
 }
 
 init
@@ -146,11 +146,11 @@ split
                 break;
 
             case 1: // F_Neutral
-                pass = (old.neutralEndScene == 4 && current.neutralEndScene == 5);
+                pass = (current.neutralEndScene >= 5); // Normally for the endings I would check for old and current, however the automasher is so fast the autosplitter doesn't get the proper values in time lol
                 break;
 
             case 2: // F_Pacifist
-                pass = (old.pacifistEndScene == 259 && current.pacifistEndScene == 260);
+                pass = (current.pacifistEndScene >= 260);
                 break;
 
             case 3: // F_FPacifist
@@ -158,11 +158,11 @@ split
                 break;
 
             case 4: // F_Genocide
-                pass = (old.genoEndScene == 35 && current.genoEndScene == 36);
+                pass = (current.genoEndScene >= 36);
                 break;
 
             case 5: // F_Rope
-                pass = (old.ropeWaiter == 1 && current.ropeWaiter == 2);
+                pass = (current.ropeWaiter >= 2);
                 break;
 
             case 6: // D_WallNumbers
