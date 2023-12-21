@@ -72,7 +72,7 @@ init
                 {"F_Pacifist",  new object[] {false, -1, 255, 2}},
                 {"F_FPacifist", new object[] {false, -1, 180, 3}},
                 {"F_Genocide",  new object[] {false, -1, 268, 4}},
-                {"F_Rope",      new object[] {false, -1, 13,  5}}
+                {"F_Rope",      new object[] {false, -1,  13, 5}}
             };
             break;
 
