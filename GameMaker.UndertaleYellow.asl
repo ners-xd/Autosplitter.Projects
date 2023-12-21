@@ -61,8 +61,8 @@ startup
     settings.Add("D", true, "Demo Splits");
     settings.CurrentDefaultParent = "D";
 
-    settings.Add("D_Flowey",      false, "Exit Flowey Room");
-    settings.Add("D_Decibat",     false, "Exit Decibat Room");
+    settings.Add("D_Flowey",      false, "Exit Flowey room");
+    settings.Add("D_Decibat",     false, "Exit Decibat room");
     settings.Add("D_WallNumbers", false, "Wall Numbers");
     settings.Add("D_GoldenPear",  false, "Golden Pear");
     settings.Add("D_Ending",       true, "Ending");
