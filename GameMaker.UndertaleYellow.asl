@@ -36,11 +36,26 @@ startup
     settings.Add("F", true, "Full Game Splits");
     settings.CurrentDefaultParent = "F";
 
-    settings.Add("F_Neutral",   true, "Neutral Ending");
-    settings.Add("F_Pacifist",  true, "True Pacifist Ending");
-    settings.Add("F_FPacifist", true, "Flawed Pacifist Ending");
-    settings.Add("F_Genocide",  true, "Genocide Ending");
-    settings.Add("F_Rope",      true, "Rope Ending");
+    settings.Add("F_Decibat",      false, "Exit Decibat room");
+    settings.Add("F_Dalv",         false, "Exit Dalv room");
+    settings.Add("F_DarkRuins",    false, "Exit Dark Ruins");
+    settings.Add("F_Honeydew",     false, "Enter Honeydew Resort");
+    settings.Add("F_EnterMartlet", false, "Enter Martlet room");
+    settings.Add("F_ExitMartlet",  false, "Exit Martlet room");
+    settings.Add("F_ElBailador",   false, "Exit El Bailador room");
+    settings.Add("F_FForCeroba",   false, "End Feisty Four / Geno Ceroba battle");
+    settings.Add("F_Starlo",       false, "Exit Starlo room");
+    settings.Add("F_Guardener",    false, "Exit Guardener room");
+    settings.Add("F_Axis",         false, "Exit Axis room");
+    settings.Add("F_Flowey1",      false, "End Flowey Phase 1");
+    settings.Add("F_Zenith1",      false, "End Zenith Phase 1");
+    settings.Add("F_Zenith2",      false, "End Zenith Phase 2");
+    settings.Add("F_NewHome",      false, "Enter New Home");
+    settings.Add("F_Neutral",       true, "Neutral Ending");
+    settings.Add("F_Pacifist",      true, "True Pacifist Ending");
+    settings.Add("F_FPacifist",     true, "Flawed Pacifist Ending");
+    settings.Add("F_Genocide",      true, "Genocide Ending");
+    settings.Add("F_Rope",          true, "Rope Ending");
 
     settings.CurrentDefaultParent = null;
     settings.Add("D", true, "Demo Splits");
@@ -68,11 +83,26 @@ init
             vars.splits = new Dictionary<string, object[]>()
             {
                 // Object variables in order: done, old room, new room, special condition
-                {"F_Neutral",   new object[] {false, -1, 235, 1}},
-                {"F_Pacifist",  new object[] {false, -1, 255, 2}},
-                {"F_FPacifist", new object[] {false, -1, 180, 3}},
-                {"F_Genocide",  new object[] {false, -1, 268, 4}},
-                {"F_Rope",      new object[] {false, -1,  13, 5}}
+                {"F_Decibat",      new object[] {false,  25,  26, 0}},
+                {"F_Dalv",         new object[] {false,  34,  37, 0}},
+                {"F_DarkRuins",    new object[] {false,  35,  43, 0}},
+                {"F_Honeydew",     new object[] {false,  58,  59, 0}},
+                {"F_EnterMartlet", new object[] {false,  70,  71, 0}},
+                {"F_ExitMartlet",  new object[] {false,  71,  72, 0}},
+                {"F_ElBailador",   new object[] {false, 108, 109, 0}},
+                {"F_FForCeroba",   new object[] {false, 180, 127, 0}},
+                {"F_Starlo",       new object[] {false, 135, 136, 0}},
+                {"F_Guardener",    new object[] {false, 191, 190, 0}},
+                {"F_Axis",         new object[] {false, 204, 206, 0}},
+                {"F_Flowey1",      new object[] {false, 234, 233, 0}},
+                {"F_Zenith1",      new object[] {false, 180, 260, 0}},
+                {"F_Zenith2",      new object[] {false, 180, 221, 0}},
+                {"F_NewHome",      new object[] {false, 259, 253, 0}},
+                {"F_Neutral",      new object[] {false,  -1, 235, 1}},
+                {"F_Pacifist",     new object[] {false,  -1, 255, 2}},
+                {"F_FPacifist",    new object[] {false,  -1, 180, 3}},
+                {"F_Genocide",     new object[] {false,  -1, 268, 4}},
+                {"F_Rope",         new object[] {false,  -1,  13, 5}}
             };
             break;
 
