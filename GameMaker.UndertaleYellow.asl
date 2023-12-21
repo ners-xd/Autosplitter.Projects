@@ -8,7 +8,7 @@ state("Undertale Yellow", "v1.1")
     // Self
     double startFade1       : 0x802990, 0x10,  0xD8,  0x48,  0x10,  0x0,  0x0;
     double startFade2       : 0x802990, 0x18,  0xD8,  0x48,  0x10,  0x0,  0x0;
-    double neutralEndScene  : 0x802990, 0x758, 0x8,   0xE0,  0x1A0, 0x48, 0x10, 0x60, 0x0;
+    double neutralEndScene  : 0xA4F100, 0x1A0, 0x1A0, 0x198, 0x198, 0x48, 0x10, 0x60, 0x0;
     double pacifistEndScene : 0xA60DA0, 0x20,  0x1A0, 0x1A0, 0x48,  0x10, 0x60, 0x0;
     double soulSpeed        : 0xA60DA0, 0x0,   0x48,  0x10,  0x170, 0x380;
     double genoEndScene     : 0x802990, 0x860, 0x1C0, 0x1C0, 0x38,  0x48, 0x10, 0x60, 0x0;
@@ -181,11 +181,11 @@ split
                 break;
 
             case 1: // F_Neutral
-                pass = (current.neutralEndScene >= 5); // Normally for the endings I would check for old and current, however the automasher is so fast the autosplitter doesn't get the proper values in time lol
+                pass = (current.neutralEndScene == 6 || current.neutralEndScene == 7); // Technically the extra or checks aren't really necessary for the endings but I just want to be extra safe
                 break;
 
             case 2: // F_Pacifist
-                pass = (current.pacifistEndScene >= 260);
+                pass = (current.pacifistEndScene == 260 || current.pacifistEndScene == 261);
                 break;
 
             case 3: // F_FPacifist
@@ -193,11 +193,11 @@ split
                 break;
 
             case 4: // F_Genocide
-                pass = (current.genoEndScene >= 36);
+                pass = (current.genoEndScene == 36 || current.genoEndScene == 37);
                 break;
 
             case 5: // F_Rope
-                pass = (current.ropeWaiter == 2 || current.ropeWaiter == 3); // The split should trigger when this hits 2, however because of the automasher sometimes the autosplitter doesn't pick it up; and the pointer sometimes goes to very high values so it triggers for no reason when entering the room
+                pass = (current.ropeWaiter == 2 || current.ropeWaiter == 3);
                 break;
 
             case 6: // D_WallNumbers
