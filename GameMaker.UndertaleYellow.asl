@@ -138,7 +138,6 @@ init
     }
 
     print("[Undertale Yellow] Version: " + version + " (" + hash + ")");
-    foreach(string split in vars.splits.Keys) print(split);
 }
 
 start
