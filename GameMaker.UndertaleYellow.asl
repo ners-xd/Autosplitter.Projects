@@ -37,26 +37,30 @@ startup
     settings.Add("F", true, "Full Game Splits");
     settings.CurrentDefaultParent = "F";
 
-    settings.Add("F_Decibat",      false, "Exit Decibat room");
-    settings.Add("F_Dalv",         false, "Exit Dalv room");
-    settings.Add("F_DarkRuins",    false, "Exit Dark Ruins");
-    settings.Add("F_Honeydew",     false, "Enter Honeydew Resort");
-    settings.Add("F_EnterMartlet", false, "Enter Martlet room");
-    settings.Add("F_ExitMartlet",  false, "Exit Martlet room");
-    settings.Add("F_ElBailador",   false, "Exit El Bailador room");
-    settings.Add("F_FForCeroba",   false, "End Feisty Four / Geno Ceroba battle");
-    settings.Add("F_Starlo",       false, "Exit Starlo room");
-    settings.Add("F_Guardener",    false, "Exit Guardener room");
-    settings.Add("F_Axis",         false, "Exit Axis room");
-    settings.Add("F_Flowey1",      false, "End Flowey Phase 1");
-    settings.Add("F_Zenith1",      false, "End Zenith Phase 1");
-    settings.Add("F_Zenith2",      false, "End Zenith Phase 2");
-    settings.Add("F_NewHome",      false, "Enter New Home");
-    settings.Add("F_Neutral",       true, "Neutral Ending");
-    settings.Add("F_Pacifist",      true, "True Pacifist Ending");
-    settings.Add("F_FPacifist",     true, "Flawed Pacifist Ending");
-    settings.Add("F_Genocide",      true, "Genocide Ending");
-    settings.Add("F_Rope",          true, "Rope Ending");
+    settings.Add("F_Decibat",       false, "Exit Decibat room");
+    settings.Add("F_Dalv",          false, "Exit Dalv room");
+    settings.Add("F_GoldenPear",    false, "Obtain Golden Pear");
+    settings.Add("F_DarkRuins",     false, "Exit Dark Ruins");
+    settings.Add("F_Honeydew",      false, "Enter Honeydew Resort");
+    settings.Add("F_GoldenCoffee",  false, "Obtain Golden Coffee");
+    settings.Add("F_EnterMartlet",  false, "Enter Martlet room");
+    settings.Add("F_ExitMartlet",   false, "Exit Martlet room");
+    settings.Add("F_ElBailador",    false, "Exit El Bailador room");
+    settings.Add("F_GoldenCactus",  false, "Obtain Golden Cactus");
+    settings.Add("F_FForCeroba",    false, "End Feisty Four / Geno Ceroba battle");
+    settings.Add("F_Starlo",        false, "Exit Starlo room");
+    settings.Add("F_GoldenBandana", false, "Obtain Golden Bandana");
+    settings.Add("F_Guardener",     false, "Exit Guardener room");
+    settings.Add("F_Axis",          false, "Exit Axis room");
+    settings.Add("F_Flowey1",       false, "End Flowey Phase 1");
+    settings.Add("F_Zenith1",       false, "End Zenith Phase 1");
+    settings.Add("F_Zenith2",       false, "End Zenith Phase 2");
+    settings.Add("F_NewHome",       false, "Enter New Home");
+    settings.Add("F_Neutral",        true, "Neutral Ending");
+    settings.Add("F_Pacifist",       true, "True Pacifist Ending");
+    settings.Add("F_FPacifist",      true, "Flawed Pacifist Ending");
+    settings.Add("F_Genocide",       true, "Genocide Ending");
+    settings.Add("F_Rope",           true, "Rope Ending");
 
     settings.CurrentDefaultParent = null;
     settings.Add("D", true, "Demo Splits");
@@ -64,8 +68,8 @@ startup
 
     settings.Add("D_Flowey",      false, "Exit Flowey room");
     settings.Add("D_Decibat",     false, "Exit Decibat room");
-    settings.Add("D_WallNumbers", false, "Wall Numbers");
-    settings.Add("D_GoldenPear",  false, "Golden Pear");
+    settings.Add("D_WallNumbers", false, "Finish wall numbers");
+    settings.Add("D_GoldenPear",  false, "Obtain Golden Pear");
     settings.Add("D_Ending",       true, "Ending");
 }
 
@@ -92,26 +96,30 @@ init
             vars.splits = new Dictionary<string, object[]>()
             {
                 // Object variables in order: done, old room, new room, special condition
-                {"F_Decibat",      new object[] {false,  25,  26, 0}},
-                {"F_Dalv",         new object[] {false,  34,  37, 0}},
-                {"F_DarkRuins",    new object[] {false,  35,  43, 0}},
-                {"F_Honeydew",     new object[] {false,  58,  59, 0}},
-                {"F_EnterMartlet", new object[] {false,  70,  71, 0}},
-                {"F_ExitMartlet",  new object[] {false,  71,  72, 0}},
-                {"F_ElBailador",   new object[] {false, 108, 109, 0}},
-                {"F_FForCeroba",   new object[] {false, 180, 127, 0}},
-                {"F_Starlo",       new object[] {false, 135, 136, 0}},
-                {"F_Guardener",    new object[] {false, 191, 190, 0}},
-                {"F_Axis",         new object[] {false, 204, 206, 0}},
-                {"F_Flowey1",      new object[] {false, 234, 233, 0}},
-                {"F_Zenith1",      new object[] {false, 180, 260, 0}},
-                {"F_Zenith2",      new object[] {false, 180, 221, 0}},
-                {"F_NewHome",      new object[] {false, 259, 253, 0}},
-                {"F_Neutral",      new object[] {false,  -1, 235, 1}},
-                {"F_Pacifist",     new object[] {false,  -1, 255, 2}},
-                {"F_FPacifist",    new object[] {false,  -1, 180, 3}},
-                {"F_Genocide",     new object[] {false,  -1, 268, 4}},
-                {"F_Rope",         new object[] {false,  -1,  13, 5}}
+                {"F_Decibat",       new object[] {false,  25,  26, 0}},
+                {"F_Dalv",          new object[] {false,  34,  37, 0}},
+                {"F_GoldenPear",    new object[] {false,  -1,  29, 1}},
+                {"F_DarkRuins",     new object[] {false,  35,  43, 0}},
+                {"F_Honeydew",      new object[] {false,  58,  59, 0}},
+                {"F_GoldenCoffee",  new object[] {false,  -1,  63, 2}},
+                {"F_EnterMartlet",  new object[] {false,  70,  71, 0}},
+                {"F_ExitMartlet",   new object[] {false,  71,  72, 0}},
+                {"F_ElBailador",    new object[] {false, 108, 109, 0}},
+                {"F_GoldenCactus",  new object[] {false,  -1,  83, 3}},
+                {"F_FForCeroba",    new object[] {false, 180, 127, 0}},
+                {"F_Starlo",        new object[] {false, 135, 136, 0}},
+                {"F_GoldenBandana", new object[] {false,  -1, 167, 4}},
+                {"F_Guardener",     new object[] {false, 191, 190, 0}},
+                {"F_Axis",          new object[] {false, 204, 206, 0}},
+                {"F_Flowey1",       new object[] {false, 234, 233, 0}},
+                {"F_Zenith1",       new object[] {false, 180, 260, 0}},
+                {"F_Zenith2",       new object[] {false, 180, 221, 0}},
+                {"F_NewHome",       new object[] {false, 259, 253, 0}},
+                {"F_Neutral",       new object[] {false,  -1, 235, 5}},
+                {"F_Pacifist",      new object[] {false,  -1, 255, 6}},
+                {"F_FPacifist",     new object[] {false,  -1, 180, 7}},
+                {"F_Genocide",      new object[] {false,  -1, 268, 8}},
+                {"F_Rope",          new object[] {false,  -1,  13, 9}}
             };
             break;
 
@@ -120,11 +128,11 @@ init
 
             vars.splits = new Dictionary<string, object[]>()
             {
-                {"D_Flowey",      new object[] {false, 14, 16, 0}},
-                {"D_Decibat",     new object[] {false, 24, 25, 0}},
-                {"D_WallNumbers", new object[] {false, -1, 15, 6}},
-                {"D_GoldenPear",  new object[] {false, -1, 40, 7}},
-                {"D_Ending",      new object[] {false, 41, 56, 0}}
+                {"D_Flowey",      new object[] {false, 14, 16,  0}},
+                {"D_Decibat",     new object[] {false, 24, 25,  0}},
+                {"D_WallNumbers", new object[] {false, -1, 15, 10}},
+                {"D_GoldenPear",  new object[] {false, -1, 40, 11}},
+                {"D_Ending",      new object[] {false, 41, 56,  0}}
             };
             break;
     }
@@ -188,31 +196,47 @@ split
                 pass = true;
                 break;
 
-            case 1: // F_Neutral
+            case 1: // F_GoldenPear
+                pass = (vars.checkItem("G. Pear"));
+                break;
+
+            case 2: // F_GoldenCoffee
+                pass = (vars.checkItem("G. Coffee"));
+                break;
+
+            case 3: // F_GoldenCactus
+                pass = (vars.checkItem("G. Cactus"));
+                break;
+
+            case 4: // F_GoldenBandana
+                pass = (vars.checkItem("G. Bandana"));
+                break;
+
+            case 5: // F_Neutral
                 pass = (current.neutralEndScene == 6 || current.neutralEndScene == 7); // Technically the extra or checks aren't really necessary for the endings but I just want to be extra safe
                 break;
 
-            case 2: // F_Pacifist
+            case 6: // F_Pacifist
                 pass = (current.pacifistEndScene == 260 || current.pacifistEndScene == 261);
                 break;
 
-            case 3: // F_FPacifist
+            case 7: // F_FPacifist
                 pass = (vars.barrier == true && old.soulSpeed == 1 && current.soulSpeed == 0); // Sometimes this split would trigger in any random battle so I added the extra variable
                 break;
 
-            case 4: // F_Genocide
+            case 8: // F_Genocide
                 pass = (current.genoEndScene == 36 || current.genoEndScene == 37);
                 break;
 
-            case 5: // F_Rope
+            case 9: // F_Rope
                 pass = (current.ropeWaiter == 2 || current.ropeWaiter == 3);
                 break;
 
-            case 6: // D_WallNumbers
+            case 10: // D_WallNumbers
                 pass = (old.tinyPuzzle == 1 && current.tinyPuzzle == 0);
                 break;
 
-            case 7: // D_GoldenPear
+            case 11: // D_GoldenPear
                 pass = (old.pearFlag == 0 && current.pearFlag == 1);
                 break;
         }
