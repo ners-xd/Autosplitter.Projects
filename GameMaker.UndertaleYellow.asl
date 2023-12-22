@@ -32,6 +32,7 @@ state("Undertale Yellow", "Demo")
 startup
 {
     refreshRate = 30;
+    vars.barrier = false;
 
     settings.Add("F", true, "Full Game Splits");
     settings.CurrentDefaultParent = "F";
@@ -159,6 +160,7 @@ reset
 
 onReset
 {
+    vars.barrier = false;
     foreach(string split in vars.splits.Keys) 
         vars.splits[split][0] = false;
         
@@ -168,7 +170,12 @@ onReset
 update
 {
     if(old.room != current.room)
+    {
+        if(old.room == 269 && current.room == 180) // Entered Flawed Pacifist Asgore battle
+            vars.barrier = true; // Added for the ending autosplit check because room 180 is used for every battle, so this is mainly just to be safe
+
         print("[Undertale Yellow] Room: " + old.room + " -> " + current.room);
+    }
 }
 
 split
@@ -208,7 +215,7 @@ split
                 break;
 
             case 5: // F_Neutral
-                pass = (current.neutralEndScene == 6 || current.neutralEndScene == 7); // Technically the extra or checks aren't really necessary for the endings but I just want to be extra safe
+                pass = (current.neutralEndScene == 6 || current.neutralEndScene == 7);
                 break;
 
             case 6: // F_Pacifist
@@ -216,7 +223,7 @@ split
                 break;
 
             case 7: // F_FPacifist
-                pass = (old.soulSpeed == 1 && current.soulSpeed == 0);
+                pass = (vars.barrier == true && old.soulSpeed == 1 && current.soulSpeed == 0);
                 break;
 
             case 8: // F_Genocide
