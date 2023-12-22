@@ -8,10 +8,10 @@ state("Undertale Yellow", "v1.1")
     // Self
     double startFade1       : 0x802990, 0x10,  0xD8,  0x48,  0x10,  0x0,  0x0;
     double startFade2       : 0x802990, 0x18,  0xD8,  0x48,  0x10,  0x0,  0x0;
-    double neutralEndScene  : 0xA4F100, 0x1A0, 0x1A0, 0x198, 0x198, 0x48, 0x10, 0x60, 0x0;
+    double neutralEndScene  : 0xA4F100, 0x1A0, 0x1A0, 0x198, 0x198, 0x48, 0x10, 0x60,  0x0;
     double pacifistEndScene : 0xA60DA0, 0x20,  0x1A0, 0x1A0, 0x48,  0x10, 0x60, 0x0;
-    double soulSpeed        : 0xA60DA0, 0x0,   0x48,  0x10,  0x170, 0x380;
-    double genoEndScene     : 0x802990, 0x860, 0x1C0, 0x1C0, 0x38,  0x48, 0x10, 0x60, 0x0;
+    double soulSpeed        : 0xA4F338, 0x28,  0x90,  0x168, 0x10,  0x48, 0x10, 0x490, 0x0;
+    double genoEndScene     : 0x802990, 0x860, 0x1C0, 0x1C0, 0x38,  0x48, 0x10, 0x60,  0x0;
     double ropeWaiter       : 0xA60DA0, 0x0,   0x198, 0x48,  0x10,  0xE0, 0x0;
 }
 
@@ -32,7 +32,6 @@ state("Undertale Yellow", "Demo")
 startup
 {
     refreshRate = 30;
-    vars.barrier = false;
 
     settings.Add("F", true, "Full Game Splits");
     settings.CurrentDefaultParent = "F";
@@ -160,7 +159,6 @@ reset
 
 onReset
 {
-    vars.barrier = false;
     foreach(string split in vars.splits.Keys) 
         vars.splits[split][0] = false;
         
@@ -170,10 +168,7 @@ onReset
 update
 {
     if(old.room != current.room)
-    {
-        if(old.room == 269 && current.room == 180) vars.barrier = true;
         print("[Undertale Yellow] Room: " + old.room + " -> " + current.room);
-    }
 }
 
 split
@@ -221,7 +216,7 @@ split
                 break;
 
             case 7: // F_FPacifist
-                pass = (vars.barrier == true && old.soulSpeed == 1 && current.soulSpeed == 0); // Sometimes this split would trigger in any random battle so I added the extra variable
+                pass = (old.soulSpeed == 1 && current.soulSpeed == 0);
                 break;
 
             case 8: // F_Genocide
