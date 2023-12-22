@@ -80,6 +80,35 @@ init
         using(var fs = File.OpenRead(modules.First().FileName)) 
             hash = string.Concat(md5.ComputeHash(fs).Select(b => b.ToString("X2")));
 
+    vars.splits = new Dictionary<string, object[]>()
+    {
+        // Object variables in order: done, old room, new room, special condition
+        {"F_Decibat",       new object[] {false,  25,  26, 0}},
+        {"F_Dalv",          new object[] {false,  34,  37, 0}},
+        {"F_GoldenPear",    new object[] {false,  -1,  29, 1}},
+        {"F_DarkRuins",     new object[] {false,  35,  43, 0}},
+        {"F_Honeydew",      new object[] {false,  58,  59, 0}},
+        {"F_GoldenCoffee",  new object[] {false,  -1,  63, 2}},
+        {"F_EnterMartlet",  new object[] {false,  70,  71, 0}},
+        {"F_ExitMartlet",   new object[] {false,  71,  72, 0}},
+        {"F_ElBailador",    new object[] {false, 108, 109, 0}},
+        {"F_GoldenCactus",  new object[] {false,  -1,  83, 3}},
+        {"F_FForCeroba",    new object[] {false, 180, 127, 0}},
+        {"F_Starlo",        new object[] {false, 135, 136, 0}},
+        {"F_GoldenBandana", new object[] {false,  -1, 167, 4}},
+        {"F_Guardener",     new object[] {false, 191, 190, 0}},
+        {"F_Axis",          new object[] {false, 204, 206, 0}},
+        {"F_Flowey1",       new object[] {false, 234, 233, 0}},
+        {"F_Zenith1",       new object[] {false, 180, 260, 0}},
+        {"F_Zenith2",       new object[] {false, 180, 221, 0}},
+        {"F_NewHome",       new object[] {false, 259, 253, 0}},
+        {"F_Neutral",       new object[] {false,  -1, 235, 5}},
+        {"F_Pacifist",      new object[] {false,  -1, 255, 6}},
+        {"F_FPacifist",     new object[] {false,  -1, 180, 7}},
+        {"F_Genocide",      new object[] {false,  -1, 268, 8}},
+        {"F_Rope",          new object[] {false,  -1,  13, 9}}
+    };
+
     switch(hash)
     {
         case "2610A3F58304DE377DA56C221FC68D6B":
@@ -92,35 +121,6 @@ init
                 
                 return false;
             });
-
-            vars.splits = new Dictionary<string, object[]>()
-            {
-                // Object variables in order: done, old room, new room, special condition
-                {"F_Decibat",       new object[] {false,  25,  26, 0}},
-                {"F_Dalv",          new object[] {false,  34,  37, 0}},
-                {"F_GoldenPear",    new object[] {false,  -1,  29, 1}},
-                {"F_DarkRuins",     new object[] {false,  35,  43, 0}},
-                {"F_Honeydew",      new object[] {false,  58,  59, 0}},
-                {"F_GoldenCoffee",  new object[] {false,  -1,  63, 2}},
-                {"F_EnterMartlet",  new object[] {false,  70,  71, 0}},
-                {"F_ExitMartlet",   new object[] {false,  71,  72, 0}},
-                {"F_ElBailador",    new object[] {false, 108, 109, 0}},
-                {"F_GoldenCactus",  new object[] {false,  -1,  83, 3}},
-                {"F_FForCeroba",    new object[] {false, 180, 127, 0}},
-                {"F_Starlo",        new object[] {false, 135, 136, 0}},
-                {"F_GoldenBandana", new object[] {false,  -1, 167, 4}},
-                {"F_Guardener",     new object[] {false, 191, 190, 0}},
-                {"F_Axis",          new object[] {false, 204, 206, 0}},
-                {"F_Flowey1",       new object[] {false, 234, 233, 0}},
-                {"F_Zenith1",       new object[] {false, 180, 260, 0}},
-                {"F_Zenith2",       new object[] {false, 180, 221, 0}},
-                {"F_NewHome",       new object[] {false, 259, 253, 0}},
-                {"F_Neutral",       new object[] {false,  -1, 235, 5}},
-                {"F_Pacifist",      new object[] {false,  -1, 255, 6}},
-                {"F_FPacifist",     new object[] {false,  -1, 180, 7}},
-                {"F_Genocide",      new object[] {false,  -1, 268, 8}},
-                {"F_Rope",          new object[] {false,  -1,  13, 9}}
-            };
             break;
 
         case "37F685EAF7A6A8D84585D63957D96BA0":
@@ -138,6 +138,7 @@ init
     }
 
     print("[Undertale Yellow] Version: " + version + " (" + hash + ")");
+    foreach(string split in vars.splits.Keys) print(split);
 }
 
 start
