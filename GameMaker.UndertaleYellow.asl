@@ -171,7 +171,7 @@ update
 {
     if(old.room != current.room)
     {
-        if(old.room == 269 && current.room == 180) // Entered Flawed Pacifist Asgore battle
+        if(old.room == 269 && current.room == 180) // Entered the Flawed Pacifist Asgore battle
             vars.barrier = true; // Added for the ending autosplit check because room 180 is used for every battle, so this is mainly just to be safe
 
         print("[Undertale Yellow] Room: " + old.room + " -> " + current.room);
