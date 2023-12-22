@@ -21,7 +21,8 @@ state("Undertale Yellow", "Demo")
     int room : 0x5CB860;
 
     // Global
-    double tinyPuzzle : 0x3C95C0, 0x4C, 0xC, 0x478, 0x2A0;
+    double tinyPuzzle : 0x3C95C0, 0x4C, 0xC,   0x478, 0x2A0;
+    double pearFlag   : 0x3CB070, 0x38, 0x230, 0x92C, 0xB5C, 0xB70;
 
     // Self
     double startFade1 : 0x5CB8EC, 0x8, 0x84, 0x150, 0x34, 0x10, 0xA0, 0x0;
@@ -116,14 +117,6 @@ init
 
         case "37F685EAF7A6A8D84585D63957D96BA0":
             version = "Demo";
-
-            vars.checkItem = (Func<string, bool>)((itemName) => 
-            {
-                for(int i = 0; i <= 7; i++)
-                    if(new DeepPointer(0x5CB89C, 0x68, 0x14, (0x100 + i*0x10), 0x0, 0x0).DerefString(game, 32) == itemName) return true;
-                
-                return false;
-            });
 
             vars.splits = new Dictionary<string, object[]>()
             {
@@ -220,7 +213,7 @@ split
                 break;
 
             case 7: // D_GoldenPear
-                pass = (vars.checkItem("Pear")); // "G. Pear" in full game
+                pass = (old.pearFlag == 0 && current.pearFlag == 1);
                 break;
         }
 
