@@ -15,27 +15,11 @@ state("Undertale Yellow", "v1.1")
     double ropeWaiter       : 0xA60DA0, 0x0,   0x198, 0x48,  0x10,  0xE0, 0x0;
 }
 
-state("Undertale Yellow", "Demo")
-{
-    // Static
-    int room : 0x5CB860;
-
-    // Global
-    double tinyPuzzle : 0x3C95C0, 0x4C, 0xC,   0x478, 0x2A0;
-    double pearFlag   : 0x3CB070, 0x38, 0x230, 0x92C, 0xB5C, 0xB70;
-
-    // Self
-    double startFade1 : 0x5CB8EC, 0x8, 0x84, 0x150, 0x34, 0x10, 0xA0, 0x0;
-    double startFade2 : 0x5CB8EC, 0xC, 0x84, 0x150, 0x34, 0x10, 0xA0, 0x0;
-}
-
 startup
 {
-    refreshRate = 30;
+    refreshRate  = 30;
+    vars.offset  = -1;
     vars.barrier = false;
-
-    settings.Add("F", true, "Full Game Splits");
-    settings.CurrentDefaultParent = "F";
 
     settings.Add("F_Decibat",       false, "Exit Decibat room");
     settings.Add("F_Dalv",          false, "Exit Dalv room");
@@ -47,7 +31,7 @@ startup
     settings.Add("F_ExitMartlet",   false, "Exit Martlet room");
     settings.Add("F_ElBailador",    false, "Exit El Bailador room");
     settings.Add("F_GoldenCactus",  false, "Obtain Golden Cactus");
-    settings.Add("F_FForCeroba",    false, "End Feisty Four / Geno Ceroba battle");
+    settings.Add("F_FForCeroba",    false, "End Feisty Four / Genocide Ceroba battle");
     settings.Add("F_Starlo",        false, "Exit Starlo room");
     settings.Add("F_GoldenBandana", false, "Obtain Golden Bandana");
     settings.Add("F_Guardener",     false, "Exit Guardener room");
@@ -61,16 +45,6 @@ startup
     settings.Add("F_FPacifist",      true, "Flawed Pacifist Ending");
     settings.Add("F_Genocide",       true, "Genocide Ending");
     settings.Add("F_Rope",           true, "Rope Ending");
-
-    settings.CurrentDefaultParent = null;
-    settings.Add("D", true, "Demo Splits");
-    settings.CurrentDefaultParent = "D";
-
-    settings.Add("D_Flowey",      false, "Exit Flowey room");
-    settings.Add("D_Decibat",     false, "Exit Decibat room");
-    settings.Add("D_WallNumbers", false, "Finish wall numbers");
-    settings.Add("D_GoldenPear",  false, "Obtain Golden Pear");
-    settings.Add("D_Ending",       true, "Ending");
 }
 
 init
@@ -103,7 +77,7 @@ init
         {"F_Zenith2",       new object[] {false, 180, 221, 0}},
         {"F_NewHome",       new object[] {false, 259, 253, 0}},
         {"F_Neutral",       new object[] {false,  -1, 235, 5}},
-        {"F_Pacifist",      new object[] {false,  -1, 255, 6}},
+        {"F_Pacifist",      new object[] {false,  -1, 255, 6}}, // Special offset required
         {"F_FPacifist",     new object[] {false,  -1, 180, 7}},
         {"F_Genocide",      new object[] {false,  -1, 268, 8}},
         {"F_Rope",          new object[] {false,  -1,  13, 9}}
@@ -123,17 +97,14 @@ init
             });
             break;
 
-        case "37F685EAF7A6A8D84585D63957D96BA0":
-            version = "Demo";
+        default:
+            version = "Unknown";
 
-            vars.splits = new Dictionary<string, object[]>()
-            {
-                {"D_Flowey",      new object[] {false, 14, 16,  0}},
-                {"D_Decibat",     new object[] {false, 24, 25,  0}},
-                {"D_WallNumbers", new object[] {false, -1, 15, 10}},
-                {"D_GoldenPear",  new object[] {false, -1, 40, 11}},
-                {"D_Ending",      new object[] {false, 41, 56,  0}}
-            };
+            MessageBox.Show
+            (
+                "This version of Undertale Yellow is not supported by the autosplitter.\nIf you are playing an older version, update your game.\nIf not, please wait until the autosplitter receives an update.",
+                "LiveSplit | Undertale Yellow", MessageBoxButtons.OK, MessageBoxIcon.Warning
+            );
             break;
     }
 
@@ -160,6 +131,7 @@ reset
 
 onReset
 {
+    vars.offset  = -1;
     vars.barrier = false;
     foreach(string split in vars.splits.Keys) 
         vars.splits[split][0] = false;
@@ -176,6 +148,9 @@ update
 
         print("[Undertale Yellow] Room: " + old.room + " -> " + current.room);
     }
+
+    if(current.room == 255 && vars.offset == -1 && current.pacifistEndScene == 261 && settings["F_Pacifist"]) 
+        vars.offset = 48; // Split this many frames after Ceroba starts going down
 }
 
 split
@@ -189,7 +164,7 @@ split
     {
         if((!settings[splitKey] || vars.splits[splitKey][done]) ||
            (vars.splits[splitKey][oldRoom] != -1 && old.room != vars.splits[splitKey][oldRoom]) ||
-           (vars.splits[splitKey][newRoom] != -1 && current.room != vars.splits[splitKey][newRoom])) continue;
+           (current.room != vars.splits[splitKey][newRoom])) continue;
 
         bool pass = false;
         switch((int)vars.splits[splitKey][condition])
@@ -219,7 +194,16 @@ split
                 break;
 
             case 6: // F_Pacifist
-                pass = (current.pacifistEndScene == 260 || current.pacifistEndScene == 261);
+                if(vars.offset > 0)
+                {
+                    vars.offset --;
+                    pass = false;
+                }
+                else if(vars.offset == 0)
+                {
+                    vars.offset = -1;
+                    pass = true;
+                }
                 break;
 
             case 7: // F_FPacifist
@@ -231,23 +215,13 @@ split
                 break;
 
             case 9: // F_Rope
-                pass = (current.ropeWaiter == 2 || current.ropeWaiter == 3);
-                break;
-
-            case 10: // D_WallNumbers
-                pass = (old.tinyPuzzle == 1 && current.tinyPuzzle == 0);
-                break;
-
-            case 11: // D_GoldenPear
-                pass = (old.pearFlag == 0 && current.pearFlag == 1);
+                pass = (current.ropeWaiter == 4);
                 break;
         }
 
         if(pass)
-        {
-            if(splitKey != "D_Ending") // Don't mark D_Ending as done because it's triggered multiple times in All Endings
-                vars.splits[splitKey][done] = true;
-
+        {   
+            vars.splits[splitKey][done] = true;
             print("[Undertale Yellow] Split triggered (" + splitKey + ")");
             return true;
         }
