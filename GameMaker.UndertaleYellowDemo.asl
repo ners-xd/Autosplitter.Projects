@@ -1,6 +1,6 @@
 // Undertale Yellow Demo Autosplitter by NERS
 
-state("Undertale Yellow")
+state("Undertale Yellow", "Demo v1.1")
 {
     // Static
     int room : 0x5CB860;
@@ -34,6 +34,8 @@ init
 
     if(hash == "37F685EAF7A6A8D84585D63957D96BA0")
     {
+        version = "Demo v1.1";
+
         vars.splits = new Dictionary<string, object[]>()
         {
             {"D_Flowey",      new object[] {false, 14, 16, 0}},
@@ -43,11 +45,16 @@ init
             {"D_Ending",      new object[] {false, 41, 56, 0}}
         };
     }
-    else MessageBox.Show
-    (
-        "This version of Undertale Yellow is not supported by the autosplitter.\nPlease use Demo version 1.1.",
-        "LiveSplit | Undertale Yellow Demo", MessageBoxButtons.OK, MessageBoxIcon.Warning
-    );
+    else
+    {
+        version = "Unknown";
+
+        MessageBox.Show
+        (
+            "This version of Undertale Yellow is not supported by the autosplitter.\nPlease use Demo version 1.1.",
+            "LiveSplit | Undertale Yellow Demo", MessageBoxButtons.OK, MessageBoxIcon.Warning
+        );
+    }
 
     print("[Undertale Yellow Demo] Hash: " + hash);
 }
@@ -80,6 +87,9 @@ onReset
 
 update
 {
+    if(version == "Unknown")
+        return false;
+
     if(old.room != current.room)
         print("[Undertale Yellow Demo] Room: " + old.room + " -> " + current.room);
 }
