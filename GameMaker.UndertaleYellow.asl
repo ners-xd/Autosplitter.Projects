@@ -38,10 +38,13 @@ startup
     settings.Add("F_GoldenBandana", false, "Obtain Golden Bandana");
     settings.Add("F_Guardener",     false, "Exit Guardener room");
     settings.Add("F_Axis",          false, "Exit Axis room");
-    settings.Add("F_Flowey1",       false, "End Flowey Phase 1");
-    settings.Add("F_Zenith1",       false, "End Zenith Phase 1");
-    settings.Add("F_Zenith2",       false, "End Zenith Phase 2");
+    settings.Add("F_Flowey1",       false, "Flowey Flashback");
+    settings.Add("F_Zenith1",       false, "Zenith Flashback 1");
+    settings.Add("F_Zenith2",       false, "End Zenith battle");
     settings.Add("F_NewHome",       false, "Enter New Home");
+    settings.Add("F_Ceroba1",       false, "Ceroba Flashback 1");
+    settings.Add("F_Ceroba2",       false, "Ceroba Flashback 2");
+    settings.Add("F_Ceroba3",       false, "End Pacifist Ceroba battle");
     settings.Add("F_Neutral",        true, "Neutral Ending");
     settings.Add("F_Pacifist",       true, "True Pacifist Ending");
     settings.Add("F_FPacifist",      true, "Flawed Pacifist Ending");
@@ -79,6 +82,9 @@ init
         {"F_Zenith1",       new object[] {false, 180, 260, 0}},
         {"F_Zenith2",       new object[] {false, 180, 221, 0}},
         {"F_NewHome",       new object[] {false, 259, 253, 0}},
+        {"F_Ceroba1",       new object[] {false, 180, 246, 0}},
+        {"F_Ceroba2",       new object[] {false, 180, 250, 0}},
+        {"F_Ceroba3",       new object[] {false, 180, 255, 0}},
         {"F_Neutral",       new object[] {false,  -1, 235, 5}},
         {"F_Pacifist",      new object[] {false,  -1, 255, 6}}, // Special offset required
         {"F_FPacifist",     new object[] {false,  -1, 180, 7}},
