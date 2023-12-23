@@ -39,7 +39,7 @@ startup
     settings.Add("F_Guardener",     false, "Exit Guardener room");
     settings.Add("F_Axis",          false, "Exit Axis room");
     settings.Add("F_Flowey1",       false, "Flowey Flashback");
-    settings.Add("F_Zenith1",       false, "Zenith Flashback 1");
+    settings.Add("F_Zenith1",       false, "Zenith Flashback");
     settings.Add("F_Zenith2",       false, "End Zenith battle");
     settings.Add("F_NewHome",       false, "Enter New Home");
     settings.Add("F_Ceroba1",       false, "Ceroba Flashback 1");
