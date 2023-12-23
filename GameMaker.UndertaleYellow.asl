@@ -20,7 +20,9 @@ startup
     refreshRate  = 30;
     vars.offset  = -1;
     vars.barrier = false;
+    vars.started = false;
 
+    settings.Add("F_FiveLights",    false, "Exit the five lights puzzle room");
     settings.Add("F_Decibat",       false, "Exit Decibat room");
     settings.Add("F_Dalv",          false, "Exit Dalv room");
     settings.Add("F_GoldenPear",    false, "Obtain Golden Pear");
@@ -57,6 +59,7 @@ init
     vars.splits = new Dictionary<string, object[]>()
     {
         // Object variables in order: done, old room, new room, special condition
+        {"F_FiveLights",    new object[] {false,  18,  19, 0}},
         {"F_Decibat",       new object[] {false,  25,  26, 0}},
         {"F_Dalv",          new object[] {false,  34,  37, 0}},
         {"F_GoldenPear",    new object[] {false,  -1,  29, 1}},
@@ -122,6 +125,9 @@ start
 
 reset
 {
+    if(vars.started == false)
+        return false; // Fix for an issue where the timer would reset immediately after starting
+
     if(current.room == 2)
         return old.startFade1 == 0.5 && current.startFade1 > 0.5 && current.startFade1 < 0.6;
 
@@ -133,8 +139,13 @@ onReset
 {
     vars.offset  = -1;
     vars.barrier = false;
-    foreach(string split in vars.splits.Keys) 
-        vars.splits[split][0] = false;
+    vars.started = false;
+
+    if(game != null)
+    {
+        foreach(string split in vars.splits.Keys) 
+            vars.splits[split][0] = false;
+    }
         
     print("[Undertale Yellow] All splits have been reset to initial state");
 }
@@ -146,6 +157,9 @@ update
 
     if(old.room != current.room)
     {
+        if((old.room == 2 || old.room == 3) && current.room == 6)
+            vars.started = true;
+
         if(old.room == 269 && current.room == 180) // Entered the Flawed Pacifist Asgore battle
             vars.barrier = true; // Added for the ending autosplit check because room 180 is used for every battle, so this is mainly just to be safe
 
