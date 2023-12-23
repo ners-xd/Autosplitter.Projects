@@ -141,6 +141,9 @@ onReset
 
 update
 {
+    if(version == "Unknown")
+        return false;
+
     if(old.room != current.room)
     {
         if(old.room == 269 && current.room == 180) // Entered the Flawed Pacifist Asgore battle
