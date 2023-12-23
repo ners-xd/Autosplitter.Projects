@@ -17,6 +17,7 @@ state("Undertale Yellow", "Demo v1.1")
 startup
 {
     refreshRate  = 30;
+    vars.started = false;
 
     settings.Add("D_Flowey",      false, "Exit Flowey room");
     settings.Add("D_Decibat",     false, "Exit Decibat room");
@@ -70,6 +71,9 @@ start
 
 reset
 {
+    if(vars.started == false)
+        return false; // Fix for an issue where the timer would reset immediately after starting
+
     if(current.room == 2)
         return old.startFade1 == 0.5 && current.startFade1 > 0.5 && current.startFade1 < 0.6;
 
@@ -79,8 +83,13 @@ reset
 
 onReset
 {
-    foreach(string split in vars.splits.Keys) 
-        vars.splits[split][0] = false;
+    vars.started = false;
+
+    if(game != null)
+    {
+        foreach(string split in vars.splits.Keys) 
+            vars.splits[split][0] = false;
+    }
         
     print("[Undertale Yellow Demo] All splits have been reset to initial state");
 }
@@ -91,7 +100,12 @@ update
         return false;
 
     if(old.room != current.room)
+    {
+        if((old.room == 2 || old.room == 3) && current.room == 5)
+            vars.started = true;
+
         print("[Undertale Yellow Demo] Room: " + old.room + " -> " + current.room);
+    }
 }
 
 split
