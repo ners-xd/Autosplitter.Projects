@@ -5,9 +5,6 @@ state("Undertale Yellow", "v1.1")
     // Static
     int room : 0xA3FCF4;
 
-    // Global
-    double killRoom : 0x82FC70, 0x48, 0x10, 0x390, 0x100;
-
     // Self
     double startFade1       : 0x802990, 0x10,  0xD8,  0x48,  0x10,  0x0,  0x0;
     double startFade2       : 0x802990, 0x18,  0xD8,  0x48,  0x10,  0x0,  0x0;
@@ -20,10 +17,11 @@ state("Undertale Yellow", "v1.1")
 
 startup
 {
-    refreshRate  = 30;
-    vars.offset  = -1;
-    vars.barrier = false;
-    vars.started = false;
+    refreshRate   = 30;
+    vars.offset   = -1;
+    vars.killRoom = 0;
+    vars.barrier  = false;
+    vars.started  = false;
 
     settings.Add("F_KillCount", false, "Show kill count");
     settings.SetToolTip("F_KillCount", "A new row will appear on your layout with the current room and area kills.");
@@ -81,6 +79,25 @@ startup
         foreach(var lc in cache.Values)
             timer.Layout.LayoutComponents.Remove(lc);
     });
+
+    vars.killTextKey = "Kills (Room | Area)";
+    vars.dontUpdate = new HashSet<int> { 180, 182, 185 }; // Battle Room, Shops, Death Screen
+    vars.areas = new List<Tuple<int, int, int, int>>
+    {
+        // min room, max room, area, max kills per room
+        Tuple.Create(13,  42,  1, 5), // Dark Ruins
+        Tuple.Create(43,  72,  2, 5), // Snowdin
+        Tuple.Create(77,  140, 3, 3), // Dunes
+        Tuple.Create(241, 252, 3, 3), //
+        Tuple.Create(276, 276, 3, 3), //
+        Tuple.Create(283, 283, 3, 3), //
+        Tuple.Create(141, 177, 4, 3), // Steamworks
+        Tuple.Create(187, 209, 4, 3), //
+        Tuple.Create(220, 220, 4, 3), //
+        Tuple.Create(237, 240, 4, 3), //
+        Tuple.Create(275, 275, 4, 3), //
+        Tuple.Create(277, 281, 4, 3)  //
+    };
 }
 
 shutdown
@@ -91,6 +108,7 @@ shutdown
 exit
 {
     vars.removeAllTexts();
+    vars.killRoom = 0;
 }
 
 init
@@ -210,38 +228,69 @@ update
         if(old.room == 269 && current.room == 180) // Entered the Flawed Pacifist Asgore battle
             vars.barrier = true; // Added for the ending autosplit check because room 180 is used for every battle, so this is mainly just to be safe
 
-        // There's not really a need to update the text every frame so I decided to make it on room change (except for the battle room, the shops and the death screen)
-        if(settings["F_KillCount"] && current.room != 180 && current.room != 182 && current.room != 185) 
+        if(settings["F_KillCount"] && !vars.dontUpdate.Contains(current.room))
         {
-            int area = 0, needed = 0;
-            if(current.room >= 13 && current.room <= 42)
+            var tuple = ((List<Tuple<int, int, int, int>>)vars.areas).FirstOrDefault(t => current.room >= t.Item1 && current.room <= t.Item2);
+            if(tuple != null)
             {
-                area = 1; // Dark Ruins
-                needed = 5;
-            }
-            else if(current.room >= 43 && current.room <= 72)
-            {
-                area = 2; // Snowdin
-                needed = 5;
-            }
-            else if((current.room >= 77 && current.room <= 140) || (current.room >= 241 && current.room <= 252) || current.room == 276 || current.room == 283)
-            {
-                area = 3; // Dunes
-                needed = 3;
-            }
-            else if((current.room >= 141 && current.room <= 177) || (current.room >= 187 && current.room <= 209) || current.room == 220 || (current.room >= 237 && current.room <= 240) || current.room == 275 || (current.room >= 277 && current.room <= 281))
-            {
-                area = 4; // Steamworks
-                needed = 3;
-            }
+                /* 
+                    Pretty much copy-pasted obj_rndenc_Other_4
+                    I could have gotten a pointer path to global.kill_area_current, however more pointers = more chances for the paths to break for other people lol
+                    Areas array sizes:
+                    Dark Ruins = 0-6
+                    Snowdin    = 0-7
+                    Dunes      = 0-8
+                    Steamworks = 0-12 
+                */
+                switch((int)current.room)
+                {
+                    case 16: case 47: case 79: case 164:
+                        vars.killRoom = 0;
+                        break;
+                    case 18: case 48: case 80: case 169:
+                        vars.killRoom = 1;
+                        break;
+                    case 24: case 51: case 81: case 173:
+                        vars.killRoom = 2;
+                        break;
+                    case 20: case 54: case 82: case 176:
+                        vars.killRoom = 3;
+                        break;
+                    case 22: case 61: case 84: case 177:
+                        vars.killRoom = 4;
+                        break;
+                    case 26: case 64: case 87: case 190:
+                        vars.killRoom = 5;
+                        break;
+                    case 27: case 67: case 88: case 195:
+                        vars.killRoom = 6;
+                        break;
+                    case 68: case 95: case 196:
+                        vars.killRoom = 7;
+                        break;
+                    case 113: case 198:
+                        vars.killRoom = 8;
+                        break;
+                    case 199:
+                        vars.killRoom = 9;
+                        break;
+                    case 200:
+                        vars.killRoom = 10;
+                        break;
+                    case 281:
+                        vars.killRoom = 11;
+                        break;
+                    case 202:
+                        vars.killRoom = 12;
+                        break;
+                }
 
-            if(area > 0)
-            {
-                double rKills = new DeepPointer(0x82FC70, 0x48, 0x10, 0x10E0, 0x0,  0x90, (0x10 * area), 0x90, (0x10 * (int)current.killRoom)).Deref<double>(game);
+                int room = (int)vars.killRoom, area = tuple.Item3, needed = tuple.Item4;
+                double rKills = new DeepPointer(0x82FC70, 0x48, 0x10, 0x10E0, 0x0,  0x90, (0x10 * area), 0x90, (0x10 * room)).Deref<double>(game);
                 double tKills = new DeepPointer(0x82FC70, 0x48, 0x10, 0x10E0, 0x10, 0x90, (0x10 * area)).Deref<double>(game);
-                vars.setText("Kills (Room | Area)", ((needed-rKills) + "/" + needed + " | " + (20-tKills) + "/20"));
+                vars.setText(vars.killTextKey, ((needed - rKills) + "/" + needed + " | " + (20 - tKills) + "/20"));
             }
-            else vars.setText("Kills (Room | Area)", "Invalid Area");
+            else vars.setText(vars.killTextKey, "Invalid Area");
         }
         
         print("[Undertale Yellow] Room: " + old.room + " -> " + current.room);
