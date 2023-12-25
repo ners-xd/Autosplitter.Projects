@@ -5,6 +5,9 @@ state("Undertale Yellow", "v1.1")
     // Static
     int room : 0xA3FCF4;
 
+    // Global
+    double killRoom : 0x82FC70, 0x48, 0x10, 0x390, 0x100;
+
     // Self
     double startFade1       : 0x802990, 0x10,  0xD8,  0x48,  0x10,  0x0,  0x0;
     double startFade2       : 0x802990, 0x18,  0xD8,  0x48,  0x10,  0x0,  0x0;
@@ -21,6 +24,9 @@ startup
     vars.offset  = -1;
     vars.barrier = false;
     vars.started = false;
+
+    settings.Add("F_KillCount", false, "Show kill count");
+    settings.SetToolTip("F_KillCount", "A new row will appear on your layout with the current room and area kills.");
 
     settings.Add("F_FiveLights",    false, "Exit the five lights puzzle room");
     settings.Add("F_Decibat",       false, "Exit Decibat room");
@@ -50,6 +56,41 @@ startup
     settings.Add("F_FPacifist",      true, "Flawed Pacifist Ending");
     settings.Add("F_Genocide",       true, "Genocide Ending");
     settings.Add("F_Rope",           true, "Rope Ending");
+
+    // Thanks to Ero for this
+    var cache = new Dictionary<string, LiveSplit.UI.Components.ILayoutComponent>();
+    vars.setText = (Action<string, object>)((text1, text2) =>
+    {
+        LiveSplit.UI.Components.ILayoutComponent lc;
+        if(!cache.TryGetValue(text1, out lc))
+        {
+            lc = LiveSplit.UI.Components.ComponentManager.LoadLayoutComponent("LiveSplit.Text.dll", timer);
+            cache[text1] = lc;
+        }
+
+        if(!timer.Layout.LayoutComponents.Contains(lc))
+            timer.Layout.LayoutComponents.Add(lc);
+
+        dynamic tc = lc.Component;
+        tc.Settings.Text1 = text1;
+        tc.Settings.Text2 = text2.ToString();
+    });
+
+    vars.removeAllTexts = (Action)(() =>
+    {
+        foreach(var lc in cache.Values)
+            timer.Layout.LayoutComponents.Remove(lc);
+    });
+}
+
+shutdown
+{
+    vars.removeAllTexts();
+}
+
+exit
+{
+    vars.removeAllTexts();
 }
 
 init
@@ -151,9 +192,9 @@ onReset
     {
         foreach(string split in vars.splits.Keys) 
             vars.splits[split][0] = false;
-    }
         
-    print("[Undertale Yellow] All splits have been reset to initial state");
+        print("[Undertale Yellow] All splits have been reset to initial state");
+    }
 }
 
 update
@@ -169,6 +210,40 @@ update
         if(old.room == 269 && current.room == 180) // Entered the Flawed Pacifist Asgore battle
             vars.barrier = true; // Added for the ending autosplit check because room 180 is used for every battle, so this is mainly just to be safe
 
+        // There's not really a need to update the text every frame so I decided to make it on room change (except for the battle room, the shops and the death screen)
+        if(settings["F_KillCount"] && current.room != 180 && current.room != 182 && current.room != 185) 
+        {
+            int area = 0, needed = 0;
+            if(current.room >= 13 && current.room <= 42)
+            {
+                area = 1; // Dark Ruins
+                needed = 5;
+            }
+            else if(current.room >= 43 && current.room <= 72)
+            {
+                area = 2; // Snowdin
+                needed = 5;
+            }
+            else if((current.room >= 77 && current.room <= 140) || (current.room >= 241 && current.room <= 252) || current.room == 276 || current.room == 283)
+            {
+                area = 3; // Dunes
+                needed = 3;
+            }
+            else if((current.room >= 141 && current.room <= 177) || (current.room >= 187 && current.room <= 209) || current.room == 220 || (current.room >= 237 && current.room <= 240) || current.room == 275 || (current.room >= 277 && current.room <= 281))
+            {
+                area = 4; // Steamworks
+                needed = 3;
+            }
+
+            if(area > 0)
+            {
+                double rKills = new DeepPointer(0x82FC70, 0x48, 0x10, 0x10E0, 0x0,  0x90, (0x10 * area), 0x90, (0x10 * (int)current.killRoom)).Deref<double>(game);
+                double tKills = new DeepPointer(0x82FC70, 0x48, 0x10, 0x10E0, 0x10, 0x90, (0x10 * area)).Deref<double>(game);
+                vars.setText("Kills (Room | Area)", ((needed-rKills) + "/" + needed + " | " + (20-tKills) + "/20"));
+            }
+            else vars.setText("Kills (Room | Area)", "Invalid Area");
+        }
+        
         print("[Undertale Yellow] Room: " + old.room + " -> " + current.room);
     }
 
