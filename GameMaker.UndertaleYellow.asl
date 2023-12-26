@@ -134,7 +134,7 @@ init
         {"F_GoldenCactus",  new object[] {false,  -1,  83, 3}},
         {"F_FForCeroba",    new object[] {false, 180, 127, 0}},
         {"F_Starlo",        new object[] {false, 135, 136, 0}},
-        {"F_GoldenBandana", new object[] {false,  -1, 167, 4}},
+        {"F_GoldenBandana", new object[] {false,  -1,  -1, 4}}, // Can be obtained in different rooms depending on the route
         {"F_Guardener",     new object[] {false, 191, 190, 0}},
         {"F_Axis",          new object[] {false, 204, 206, 0}},
         {"F_Flowey1",       new object[] {false, 234, 233, 0}},
@@ -311,7 +311,7 @@ split
     {
         if((!settings[splitKey] || vars.splits[splitKey][done]) ||
            (vars.splits[splitKey][oldRoom] != -1 && old.room != vars.splits[splitKey][oldRoom]) ||
-           (current.room != vars.splits[splitKey][newRoom])) continue;
+           (vars.splits[splitKey][newRoom] != -1 && current.room != vars.splits[splitKey][newRoom])) continue;
 
         bool pass = false;
         switch((int)vars.splits[splitKey][condition])
@@ -333,7 +333,7 @@ split
                 break;
 
             case 4: // F_GoldenBandana
-                pass = (vars.checkItem("G. Bandana"));
+                pass = ((current.room == 167 || current.room == 275) && vars.checkItem("G. Bandana"));
                 break;
 
             case 5: // F_Neutral
