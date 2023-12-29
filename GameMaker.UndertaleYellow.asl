@@ -26,34 +26,36 @@ startup
     settings.Add("F_KillCount", false, "Show kill count");
     settings.SetToolTip("F_KillCount", "A new row will appear on your layout with the current room and area kills.");
 
-    settings.Add("F_FiveLights",    false, "Exit the five lights puzzle room");
-    settings.Add("F_Decibat",       false, "Exit Decibat room");
-    settings.Add("F_Dalv",          false, "Exit Dalv room");
-    settings.Add("F_GoldenPear",    false, "Obtain Golden Pear");
-    settings.Add("F_DarkRuins",     false, "Exit Dark Ruins");
-    settings.Add("F_Honeydew",      false, "Enter Honeydew Resort");
-    settings.Add("F_GoldenCoffee",  false, "Obtain Golden Coffee");
-    settings.Add("F_EnterMartlet",  false, "Enter Martlet room");
-    settings.Add("F_ExitMartlet",   false, "Exit Martlet room");
-    settings.Add("F_ElBailador",    false, "Exit El Bailador room");
-    settings.Add("F_GoldenCactus",  false, "Obtain Golden Cactus");
-    settings.Add("F_FForCeroba",    false, "End Feisty Four / Genocide Ceroba battle");
-    settings.Add("F_Starlo",        false, "Exit Starlo room");
-    settings.Add("F_GoldenBandana", false, "Obtain Golden Bandana");
-    settings.Add("F_Guardener",     false, "Exit Guardener room");
-    settings.Add("F_Axis",          false, "Exit Axis room");
-    settings.Add("F_Flowey1",       false, "Flowey Flashback");
-    settings.Add("F_Zenith1",       false, "Zenith Flashback");
-    settings.Add("F_Zenith2",       false, "End Zenith battle");
-    settings.Add("F_NewHome",       false, "Enter New Home");
-    settings.Add("F_Ceroba1",       false, "Ceroba Flashback 1");
-    settings.Add("F_Ceroba2",       false, "Ceroba Flashback 2");
-    settings.Add("F_Ceroba3",       false, "End Pacifist Ceroba battle");
-    settings.Add("F_Neutral",        true, "Neutral Ending");
-    settings.Add("F_Pacifist",       true, "True Pacifist Ending");
-    settings.Add("F_FPacifist",      true, "Flawed Pacifist Ending");
-    settings.Add("F_Genocide",       true, "Genocide Ending");
-    settings.Add("F_Rope",           true, "Rope Ending");
+    settings.Add("F_FiveLights",     false, "Exit the five lights puzzle room");
+    settings.Add("F_Decibat",        false, "Exit Decibat room");
+    settings.Add("F_Dalv",           false, "Exit Dalv room");
+    settings.Add("F_GoldenPear",     false, "Obtain Golden Pear");
+    settings.Add("F_DarkRuins",      false, "Exit Dark Ruins");
+    settings.Add("F_Honeydew",       false, "Enter Honeydew Resort");
+    settings.Add("F_GoldenCoffee",   false, "Obtain Golden Coffee");
+    settings.Add("F_EnterMartlet",   false, "Enter Martlet room");
+    settings.Add("F_ExitMartlet",    false, "Exit Martlet room");
+    settings.Add("F_ElBailador",     false, "Exit El Bailador room");
+    settings.Add("F_GoldenCactus",   false, "Obtain Golden Cactus");
+    settings.Add("F_FForCeroba",     false, "End Feisty Four / Genocide Ceroba battle");
+    settings.Add("F_Starlo",         false, "Exit Starlo room");
+    settings.Add("F_GoldenBandana",  false, "Obtain Golden Bandana");
+    settings.Add("F_Guardener",      false, "Exit Guardener room");
+    settings.Add("F_GreenhouseSkip", false, "Greenhouse Skip");
+    settings.SetToolTip("F_GreenhouseSkip", "This autosplit triggers when you exit the room with the savepoint after Guardener\n(most common split location for Greenhouse Skip).");
+    settings.Add("F_Axis",           false, "Exit Axis room");
+    settings.Add("F_Flowey1",        false, "Flowey Flashback");
+    settings.Add("F_Zenith1",        false, "Zenith Flashback");
+    settings.Add("F_Zenith2",        false, "End Zenith battle");
+    settings.Add("F_NewHome",        false, "Enter New Home");
+    settings.Add("F_Ceroba1",        false, "Ceroba Flashback 1");
+    settings.Add("F_Ceroba2",        false, "Ceroba Flashback 2");
+    settings.Add("F_Ceroba3",        false, "End Pacifist Ceroba battle");
+    settings.Add("F_Neutral",         true, "Neutral Ending");
+    settings.Add("F_Pacifist",        true, "True Pacifist Ending");
+    settings.Add("F_FPacifist",       true, "Flawed Pacifist Ending");
+    settings.Add("F_Genocide",        true, "Genocide Ending");
+    settings.Add("F_Rope",            true, "Rope Ending");
 
     // Thanks to Ero for this
     var cache = new Dictionary<string, LiveSplit.UI.Components.ILayoutComponent>();
@@ -121,34 +123,35 @@ init
     vars.splits = new Dictionary<string, object[]>()
     {
         // Object variables in order: done, old room, new room, special condition
-        {"F_FiveLights",    new object[] {false,  18,  19, 0}},
-        {"F_Decibat",       new object[] {false,  25,  26, 0}},
-        {"F_Dalv",          new object[] {false,  34,  37, 0}},
-        {"F_GoldenPear",    new object[] {false,  -1,  29, 1}},
-        {"F_DarkRuins",     new object[] {false,  35,  43, 0}},
-        {"F_Honeydew",      new object[] {false,  58,  59, 0}},
-        {"F_GoldenCoffee",  new object[] {false,  -1,  63, 2}},
-        {"F_EnterMartlet",  new object[] {false,  70,  71, 0}},
-        {"F_ExitMartlet",   new object[] {false,  71,  72, 0}},
-        {"F_ElBailador",    new object[] {false, 108, 109, 0}},
-        {"F_GoldenCactus",  new object[] {false,  -1,  83, 3}},
-        {"F_FForCeroba",    new object[] {false, 180, 127, 0}},
-        {"F_Starlo",        new object[] {false, 135, 136, 0}},
-        {"F_GoldenBandana", new object[] {false,  -1,  -1, 4}}, // Can be obtained in different rooms depending on the route
-        {"F_Guardener",     new object[] {false, 191, 190, 0}},
-        {"F_Axis",          new object[] {false, 204, 206, 0}},
-        {"F_Flowey1",       new object[] {false, 234, 233, 0}},
-        {"F_Zenith1",       new object[] {false, 180, 260, 0}},
-        {"F_Zenith2",       new object[] {false, 180, 221, 0}},
-        {"F_NewHome",       new object[] {false, 259, 253, 0}},
-        {"F_Ceroba1",       new object[] {false, 180, 246, 0}},
-        {"F_Ceroba2",       new object[] {false, 180, 250, 0}},
-        {"F_Ceroba3",       new object[] {false, 180, 255, 0}},
-        {"F_Neutral",       new object[] {false,  -1, 235, 5}},
-        {"F_Pacifist",      new object[] {false,  -1, 255, 6}}, // Special offset required
-        {"F_FPacifist",     new object[] {false,  -1, 180, 7}},
-        {"F_Genocide",      new object[] {false,  -1, 268, 8}},
-        {"F_Rope",          new object[] {false,  -1,  13, 9}}
+        {"F_FiveLights",     new object[] {false,  18,  19, 0}},
+        {"F_Decibat",        new object[] {false,  25,  26, 0}},
+        {"F_Dalv",           new object[] {false,  34,  37, 0}},
+        {"F_GoldenPear",     new object[] {false,  -1,  29, 1}},
+        {"F_DarkRuins",      new object[] {false,  35,  43, 0}},
+        {"F_Honeydew",       new object[] {false,  58,  59, 0}},
+        {"F_GoldenCoffee",   new object[] {false,  -1,  63, 2}},
+        {"F_EnterMartlet",   new object[] {false,  70,  71, 0}},
+        {"F_ExitMartlet",    new object[] {false,  71,  72, 0}},
+        {"F_ElBailador",     new object[] {false, 108, 109, 0}},
+        {"F_GoldenCactus",   new object[] {false,  -1,  83, 3}},
+        {"F_FForCeroba",     new object[] {false, 180, 127, 0}},
+        {"F_Starlo",         new object[] {false, 135, 136, 0}},
+        {"F_GoldenBandana",  new object[] {false,  -1,  -1, 4}}, // Can be obtained in different rooms depending on the route
+        {"F_Guardener",      new object[] {false, 191, 190, 0}},
+        {"F_GreenhouseSkip", new object[] {false, 190, 281, 0}},
+        {"F_Axis",           new object[] {false, 204, 206, 0}},
+        {"F_Flowey1",        new object[] {false, 234, 233, 0}},
+        {"F_Zenith1",        new object[] {false, 180, 260, 0}},
+        {"F_Zenith2",        new object[] {false, 180, 221, 0}},
+        {"F_NewHome",        new object[] {false, 259, 253, 0}},
+        {"F_Ceroba1",        new object[] {false, 180, 246, 0}},
+        {"F_Ceroba2",        new object[] {false, 180, 250, 0}},
+        {"F_Ceroba3",        new object[] {false, 180, 255, 0}},
+        {"F_Neutral",        new object[] {false,  -1, 235, 5}},
+        {"F_Pacifist",       new object[] {false,  -1, 255, 6}}, // Special offset required
+        {"F_FPacifist",      new object[] {false,  -1, 180, 7}},
+        {"F_Genocide",       new object[] {false,  -1, 268, 8}},
+        {"F_Rope",           new object[] {false,  -1,  13, 9}}
     };
 
     switch(hash)
