@@ -365,7 +365,7 @@ split
                 break;
 
             case 9: // F_Rope
-                pass = (current.ropeWaiter == 4);
+                pass = (old.ropeWaiter == 3 || old.ropeWaiter == 4 || current.ropeWaiter == 4); // This condition is very goofy but it makes sense trust (it gets set to 4 only for three frames so sometimes the autosplitter doesn't pick it up)
                 break;
         }
 
