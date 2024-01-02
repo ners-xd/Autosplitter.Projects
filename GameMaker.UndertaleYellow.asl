@@ -300,7 +300,7 @@ update
     }
 
     if(current.room == 255 && vars.offset == -1 && current.pacifistEndScene == 261 && settings["F_Pacifist"]) 
-        vars.offset = 45; // Split this many frames after Ceroba starts going down
+        vars.offset = 46; // Split this many frames after Ceroba starts going down
 }
 
 split
