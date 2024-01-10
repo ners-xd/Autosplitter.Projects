@@ -25,6 +25,7 @@ startup
     settings.Add("F_KillCount", false, "Show kill count");
     settings.SetToolTip("F_KillCount", "A new row will appear on your layout with the current room and area kills.");
 
+    settings.Add("F_Ruins",          false, "Exit Ruins");
     settings.Add("F_FiveLights",     false, "Exit the five lights puzzle room");
     settings.Add("F_Decibat",        false, "Exit Decibat room");
     settings.Add("F_Dalv",           false, "Exit Dalv room");
@@ -122,6 +123,7 @@ init
     vars.splits = new Dictionary<string, object[]>()
     {
         // Object variables in order: done, old room, new room, special condition
+        {"F_Ruins",          new object[] {false,  10,  11, 0}},
         {"F_FiveLights",     new object[] {false,  18,  19, 0}},
         {"F_Decibat",        new object[] {false,  25,  26, 0}},
         {"F_Dalv",           new object[] {false,  34,  37, 0}},
