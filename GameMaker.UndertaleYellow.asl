@@ -12,7 +12,6 @@ state("Undertale Yellow", "v1.1")
     double pacifistEndScene : 0xA60DA0, 0x20,  0x1A0, 0x1A0, 0x48,  0x10, 0x60, 0x0;
     double soulSpeed        : 0xA4F338, 0x28,  0x90,  0x168, 0x10,  0x48, 0x10, 0x490, 0x0;
     double genoEndScene     : 0x802990, 0x860, 0x1C0, 0x1C0, 0x38,  0x48, 0x10, 0x60,  0x0;
-    double ropeWaiter       : 0xA4F350, 0x10,  0x1A0, 0x48,  0x10,  0xE0, 0x0;
 }
 
 startup
@@ -151,7 +150,7 @@ init
         {"F_Pacifist",       new object[] {false,  -1, 255, 6}}, // Special offset required
         {"F_FPacifist",      new object[] {false,  -1, 180, 7}},
         {"F_Genocide",       new object[] {false,  -1, 268, 8}},
-        {"F_Rope",           new object[] {false,  -1,  13, 9}}
+        {"F_Rope",           new object[] {false,  13,   0, 0}}
     };
 
     switch(hash)
@@ -362,10 +361,6 @@ split
 
             case 8: // F_Genocide
                 pass = (current.genoEndScene == 36 || current.genoEndScene == 37);
-                break;
-
-            case 9: // F_Rope
-                pass = (old.ropeWaiter == 3 || old.ropeWaiter == 4 || current.ropeWaiter == 4); // This condition is very goofy but it makes sense trust (it gets set to 4 only for three frames so sometimes the autosplitter doesn't pick it up)
                 break;
         }
 
