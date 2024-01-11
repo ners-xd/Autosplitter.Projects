@@ -6,12 +6,12 @@ state("Undertale Yellow", "v1.1")
     int room : 0xA3FCF4;
 
     // Self
-    double startFade1       : 0x802990, 0x10,  0xD8,  0x48,  0x10,  0x0,  0x0;
-    double startFade2       : 0x802990, 0x18,  0xD8,  0x48,  0x10,  0x0,  0x0;
-    double neutralEndScene  : 0xA4F100, 0x1A0, 0x1A0, 0x198, 0x198, 0x48, 0x10, 0x60,  0x0;
-    double pacifistEndScene : 0xA60DA0, 0x20,  0x1A0, 0x1A0, 0x48,  0x10, 0x60, 0x0;
-    double soulSpeed        : 0xA4F338, 0x28,  0x90,  0x168, 0x10,  0x48, 0x10, 0x490, 0x0;
-    double genoEndScene     : 0x802990, 0x860, 0x1C0, 0x1C0, 0x38,  0x48, 0x10, 0x60,  0x0;
+    double startFade1       : 0x802990, 0x10,  0xD8,  0x48,  0x10, 0x0,  0x0;              // obj_mainmenu.sh (room 2)
+    double startFade2       : 0x802990, 0x18,  0xD8,  0x48,  0x10, 0x0,  0x0;              // obj_mainmenu.sh (room 3)
+    double neutralEndScene  : 0xA622F8, 0x60,  0x1A0, 0x198, 0x48, 0x10, 0x60, 0x0;        // obj_flowey_battle_final_ending_cutscene.scene
+    double pacifistEndScene : 0xA60DA0, 0x20,  0x1A0, 0x1A0, 0x48, 0x10, 0x60, 0x0;        // obj_newhome_03_cutscene_postfight_spare.scene
+    double soulSpeed        : 0xA4F338, 0x28,  0x90,  0x168, 0x10, 0x48, 0x10, 0x490, 0x0; // obj_heart_battle_fighting_parent.walk_speed
+    double genoEndScene     : 0x802990, 0x860, 0x1C0, 0x1C0, 0x38, 0x48, 0x10, 0x60,  0x0; // obj_castle_throne_room_controller.scene
 }
 
 startup
@@ -289,10 +289,10 @@ update
                         break;
                 }
 
-                int room = (int)vars.killRoom, area = tuple.Item3, needed = tuple.Item4;
+                int room = (int)vars.killRoom, area = tuple.Item3, mKills = tuple.Item4;
                 double rKills = new DeepPointer(0x82FC70, 0x48, 0x10, 0x10E0, 0x0,  0x90, (0x10 * area), 0x90, (0x10 * room)).Deref<double>(game);
                 double tKills = new DeepPointer(0x82FC70, 0x48, 0x10, 0x10E0, 0x10, 0x90, (0x10 * area)).Deref<double>(game);
-                vars.setText(vars.killTextKey, ((needed - rKills) + "/" + needed + " | " + (20 - tKills) + "/20"));
+                vars.setText(vars.killTextKey, ((mKills - rKills) + "/" + mKills + " | " + (20 - tKills) + "/20"));
             }
             else vars.setText(vars.killTextKey, "Invalid Area");
         }
@@ -341,7 +341,7 @@ split
                 break;
 
             case 5: // F_Neutral
-                pass = (current.neutralEndScene == 6 || current.neutralEndScene == 7);
+                pass = (old.neutralEndScene != 6 && current.neutralEndScene == 6);
                 break;
 
             case 6: // F_Pacifist
@@ -362,7 +362,7 @@ split
                 break;
 
             case 8: // F_Genocide
-                pass = (current.genoEndScene == 36 || current.genoEndScene == 37);
+                pass = (old.genoEndScene == 35 && (current.genoEndScene == 36 || current.genoEndScene == 37)); // Sometimes it goes to 36, sometimes 37 on the same frame for some reason
                 break;
         }
 
