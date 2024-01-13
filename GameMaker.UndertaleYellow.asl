@@ -5,22 +5,25 @@ state("Undertale Yellow", "v1.1")
     // Static
     int room : 0xA3FCF4;
 
+    // Global
+    double dialogueOpen : 0x82FC70, 0x48, 0x10, 0x390, 0xA0;
+
     // Self
-    double startFade1       : 0x802990, 0x10,  0xD8,  0x48,  0x10,  0x0,  0x0;              // obj_mainmenu.sh (room 2)
-    double startFade2       : 0x802990, 0x18,  0xD8,  0x48,  0x10,  0x0,  0x0;              // obj_mainmenu.sh (room 3)
-    double neutralEndScene  : 0xA4F100, 0x1A0, 0x1A0, 0x198, 0x198, 0x48, 0x10, 0x60,  0x0; // obj_flowey_battle_final_ending_cutscene.scene
-    double pacifistEndScene : 0xA60DA0, 0x20,  0x1A0, 0x1A0, 0x48,  0x10, 0x60, 0x0;        // obj_newhome_03_cutscene_postfight_spare.scene
-    double soulSpeed        : 0xA4F338, 0x28,  0x90,  0x168, 0x10,  0x48, 0x10, 0x490, 0x0; // obj_heart_battle_fighting_parent.walk_speed
-    double genoEndScene     : 0x802990, 0x860, 0x1C0, 0x1C0, 0x38,  0x48, 0x10, 0x60,  0x0; // obj_castle_throne_room_controller.scene
+    double startFade1       : 0x802990, 0x10,  0xD8,  0x48,  0x10, 0x0,  0x0;                          // obj_mainmenu.sh (room 2)
+    double startFade2       : 0x802990, 0x18,  0xD8,  0x48,  0x10, 0x0,  0x0;                          // obj_mainmenu.sh (room 3)
+    double neutralEndScene  : 0x802990, 0x758, 0x1A0, 0x760, 0x88, 0x70, 0x38, 0x48, 0x10,  0x60, 0x0; // obj_flowey_battle_final_ending_cutscene.scene
+    double pacifistEndScene : 0x802990, 0x7F8, 0x1E8, 0x3D0, 0x28, 0x38, 0x48, 0x10, 0x60,  0x0;       // obj_newhome_03_cutscene_postfight_spare.scene
+    double soulSpeed        : 0x802990, 0x5A0, 0x178, 0x88,  0x70, 0x38, 0x48, 0x10, 0x490, 0x0;       // obj_heart_battle_fighting_parent.walk_speed
+    double genoEndScene     : 0x802990, 0x860, 0x1C0, 0x1C0, 0x38, 0x48, 0x10, 0x60, 0x0;              // obj_castle_throne_room_controller.scene
 }
 
 startup
 {
     refreshRate   = 30;
-    vars.offset   = -1;
     vars.killRoom = 0;
-    vars.barrier  = false;
+    vars.tempVar  = false;
     vars.started  = false;
+    vars.offset   = new Stopwatch();
 
     settings.Add("F_KillCount", false, "Show kill count");
     settings.SetToolTip("F_KillCount", "A new row will appear on your layout with the current room and area kills.");
@@ -206,8 +209,8 @@ reset
 
 onReset
 {
-    vars.offset  = -1;
-    vars.barrier = false;
+    vars.offset.Reset();
+    vars.tempVar = false;
     vars.started = false;
 
     if(game != null)
@@ -230,7 +233,7 @@ update
             vars.started = true;
 
         if(old.room == 269 && current.room == 180) // Entered the Flawed Pacifist Asgore battle
-            vars.barrier = true; // Added for the ending autosplit check because room 180 is used for every battle, so this is mainly just to be safe
+            vars.tempVar = true; // Added for the ending autosplit check because room 180 is used for every battle, so this is mainly just to be safe 
 
         if(settings["F_KillCount"] && !vars.dontUpdate.Contains(current.room))
         {
@@ -238,13 +241,13 @@ update
             if(tuple != null)
             {
                 /* 
-                    Pretty much copy-pasted obj_rndenc_Other_4
-                    I could have gotten a pointer path to global.kill_area_current, however more pointers = more chances for the paths to break for other people lol
-                    Areas array sizes:
-                    Dark Ruins = 0-6
-                    Snowdin    = 0-7
-                    Dunes      = 0-8
-                    Steamworks = 0-12 
+                Pretty much copy-pasted obj_rndenc_Other_4
+                I could have gotten a pointer path to global.kill_area_current, however more pointers = more chances for the paths to break for other people lol
+                Areas array sizes:
+                Dark Ruins = 0-6
+                Snowdin    = 0-7
+                Dunes      = 0-8
+                Steamworks = 0-12 
                 */
                 switch((int)current.room)
                 {
@@ -300,8 +303,11 @@ update
         print("[Undertale Yellow] Room: " + old.room + " -> " + current.room);
     }
 
-    if(current.room == 255 && vars.offset == -1 && current.pacifistEndScene == 261 && settings["F_Pacifist"]) 
-        vars.offset = 46; // Split this many frames after Ceroba starts going down
+    if(current.room == 255 && !vars.offset.IsRunning && current.pacifistEndScene == 261 && settings["F_Pacifist"]) 
+        vars.offset.Start(); // Split this many frames after Ceroba starts going down
+
+    else if(current.neutralEndScene == 4 && current.dialogueOpen == 1) // Entered the cutscene at the end of Neutral
+        vars.tempVar = true; // Added for the ending autosplit check because neutralEndScene takes random values in the battle and makes the split trigger
 }
 
 split
@@ -341,28 +347,23 @@ split
                 break;
 
             case 5: // F_Neutral
-                pass = (old.neutralEndScene != 6 && current.neutralEndScene == 6);
+                pass = (vars.tempVar == true && old.neutralEndScene == 5 && current.neutralEndScene == 6);
                 break;
 
             case 6: // F_Pacifist
-                if(vars.offset > 0)
+                if(vars.offset.ElapsedMilliseconds >= 2250)
                 {
-                    vars.offset --;
-                    pass = false;
-                }
-                else if(vars.offset == 0)
-                {
-                    vars.offset = -1;
+                    vars.offset.Reset();
                     pass = true;
                 }
                 break;
 
             case 7: // F_FPacifist
-                pass = (vars.barrier == true && old.soulSpeed == 1 && current.soulSpeed == 0);
+                pass = (vars.tempVar == true && old.soulSpeed == 1 && current.soulSpeed == 0);
                 break;
 
             case 8: // F_Genocide
-                pass = (old.genoEndScene == 35 && (current.genoEndScene == 36 || current.genoEndScene == 37)); // Sometimes it goes to 36, sometimes 37 on the same frame for some reason
+                pass = (old.genoEndScene == 35 && (current.genoEndScene == 36 || current.genoEndScene == 37)); // Sometimes it goes to 36, sometimes 37 on the same frame
                 break;
         }
 
