@@ -232,7 +232,7 @@ update
         if((old.room == 2 || old.room == 3) && current.room == 6)
             vars.started = true;
 
-        if(old.room == 269 && current.room == 180) // Entered the Flawed Pacifist Asgore battle
+        if(old.room == 269 && current.room == 180 && settings["F_FPacifist"]) // Entered the Flawed Pacifist Asgore battle
             vars.tempVar = true; // Added for the ending autosplit check because room 180 is used for every battle, so this is mainly just to be safe 
 
         if(settings["F_KillCount"] && !vars.dontUpdate.Contains(current.room))
@@ -304,9 +304,9 @@ update
     }
 
     if(current.room == 255 && !vars.offset.IsRunning && current.pacifistEndScene == 261 && settings["F_Pacifist"]) 
-        vars.offset.Start(); // Split this many frames after Ceroba starts going down
+        vars.offset.Start(); // Start the stopwatch after Ceroba faces down
 
-    else if(current.room == 235 && current.neutralEndScene == 4 && current.dialogueOpen == 1) // Entered the cutscene at the end of Neutral
+    else if(current.room == 235 && current.neutralEndScene == 4 && current.dialogueOpen == 1 && settings["F_Neutral"]) // Entered the cutscene at the end of Neutral
         vars.tempVar = true; // Added for the ending autosplit check because neutralEndScene takes random values in the battle and makes the split trigger
 }
 
