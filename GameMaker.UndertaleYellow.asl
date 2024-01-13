@@ -307,7 +307,7 @@ update
         vars.offset.Start(); // Start the stopwatch after Ceroba faces down
 
     else if(current.room == 235 && current.neutralEndScene == 4 && current.dialogueOpen == 1 && settings["F_Neutral"]) // Entered the cutscene at the end of Neutral
-        vars.tempVar = true; // Added for the ending autosplit check because neutralEndScene takes random values in the battle and makes the split trigger
+        vars.tempVar = true; // Added for the ending autosplit check because neutralEndScene takes random values in the Flowey battle and makes the split trigger
 }
 
 split
