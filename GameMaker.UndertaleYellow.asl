@@ -166,7 +166,7 @@ init
             vars.checkItem = (Func<string, bool>)((itemName) => 
             {
                 for(int i = 1; i <= 8; i++)
-                    if(new DeepPointer(0xA60CB0, 0x0, 0x50, 0x390, 0x20, 0x90, (0x10 * i), 0x0, 0x0).DerefString(game, 32) == itemName) return true;
+                    if(new DeepPointer(0x82FC70, 0x48, 0x10, 0x390, 0x20, 0x90, (0x10 * i), 0x0, 0x0).DerefString(game, 32) == itemName) return true;
                 
                 return false;
             });
