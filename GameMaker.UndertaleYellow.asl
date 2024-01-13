@@ -306,7 +306,7 @@ update
     if(current.room == 255 && !vars.offset.IsRunning && current.pacifistEndScene == 261 && settings["F_Pacifist"]) 
         vars.offset.Start(); // Split this many frames after Ceroba starts going down
 
-    else if(current.neutralEndScene == 4 && current.dialogueOpen == 1) // Entered the cutscene at the end of Neutral
+    else if(current.room == 235 && current.neutralEndScene == 4 && current.dialogueOpen == 1) // Entered the cutscene at the end of Neutral
         vars.tempVar = true; // Added for the ending autosplit check because neutralEndScene takes random values in the battle and makes the split trigger
 }
 
