@@ -6,7 +6,8 @@ state("Undertale Yellow", "v1.1")
     int room : 0xA3FCF4;
 
     // Global
-    double dialogueOpen : 0x82FC70, 0x48, 0x10, 0x390, 0xA0;
+    double dialogue : 0x82FC70, 0x48, 0x10, 0x390, 0xA0;  // global.dialogue_open
+    double killRoom : 0x82FC70, 0x48, 0x10, 0x390, 0x100; // global.kill_area_current
 
     // Self
     double startFade1       : 0x802990, 0x10,  0xD8,  0x48,  0x10, 0x0,  0x0;                          // obj_mainmenu.sh (room 2)
@@ -15,12 +16,12 @@ state("Undertale Yellow", "v1.1")
     double pacifistEndScene : 0x802990, 0x7F8, 0x1E8, 0x3D0, 0x28, 0x38, 0x48, 0x10, 0x60,  0x0;       // obj_newhome_03_cutscene_postfight_spare.scene
     double soulSpeed        : 0x802990, 0x5A0, 0x178, 0x88,  0x70, 0x38, 0x48, 0x10, 0x490, 0x0;       // obj_heart_battle_fighting_parent.walk_speed
     double genoEndScene     : 0x802990, 0x860, 0x1C0, 0x1C0, 0x38, 0x48, 0x10, 0x60, 0x0;              // obj_castle_throne_room_controller.scene
+    double ropeWaiter       : 0x802990, 0x68,  0x1A0, 0x1B0, 0x90, 0x70, 0x38, 0x48, 0x10,  0xE0, 0x0; // obj_darkruins_01_rope.waiter
 }
 
 startup
 {
     refreshRate   = 30;
-    vars.killRoom = 0;
     vars.tempVar  = false;
     vars.started  = false;
     vars.offset   = new Stopwatch();
@@ -113,7 +114,6 @@ shutdown
 exit
 {
     vars.removeAllTexts();
-    vars.killRoom = 0;
 }
 
 init
@@ -155,7 +155,7 @@ init
         {"F_Pacifist",       new object[] {false,  -1, 255, 6}}, // Special offset required
         {"F_FPacifist",      new object[] {false,  -1, 180, 7}},
         {"F_Genocide",       new object[] {false,  -1, 268, 8}},
-        {"F_Rope",           new object[] {false,  13,   0, 0}}
+        {"F_Rope",           new object[] {false,  -1,  13, 9}}
     };
 
     switch(hash)
@@ -240,60 +240,8 @@ update
             var tuple = ((List<Tuple<int, int, int, int>>)vars.areas).FirstOrDefault(t => current.room >= t.Item1 && current.room <= t.Item2);
             if(tuple != null)
             {
-                /* 
-                Pretty much copy-pasted obj_rndenc_Other_4
-                I could have gotten a pointer path to global.kill_area_current, however more pointers = more chances for the paths to break for other people lol
-                Areas array sizes:
-                Dark Ruins = 0-6
-                Snowdin    = 0-7
-                Dunes      = 0-8
-                Steamworks = 0-12 
-                */
-                switch((int)current.room)
-                {
-                    case 16: case 47: case 79: case 164:
-                        vars.killRoom = 0;
-                        break;
-                    case 18: case 48: case 80: case 169:
-                        vars.killRoom = 1;
-                        break;
-                    case 24: case 51: case 81: case 173:
-                        vars.killRoom = 2;
-                        break;
-                    case 20: case 54: case 82: case 176:
-                        vars.killRoom = 3;
-                        break;
-                    case 22: case 61: case 84: case 177:
-                        vars.killRoom = 4;
-                        break;
-                    case 26: case 64: case 87: case 190:
-                        vars.killRoom = 5;
-                        break;
-                    case 27: case 67: case 88: case 195:
-                        vars.killRoom = 6;
-                        break;
-                    case 68: case 95: case 196:
-                        vars.killRoom = 7;
-                        break;
-                    case 113: case 198:
-                        vars.killRoom = 8;
-                        break;
-                    case 199:
-                        vars.killRoom = 9;
-                        break;
-                    case 200:
-                        vars.killRoom = 10;
-                        break;
-                    case 281:
-                        vars.killRoom = 11;
-                        break;
-                    case 202:
-                        vars.killRoom = 12;
-                        break;
-                }
-
-                int room = (int)vars.killRoom, area = tuple.Item3, mKills = tuple.Item4;
-                double rKills = new DeepPointer(0x82FC70, 0x48, 0x10, 0x10E0, 0x0,  0x90, (0x10 * area), 0x90, (0x10 * room)).Deref<double>(game);
+                int area = tuple.Item3, mKills = tuple.Item4;
+                double rKills = new DeepPointer(0x82FC70, 0x48, 0x10, 0x10E0, 0x0,  0x90, (0x10 * area), 0x90, (0x10 * (int)current.killRoom)).Deref<double>(game);
                 double tKills = new DeepPointer(0x82FC70, 0x48, 0x10, 0x10E0, 0x10, 0x90, (0x10 * area)).Deref<double>(game);
                 vars.setText(vars.killTextKey, ((mKills - rKills) + "/" + mKills + " | " + (20 - tKills) + "/20"));
             }
@@ -306,7 +254,7 @@ update
     if(current.room == 255 && !vars.offset.IsRunning && current.pacifistEndScene == 261 && settings["F_Pacifist"]) 
         vars.offset.Start(); // Start the stopwatch after Ceroba faces down
 
-    else if(current.room == 235 && current.neutralEndScene == 4 && current.dialogueOpen == 1 && settings["F_Neutral"]) // Entered the cutscene at the end of Neutral
+    else if(current.room == 235 && current.neutralEndScene == 4 && current.dialogue == 1 && settings["F_Neutral"]) // Entered the cutscene at the end of Neutral
         vars.tempVar = true; // Added for the ending autosplit check because neutralEndScene takes random values in the Flowey battle and makes the split trigger
 }
 
@@ -364,6 +312,10 @@ split
 
             case 8: // F_Genocide
                 pass = (old.genoEndScene == 35 && (current.genoEndScene == 36 || current.genoEndScene == 37)); // Sometimes it goes to 36, sometimes 37 on the same frame
+                break;
+
+            case 9: // F_Rope
+                pass = (old.ropeWaiter == 3 && current.ropeWaiter == 4);
                 break;
         }
 
