@@ -63,10 +63,10 @@ init
 start
 {
     if(current.room == 2)
-        return old.startFade1 == 0.5 && current.startFade1 > 0.5 && current.startFade1 < 0.6;
+        return (old.startFade1 == 0.5 && current.startFade1 > 0.5 && current.startFade1 < 0.6);
 
     else if(current.room == 3)
-        return old.startFade2 == 0.5 && current.startFade2 > 0.5 && current.startFade2 < 0.6;   
+        return (old.startFade2 == 0.5 && current.startFade2 > 0.5 && current.startFade2 < 0.6);   
 }
 
 reset
