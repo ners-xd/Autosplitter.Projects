@@ -39,6 +39,7 @@ init
 
         vars.splits = new Dictionary<string, object[]>()
         {
+            // Object variables in order: done, old room, new room, special condition
             {"D_Flowey",      new object[] {false, 14, 16, 0}},
             {"D_Decibat",     new object[] {false, 24, 25, 0}},
             {"D_WallNumbers", new object[] {false, -1, 15, 1}},
