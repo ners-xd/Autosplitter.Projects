@@ -125,11 +125,13 @@ init
     Func<int, string, IntPtr> scan = (o, sig) =>
     {
         IntPtr ptr = scanner.Scan(new SigScanTarget(o, sig) { OnFound = (p, s, addr) => addr + p.ReadValue<int>(addr) + 0x4 });
-        if(ptr == IntPtr.Zero) throw new NullReferenceException("[Undertale Yellow] Signature scanning failed!");
+        if(ptr == IntPtr.Zero) throw new NullReferenceException("[Undertale Yellow] Signature scanning failed");
         print("[Undertale Yellow] Signature found at " + ptr.ToString("X"));
         return ptr;
     };
-    vars.ptrRoomId = scan(9, "48 8B 05 ?? ?? ?? ?? 89 3D ?? ?? ?? ??");
+
+    IntPtr ptrRoomID = scan(9, "48 8B 05 ?? ?? ?? ?? 89 3D ?? ?? ?? ??");
+    vars.getRoomID = (Action)(() => { current.room = game.ReadValue<int>(ptrRoomID); });
 
     vars.splits = new Dictionary<string, object[]>()
     {
@@ -235,7 +237,7 @@ update
     if(version == "Unknown")
         return false;
 
-    current.room = game.ReadValue<int>((IntPtr)vars.ptrRoomId);
+    vars.getRoomID();
     if(old.room != current.room)
     {
         if((old.room == 2 || old.room == 3) && current.room == 6)
