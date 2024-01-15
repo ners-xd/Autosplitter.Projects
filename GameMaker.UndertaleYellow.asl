@@ -2,9 +2,6 @@
 
 state("Undertale Yellow", "v1.1")
 {
-    // Static
-    int room : 0xA3FCF4;
-
     // Global
     double dialogue : 0x82FC70, 0x48, 0x10, 0x390, 0xA0;  // global.dialogue_open
     double killRoom : 0x82FC70, 0x48, 0x10, 0x390, 0x100; // global.kill_area_current
@@ -123,6 +120,17 @@ init
         using(var fs = File.OpenRead(modules.First().FileName)) 
             hash = string.Concat(md5.ComputeHash(fs).Select(b => b.ToString("X2")));
 
+    var module = modules.First();
+    var scanner = new SignatureScanner(game, module.BaseAddress, module.ModuleMemorySize);
+    Func<int, string, IntPtr> scan = (o, sig) =>
+    {
+        IntPtr ptr = scanner.Scan(new SigScanTarget(o, sig) { OnFound = (p, s, addr) => addr + p.ReadValue<int>(addr) + 0x4 });
+        if(ptr == IntPtr.Zero) throw new NullReferenceException("[Undertale Yellow] Signature scanning failed!");
+        print("[Undertale Yellow] Signature found at " + ptr.ToString("X"));
+        return ptr;
+    };
+    vars.ptrRoomId = scan(9, "48 8B 05 ?? ?? ?? ?? 89 3D ?? ?? ?? ??");
+
     vars.splits = new Dictionary<string, object[]>()
     {
         // Object variables in order: done, old room, new room, special condition
@@ -177,7 +185,7 @@ init
 
             MessageBox.Show
             (
-                "This version of Undertale Yellow is not supported by the autosplitter.\nIf you are playing an older version, update your game.\nIf not, please wait until the autosplitter receives an update.",
+                "This version of Undertale Yellow is not fully supported by the autosplitter (some splits will not trigger).\n\nIf you are playing an older version, update your game.\nIf not, please wait until the autosplitter receives an update.",
                 "LiveSplit | Undertale Yellow", MessageBoxButtons.OK, MessageBoxIcon.Warning
             );
             break;
@@ -227,6 +235,7 @@ update
     if(version == "Unknown")
         return false;
 
+    current.room = game.ReadValue<int>((IntPtr)vars.ptrRoomId);
     if(old.room != current.room)
     {
         if((old.room == 2 || old.room == 3) && current.room == 6)
