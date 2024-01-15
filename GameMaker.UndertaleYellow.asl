@@ -187,7 +187,7 @@ init
 
             MessageBox.Show
             (
-                "This version of Undertale Yellow is not fully supported by the autosplitter (some splits will not trigger).\n\nIf you are playing an older version, update your game.\nIf not, please wait until the autosplitter receives an update.",
+                "This version of Undertale Yellow is not supported by the autosplitter.\nIf you are playing an older version, update your game.\nIf not, please wait until the autosplitter receives an update.",
                 "LiveSplit | Undertale Yellow", MessageBoxButtons.OK, MessageBoxIcon.Warning
             );
             break;
