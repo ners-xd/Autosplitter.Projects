@@ -1,19 +1,33 @@
 // Undertale Yellow Autosplitter by NERS
 
-state("Undertale Yellow", "v1.1")
+state("Undertale Yellow", "v1.0")
 {
     // Global
     double dialogue : 0x82FC70, 0x48, 0x10, 0x390, 0xA0;  // global.dialogue_open
     double killRoom : 0x82FC70, 0x48, 0x10, 0x390, 0x100; // global.kill_area_current
 
     // Self
-    double startFade1       : 0x802990, 0x10,  0xD8,  0x48,  0x10, 0x0,  0x0;                          // obj_mainmenu.sh (room 2)
-    double startFade2       : 0x802990, 0x18,  0xD8,  0x48,  0x10, 0x0,  0x0;                          // obj_mainmenu.sh (room 3)
+    double startFade1       : 0x802990, 0x10,  0xD8,  0x48,  0x10, 0xE0, 0x0;                          // obj_mainmenu.sh (room 2)
+    double startFade2       : 0x802990, 0x18,  0xD8,  0x48,  0x10, 0xE0, 0x0;                          // obj_mainmenu.sh (room 3)
     double neutralEndScene  : 0x802990, 0x758, 0x1A0, 0x760, 0x88, 0x70, 0x38, 0x48, 0x10,  0x60, 0x0; // obj_flowey_battle_final_ending_cutscene.scene
-    double pacifistEndScene : 0x802990, 0x7F8, 0x1E8, 0x3D0, 0x28, 0x38, 0x48, 0x10, 0x60,  0x0;       // obj_newhome_03_cutscene_postfight_spare.scene
+    double pacifistEndScene : 0x802990, 0x7F8, 0x1E8, 0x5F0, 0x20, 0x38, 0x48, 0x10, 0x60,  0x0;       // obj_newhome_03_cutscene_postfight_spare.scene
     double soulSpeed        : 0x802990, 0x5A0, 0x178, 0x88,  0x70, 0x38, 0x48, 0x10, 0x490, 0x0;       // obj_heart_battle_fighting_parent.walk_speed
-    double genoEndScene     : 0x802990, 0x860, 0x1C0, 0x1C0, 0x38, 0x48, 0x10, 0x60, 0x0;              // obj_castle_throne_room_controller.scene
-    double ropeWaiter       : 0x802990, 0x68,  0x1A0, 0x1B0, 0x90, 0x70, 0x38, 0x48, 0x10,  0xE0, 0x0; // obj_darkruins_01_rope.waiter
+    double genoEndScene     : 0x802990, 0x860, 0x1C0, 0x6B0, 0x38, 0x48, 0x10, 0x10, 0x20;             // obj_castle_throne_room_controller.scene
+    double ropeWaiter       : 0x802990, 0x68,  0x1A0, 0x1B0, 0x90, 0x70, 0x38, 0x48, 0x10,  0xC0, 0x0; // obj_darkruins_01_rope.waiter
+}
+
+state("Undertale Yellow", "v1.1")
+{
+    double dialogue : 0x82FC70, 0x48, 0x10, 0x390, 0xA0; 
+    double killRoom : 0x82FC70, 0x48, 0x10, 0x390, 0x100;
+
+    double startFade1       : 0x802990, 0x10,  0xD8,  0x48,  0x10, 0x0,  0x0;                         
+    double startFade2       : 0x802990, 0x18,  0xD8,  0x48,  0x10, 0x0,  0x0;                         
+    double neutralEndScene  : 0x802990, 0x758, 0x1A0, 0x760, 0x88, 0x70, 0x38, 0x48, 0x10,  0x60, 0x0;
+    double pacifistEndScene : 0x802990, 0x7F8, 0x1E8, 0x3D0, 0x28, 0x38, 0x48, 0x10, 0x60,  0x0;      
+    double soulSpeed        : 0x802990, 0x5A0, 0x178, 0x88,  0x70, 0x38, 0x48, 0x10, 0x490, 0x0;      
+    double genoEndScene     : 0x802990, 0x860, 0x1C0, 0x1C0, 0x38, 0x48, 0x10, 0x60, 0x0;             
+    double ropeWaiter       : 0x802990, 0x68,  0x1A0, 0x1B0, 0x90, 0x70, 0x38, 0x48, 0x10,  0xE0, 0x0;
 }
 
 startup
@@ -129,9 +143,7 @@ init
         print("[Undertale Yellow] Signature found at " + ptr.ToString("X"));
         return ptr;
     };
-
-    IntPtr ptrRoomID = scan(9, "48 8B 05 ?? ?? ?? ?? 89 3D ?? ?? ?? ??");
-    vars.getRoomID = (Action)(() => { current.room = game.ReadValue<int>(ptrRoomID); });
+    vars.ptrRoomID = scan(9, "48 8B 05 ?? ?? ?? ?? 89 3D ?? ?? ?? ??");
 
     vars.splits = new Dictionary<string, object[]>()
     {
@@ -170,6 +182,18 @@ init
 
     switch(hash)
     {
+        case "427DEFE07AE67CEC2B3E6CCA52390AA6":
+            version = "v1.0";
+
+            vars.checkItem = (Func<string, bool>)((itemName) => 
+            {
+                for(int i = 1; i <= 8; i++)
+                    if(new DeepPointer(0x82FC70, 0x48, 0x10, 0x390, 0x20, 0x90, (0x10 * i), 0x0, 0x0).DerefString(game, 32) == itemName) return true;
+                
+                return false;
+            });
+            break;
+
         case "2610A3F58304DE377DA56C221FC68D6B":
             version = "v1.1";
 
@@ -187,7 +211,7 @@ init
 
             MessageBox.Show
             (
-                "This version of Undertale Yellow is not fully supported by the autosplitter.\nIf you are playing an older version, update your game.\nIf not, please wait until the autosplitter receives an update.",
+                "This version of Undertale Yellow is currently not fully supported by the autosplitter.\nPlease wait until it receives an update.",
                 "LiveSplit | Undertale Yellow", MessageBoxButtons.OK, MessageBoxIcon.Warning
             );
             break;
@@ -237,7 +261,7 @@ update
     if(version == "Unknown")
         return false;
 
-    vars.getRoomID();
+    current.room = game.ReadValue<int>((IntPtr)vars.ptrRoomID);
     if(old.room != current.room)
     {
         if((old.room == 2 || old.room == 3) && current.room == 6)
