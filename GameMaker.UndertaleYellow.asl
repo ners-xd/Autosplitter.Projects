@@ -167,7 +167,7 @@ init
         {"F_GreenhouseSkip", new object[] {false, 190, 281, 0}},
         {"F_Axis",           new object[] {false, 204, 206, 0}},
         {"F_Flowey1",        new object[] {false, 234, 233, 0}},
-        {"F_Zenith1",        new object[] {false, 180, 260, 0}},
+        {"F_Zenith1",        new object[] {false,  -1, 260, 0}},
         {"F_Zenith2",        new object[] {false, 180, 221, 0}},
         {"F_NewHome",        new object[] {false, 259, 253, 0}},
         {"F_Ceroba1",        new object[] {false, 180, 246, 0}},
