@@ -103,8 +103,8 @@ startup
     vars.areas = new List<Tuple<int, int, int, int>>
     {
         // min room, max room, area, max kills per room
-        Tuple.Create(13,  42,  1, 5), // Dark Ruins
-        Tuple.Create(43,  72,  2, 5), // Snowdin
+        Tuple.Create(13,   42, 1, 5), // Dark Ruins
+        Tuple.Create(43,   72, 2, 5), // Snowdin
         Tuple.Create(77,  140, 3, 3), // Dunes
         Tuple.Create(241, 252, 3, 3), //
         Tuple.Create(276, 276, 3, 3), //
