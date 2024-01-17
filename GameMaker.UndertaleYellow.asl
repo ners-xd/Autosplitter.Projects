@@ -7,8 +7,8 @@ state("Undertale Yellow", "v1.0")
     double killRoom : 0x82FC70, 0x48, 0x10, 0x390, 0x100; // global.kill_area_current
 
     // Self
-    double startFade1       : 0x802990, 0x10,  0xD8,  0x48,  0x10, 0xE0, 0x0;                          // obj_mainmenu.sh (room 2)
-    double startFade2       : 0x802990, 0x18,  0xD8,  0x48,  0x10, 0xE0, 0x0;                          // obj_mainmenu.sh (room 3)
+    double startWaiter1     : 0x802990, 0x10,  0xD8,  0x48,  0x10, 0xC0, 0x0;                          // obj_mainmenu.waiter (room 2)
+    double startWaiter2     : 0x802990, 0x18,  0xD8,  0x48,  0x10, 0xC0, 0x0;                          // obj_mainmenu.waiter (room 3)
     double neutralEndScene  : 0x802990, 0x758, 0x1A0, 0x760, 0x88, 0x70, 0x38, 0x48, 0x10,  0x60, 0x0; // obj_flowey_battle_final_ending_cutscene.scene
     double pacifistEndScene : 0x802990, 0x7F8, 0x1E8, 0x5F0, 0x20, 0x38, 0x48, 0x10, 0x60,  0x0;       // obj_newhome_03_cutscene_postfight_spare.scene
     double soulSpeed        : 0x802990, 0x5A0, 0x178, 0x88,  0x70, 0x38, 0x48, 0x10, 0x490, 0x0;       // obj_heart_battle_fighting_parent.walk_speed
@@ -21,8 +21,8 @@ state("Undertale Yellow", "v1.1")
     double dialogue : 0x82FC70, 0x48, 0x10, 0x390, 0xA0; 
     double killRoom : 0x82FC70, 0x48, 0x10, 0x390, 0x100;
 
-    double startFade1       : 0x802990, 0x10,  0xD8,  0x48,  0x10, 0x0,  0x0;                         
-    double startFade2       : 0x802990, 0x18,  0xD8,  0x48,  0x10, 0x0,  0x0;                         
+    double startWaiter1     : 0x802990, 0x10,  0xD8,  0x48,  0x10, 0xE0,  0x0;                         
+    double startWaiter2     : 0x802990, 0x18,  0xD8,  0x48,  0x10, 0xE0,  0x0;                         
     double neutralEndScene  : 0x802990, 0x758, 0x1A0, 0x760, 0x88, 0x70, 0x38, 0x48, 0x10,  0x60, 0x0;
     double pacifistEndScene : 0x802990, 0x7F8, 0x1E8, 0x100, 0x20, 0x38, 0x48, 0x10, 0x60,  0x0;      
     double soulSpeed        : 0x802990, 0x5A0, 0x178, 0x88,  0x70, 0x38, 0x48, 0x10, 0x490, 0x0;      
@@ -32,13 +32,14 @@ state("Undertale Yellow", "v1.1")
 
 startup
 {
-    refreshRate   = 30;
-    vars.tempVar  = false;
-    vars.started  = false;
-    vars.offset   = new Stopwatch();
+    refreshRate  = 30;
+    vars.tempVar = false;
+    vars.offset  = new Stopwatch();
 
     settings.Add("F_KillCount", false, "Show kill count");
     settings.SetToolTip("F_KillCount", "A new row will appear on your layout with the current room and area kills.");
+
+    settings.Add("F_StartOnContinue", false, "Start/Reset the timer when loading a save file");
 
     settings.Add("F_Ruins",          false, "Exit Ruins");
     settings.Add("F_FiveLights",     false, "Exit the five lights puzzle room");
@@ -223,29 +224,31 @@ init
 start
 {
     if(current.room == 2)
-        return (current.startFade1 > 0.5 && current.startFade1 < 0.6);
+        return (old.startWaiter1 == 0 && current.startWaiter1 == 1);
 
     else if(current.room == 3)
-        return (current.startFade2 > 0.5 && current.startFade2 < 0.6);   
+        return (old.startWaiter2 == 0 && current.startWaiter2 == 1);
+
+    else
+        return (old.room <= 3 && current.room >= 6 && old.startWaiter2 == 0 && settings["F_StartOnContinue"]);
 }
 
 reset
 {
-    if(vars.started == false)
-        return false; // Fix for an issue where the timer would reset immediately after starting
-
     if(current.room == 2)
-        return (current.startFade1 > 0.5 && current.startFade1 < 0.6);
+        return (old.startWaiter1 == 0 && current.startWaiter1 == 1);
 
     else if(current.room == 3)
-        return (current.startFade2 > 0.5 && current.startFade2 < 0.6);       
+        return (old.startWaiter2 == 0 && current.startWaiter2 == 1);
+
+    else
+        return (old.room <= 3 && current.room >= 6 && old.startWaiter2 == 0 && settings["F_StartOnContinue"]);       
 }
 
 onReset
 {
     vars.offset.Reset();
     vars.tempVar = false;
-    vars.started = false;
 
     if(game != null)
     {
@@ -264,9 +267,6 @@ update
     current.room = game.ReadValue<int>((IntPtr)vars.ptrRoomID);
     if(old.room != current.room)
     {
-        if((old.room == 2 || old.room == 3) && current.room == 6)
-            vars.started = true;
-
         if(old.room == 269 && current.room == 180 && settings["F_FPacifist"]) // Entered the Flawed Pacifist Asgore battle
             vars.tempVar = true; // Added for the ending autosplit check because room 180 is used for every battle, so this is mainly just to be safe 
 
