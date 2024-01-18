@@ -11,7 +11,7 @@ state("Undertale Yellow", "v1.0")
     double startWaiter2     : 0x802990, 0x18,  0xD8,  0x48,  0x10, 0xC0, 0x0;                          // obj_mainmenu.waiter (room 3)
     double neutralEndScene  : 0x802990, 0x758, 0x1A0, 0x760, 0x88, 0x70, 0x38, 0x48, 0x10,  0x60, 0x0; // obj_flowey_battle_final_ending_cutscene.scene
     double pacifistEndScene : 0x802990, 0x7F8, 0x1E8, 0x5F0, 0x20, 0x38, 0x48, 0x10, 0x60,  0x0;       // obj_newhome_03_cutscene_postfight_spare.scene
-    double soulSpeed        : 0x802990, 0x5A0, 0x178, 0x88,  0x70, 0x38, 0x48, 0x10, 0x490, 0x0;       // obj_heart_battle_fighting_parent.walk_speed
+    double soulSpeed        : 0x802990, 0x5A0, 0x178, 0x88,  0x78, 0x38, 0x48, 0x10, 0x490, 0x0;       // obj_heart_battle_fighting_parent.walk_speed
     double genoEndScene     : 0x802990, 0x860, 0x1C0, 0x6B0, 0x38, 0x48, 0x10, 0x10, 0x20;             // obj_castle_throne_room_controller.scene
     double ropeWaiter       : 0x802990, 0x68,  0x1A0, 0x1B0, 0x90, 0x70, 0x38, 0x48, 0x10,  0xC0, 0x0; // obj_darkruins_01_rope.waiter
 }
@@ -25,7 +25,7 @@ state("Undertale Yellow", "v1.1")
     double startWaiter2     : 0x802990, 0x18,  0xD8,  0x48,  0x10, 0xE0, 0x0;                         
     double neutralEndScene  : 0x802990, 0x758, 0x1A0, 0x760, 0x88, 0x70, 0x38, 0x48, 0x10,  0x60, 0x0;
     double pacifistEndScene : 0x802990, 0x7F8, 0x1E8, 0x100, 0x20, 0x38, 0x48, 0x10, 0x60,  0x0;      
-    double soulSpeed        : 0x802990, 0x5A0, 0x178, 0x88,  0x70, 0x38, 0x48, 0x10, 0x490, 0x0;      
+    double soulSpeed        : 0x802990, 0x5A0, 0x178, 0x88,  0x78, 0x38, 0x48, 0x10, 0x490, 0x0;      
     double genoEndScene     : 0x802990, 0x860, 0x1C0, 0x1C0, 0x38, 0x48, 0x10, 0x60, 0x0;             
     double ropeWaiter       : 0x802990, 0x68,  0x1A0, 0x1B0, 0x90, 0x70, 0x38, 0x48, 0x10,  0xE0, 0x0;
 }
@@ -181,6 +181,14 @@ init
         {"F_Rope",           new object[] {false,  -1,  13, 9}}
     };
 
+    vars.resetSplits = (Action)(() =>
+    {
+        foreach(string split in vars.splits.Keys) 
+            vars.splits[split][0] = false;
+        
+        print("[Undertale Yellow] All splits have been reset to initial state");
+    });
+
     switch(hash)
     {
         case "427DEFE07AE67CEC2B3E6CCA52390AA6":
@@ -251,12 +259,7 @@ onReset
     vars.tempVar = false;
 
     if(game != null)
-    {
-        foreach(string split in vars.splits.Keys) 
-            vars.splits[split][0] = false;
-        
-        print("[Undertale Yellow] All splits have been reset to initial state");
-    }
+        vars.resetSplits();
 }
 
 update
@@ -330,27 +333,44 @@ split
                 break;
 
             case 5: // F_Neutral
-                pass = (vars.tempVar == true && old.neutralEndScene == 5 && current.neutralEndScene == 6);
+                if(vars.tempVar == true && old.neutralEndScene == 5 && current.neutralEndScene == 6)
+                {
+                    pass = true;
+                    vars.resetSplits();
+                }
                 break;
 
             case 6: // F_Pacifist
                 if(vars.offset.ElapsedMilliseconds >= 2250)
                 {
-                    vars.offset.Reset();
                     pass = true;
+                    vars.resetSplits();
+                    vars.offset.Reset();
                 }
                 break;
 
             case 7: // F_FPacifist
-                pass = (vars.tempVar == true && old.soulSpeed == 1 && current.soulSpeed == 0);
+                if(vars.tempVar == true && old.soulSpeed == 1 && current.soulSpeed == 0)
+                {
+                    pass = true;
+                    vars.resetSplits();
+                }
                 break;
 
             case 8: // F_Genocide
-                pass = (old.genoEndScene == 35 && (current.genoEndScene == 36 || current.genoEndScene == 37)); // Sometimes it goes to 36, sometimes 37 on the same frame
+                if(old.genoEndScene == 35 && (current.genoEndScene == 36 || current.genoEndScene == 37)) // Sometimes it goes to 36, sometimes 37 on the same frame
+                {
+                    pass = true;
+                    vars.resetSplits();
+                }
                 break;
 
             case 9: // F_Rope
-                pass = (old.ropeWaiter == 3 && current.ropeWaiter == 4);
+                if(old.ropeWaiter == 3 && current.ropeWaiter == 4)
+                {
+                    pass = true;
+                    vars.resetSplits(); // Reset splits after every ending because of All Endings where some splits need to be triggered multiple times
+                }
                 break;
         }
 
