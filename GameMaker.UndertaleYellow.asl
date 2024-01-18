@@ -181,14 +181,6 @@ init
         {"F_Rope",           new object[] {false,  -1,  13, 9}}
     };
 
-    vars.resetSplits = (Action)(() =>
-    {
-        foreach(string split in vars.splits.Keys) 
-            vars.splits[split][0] = false;
-        
-        print("[Undertale Yellow] All splits have been reset to initial state");
-    });
-
     switch(hash)
     {
         case "427DEFE07AE67CEC2B3E6CCA52390AA6":
@@ -259,7 +251,12 @@ onReset
     vars.tempVar = false;
 
     if(game != null)
-        vars.resetSplits();
+    {
+        foreach(string split in vars.splits.Keys) 
+            vars.splits[split][0] = false;
+        
+        print("[Undertale Yellow] All splits have been reset to initial state");
+    }
 }
 
 update
@@ -333,44 +330,27 @@ split
                 break;
 
             case 5: // F_Neutral
-                if(vars.tempVar == true && old.neutralEndScene == 5 && current.neutralEndScene == 6)
-                {
-                    pass = true;
-                    vars.resetSplits();
-                }
+                pass = (vars.tempVar == true && old.neutralEndScene == 5 && current.neutralEndScene == 6);
                 break;
 
             case 6: // F_Pacifist
                 if(vars.offset.ElapsedMilliseconds >= 2250)
                 {
-                    pass = true;
-                    vars.resetSplits();
                     vars.offset.Reset();
+                    pass = true;
                 }
                 break;
 
             case 7: // F_FPacifist
-                if(vars.tempVar == true && old.soulSpeed == 1 && current.soulSpeed == 0)
-                {
-                    pass = true;
-                    vars.resetSplits();
-                }
+                pass = (vars.tempVar == true && old.soulSpeed == 1 && current.soulSpeed == 0);
                 break;
 
             case 8: // F_Genocide
-                if(old.genoEndScene == 35 && (current.genoEndScene == 36 || current.genoEndScene == 37)) // Sometimes it goes to 36, sometimes 37 on the same frame
-                {
-                    pass = true;
-                    vars.resetSplits();
-                }
+                pass = (old.genoEndScene == 35 && (current.genoEndScene == 36 || current.genoEndScene == 37)); // Sometimes it goes to 36, sometimes 37 on the same frame
                 break;
 
             case 9: // F_Rope
-                if(old.ropeWaiter == 3 && current.ropeWaiter == 4)
-                {
-                    pass = true;
-                    vars.resetSplits(); // Reset splits after every ending because of All Endings where some splits need to be triggered multiple times
-                }
+                pass = (old.ropeWaiter == 3 && current.ropeWaiter == 4);
                 break;
         }
 
