@@ -52,9 +52,9 @@ startup
     settings.Add("F_EnterMartlet",   false, "Enter Martlet room");
     settings.Add("F_ExitMartlet",    false, "Exit Martlet room");
     settings.Add("F_ElBailador",     false, "Exit El Bailador room");
-    settings.Add("F_GoldenCactus",   false, "Obtain Golden Cactus");
     settings.Add("F_FForCeroba",     false, "End Feisty Four / Genocide Ceroba battle");
     settings.Add("F_Starlo",         false, "Exit Starlo room");
+    settings.Add("F_GoldenCactus",   false, "Obtain Golden Cactus");
     settings.Add("F_GoldenBandana",  false, "Obtain Golden Bandana");
     settings.Add("F_Guardener",      false, "Exit Guardener room");
     settings.Add("F_GreenhouseSkip", false, "Greenhouse Skip");
@@ -160,9 +160,9 @@ init
         {"F_EnterMartlet",   new object[] {false,  70,  71, 0}},
         {"F_ExitMartlet",    new object[] {false,  71,  72, 0}},
         {"F_ElBailador",     new object[] {false, 108, 109, 0}},
-        {"F_GoldenCactus",   new object[] {false,  -1,  83, 3}},
         {"F_FForCeroba",     new object[] {false, 180, 127, 0}},
         {"F_Starlo",         new object[] {false, 135, 136, 0}},
+        {"F_GoldenCactus",   new object[] {false,  -1,  83, 3}},
         {"F_GoldenBandana",  new object[] {false,  -1,  -1, 4}}, // Can be obtained in different rooms depending on the route
         {"F_Guardener",      new object[] {false, 191, 190, 0}},
         {"F_GreenhouseSkip", new object[] {false, 190, 281, 0}},
