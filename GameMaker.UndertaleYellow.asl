@@ -4,7 +4,6 @@ state("Undertale Yellow", "v1.0")
 {
     // Global
     double dialogue : 0x82FC70, 0x48, 0x10, 0x390, 0xA0;  // global.dialogue_open
-    double killRoom : 0x82FC70, 0x48, 0x10, 0x390, 0x100; // global.kill_area_current
 
     // Self
     double startWaiter1     : 0x802990, 0x10,  0xD8,  0x48,  0x10, 0xC0, 0x0;                          // obj_mainmenu.waiter (room 2)
@@ -19,7 +18,6 @@ state("Undertale Yellow", "v1.0")
 state("Undertale Yellow", "v1.1")
 {
     double dialogue : 0x82FC70, 0x48, 0x10, 0x390, 0xA0; 
-    double killRoom : 0x82FC70, 0x48, 0x10, 0x390, 0x100;
 
     double startWaiter1     : 0x802990, 0x10,  0xD8,  0x48,  0x10, 0xE0, 0x0;                         
     double startWaiter2     : 0x802990, 0x18,  0xD8,  0x48,  0x10, 0xE0, 0x0;                         
@@ -146,6 +144,7 @@ init
     };
     vars.ptrRoomID = scan(9, "48 8B 05 ?? ?? ?? ?? 89 3D ?? ?? ?? ??");
 
+    vars.killRoom = 0;
     vars.splits = new Dictionary<string, object[]>()
     {
         // Object variables in order: done, old room, new room, special condition
@@ -275,8 +274,60 @@ update
             var tuple = ((List<Tuple<int, int, int, int>>)vars.areas).FirstOrDefault(t => current.room >= t.Item1 && current.room <= t.Item2);
             if(tuple != null)
             {
+                /* 
+                Pretty much copy-pasted obj_rndenc_Other_4
+                I could have gotten a pointer path to global.kill_area_current, however any that I tried would occassionally break during specific situations
+                Areas array sizes:
+                Dark Ruins = 0-6
+                Snowdin    = 0-7
+                Dunes      = 0-8
+                Steamworks = 0-12 
+                */
+                switch((int)current.room)
+                {
+                    case 16: case 47: case 79: case 164:
+                        vars.killRoom = 0;
+                        break;
+                    case 18: case 48: case 80: case 169:
+                        vars.killRoom = 1;
+                        break;
+                    case 24: case 51: case 81: case 173:
+                        vars.killRoom = 2;
+                        break;
+                    case 20: case 54: case 82: case 176:
+                        vars.killRoom = 3;
+                        break;
+                    case 22: case 61: case 84: case 177:
+                        vars.killRoom = 4;
+                        break;
+                    case 26: case 64: case 87: case 190:
+                        vars.killRoom = 5;
+                        break;
+                    case 27: case 67: case 88: case 195:
+                        vars.killRoom = 6;
+                        break;
+                    case 68: case 95: case 196:
+                        vars.killRoom = 7;
+                        break;
+                    case 113: case 198:
+                        vars.killRoom = 8;
+                        break;
+                    case 199:
+                        vars.killRoom = 9;
+                        break;
+                    case 200:
+                        vars.killRoom = 10;
+                        break;
+                    case 281:
+                        vars.killRoom = 11;
+                        break;
+                    case 202:
+                        vars.killRoom = 12;
+                        break;
+                }
+
                 int area = tuple.Item3, mKills = tuple.Item4;
-                double rKills = new DeepPointer(0x82FC70, 0x48, 0x10, 0x10E0, 0x0,  0x90, (0x10 * area), 0x90, (0x10 * (int)current.killRoom)).Deref<double>(game);
+                double rKills = new DeepPointer(0x82FC70, 0x48, 0x10, 0x10E0, 0x0,  0x90, (0x10 * area), 0x90, (0x10 * (int)vars.killRoom)).Deref<double>(game);
                 double tKills = new DeepPointer(0x82FC70, 0x48, 0x10, 0x10E0, 0x10, 0x90, (0x10 * area)).Deref<double>(game);
                 vars.setText(vars.killTextKey, ((mKills - rKills) + "/" + mKills + " | " + (20 - tKills) + "/20"));
             }
