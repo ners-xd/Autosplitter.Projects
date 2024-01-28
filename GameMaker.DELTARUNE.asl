@@ -141,7 +141,7 @@ startup
     settings.Add("Ch1_AB", false, "All Bosses Splits");
     settings.CurrentDefaultParent = "Ch1_AB";
      settings.Add("Ch1_Jevil_EnterRoom", false, "Enter Jevil room");
-     settings.Add("Ch1_Jevil_EndBattle", false, "End Jevil battle");
+     settings.Add("Ch1_Jevil_EndBattle", false, "End Jevil battle (may not work on Demo sometimes)");
      settings.Add("Ch1_Jevil_LeaveRoom", false, "Exit Jevil room");
     settings.CurrentDefaultParent = null;
     // -------------------------------------------------------------------------------------------
