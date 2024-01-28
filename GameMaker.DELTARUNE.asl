@@ -239,6 +239,16 @@ init
             else
                 version = "Demo v1.08 / v1.09";
             break;
+
+        default:
+            version = "Unknown";
+
+            MessageBox.Show
+            (
+                "This version of DELTARUNE is not supported by the autosplitter.\nIf you are playing an older version, update your game.\nIf not, please wait until the autosplitter receives an update.",
+                "LiveSplit | DELTARUNE", MessageBoxButtons.OK, MessageBoxIcon.Warning
+            );
+            break;
     }
     print("[DELTARUNE] Detected game version: " + version + " (" + mms + ")");
 
@@ -296,7 +306,7 @@ init
         var message = MessageBox.Show
         (
             "LiveSplit uses Game Time for this game. Would you like to change the current timing method to Game Time instead of Real Time?",
-            "LiveSplit | DELTARUNE All Chapters", MessageBoxButtons.YesNo, MessageBoxIcon.Question
+            "LiveSplit | DELTARUNE", MessageBoxButtons.YesNo, MessageBoxIcon.Question
         );
 
         if(message == DialogResult.Yes)
@@ -306,6 +316,9 @@ init
 
 update
 {
+    if(version == "Unknown")
+        return false;
+
     current.room = game.ReadValue<int>((IntPtr)vars.ptrRoomId);
     current.roomName = vars.getRoomName();
 
