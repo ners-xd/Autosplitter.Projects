@@ -129,7 +129,7 @@ startup
     settings.Add("Ch1_Fields_Exit",           false, "Exit Fields");
     settings.Add("Ch1_Checkerboard_Exit",     false, "Exit Checkerboard");
     settings.Add("Ch1_BakeSale_Enter",        false, "Enter Bake Sale");
-    settings.Add("Ch1_Susie&Lancer_Exit",     false, "Exit Forest (Susie & Lancer room)");
+    settings.Add("Ch1_SusieLancer_Exit",      false, "Exit Forest (Susie & Lancer room)");
     settings.Add("Ch1_Escape_Cell",           false, "Exit Prison Cell");
     settings.Add("Ch1_KRound2_Exit",          false, "Exit K. Round 2 room");
     settings.Add("Ch1_Throne_Exit",           false, "Exit Throne Room");
@@ -153,15 +153,18 @@ startup
     settings.Add("Ch2_ArcadeGameLeave",  false, "Arcade Game (room change)");
     settings.Add("Ch2_DJFight",          false, "End DJ battle");
     settings.Add("Ch2_DJShopRoom",       false, "Enter DJ Shop room");
+    settings.Add("Ch2_Ragger2",          false, "Exit Ragger2 room");
     settings.Add("Ch2_CyberFields_Exit", false, "Exit Cyber Fields");
     settings.Add("Ch2_TrashZoneWarp",    false, "Trash Zone Warp");
     settings.Add("Ch2_MansionWarp",      false, "Mansion Warp");
     settings.Add("Ch2_Mouse2Puzzle",     false, "Exit Mouse 2 Puzzle room");
-    settings.Add("Ch2_Berdly_EndFight",  false, "End Berdly 2 battle");
     settings.Add("Ch2_Berdly_Leave",     false, "Exit Berdly 2 room (Main Route)");
     settings.Add("Ch2_SpamtonLeave",     false, "Exit Spamton room");
     settings.Add("Ch2_CyberCity_Exit",   false, "Exit Cyber City (captured by Queen)");
-    settings.Add("Ch2_Mansion_Entrance", false, "Enter Mansion (entrance save point room)");
+    settings.Add("Ch2_Mansion_Entrance", false, "Enter Mansion Entrance save point room");
+    settings.Add("Ch2_Mansion_Exit",     false, "Exit Mansion Entrance save point room");
+    settings.Add("Ch2_TasqueManager",    false, "Exit Tasque Manager room");
+    settings.Add("Ch2_Mauswheel",        false, "Exit Mauswheel room");
     settings.Add("Ch2_AcidLake_Enter",   false, "Enter Acid Lake");
     settings.Add("Ch2_AcidLake_Exit",    false, "Exit Acid Lake");
     settings.Add("Ch2_Queen",            false, "Exit Queen room");
@@ -263,7 +266,7 @@ init
         {"Ch1_Fields_Exit",           new object[] {false, "room_field4_ch1",             "room_field_checkers4_ch1",      -1, -1, 0}},
         {"Ch1_Checkerboard_Exit",     new object[] {false, "room_field_checkersboss_ch1", "room_forest_savepoint1_ch1",    -1, -1, 0}},
         {"Ch1_BakeSale_Enter",        new object[] {false, "room_forest_area3_ch1",       "room_forest_savepoint2_ch1",    -1, -1, 0}},
-        {"Ch1_Susie&Lancer_Exit",     new object[] {false, "room_forest_fightsusie_ch1",  "room_forest_afterthrash2_ch1",  -1, -1, 0}},
+        {"Ch1_SusieLancer_Exit",      new object[] {false, "room_forest_fightsusie_ch1",  "room_forest_afterthrash2_ch1",  -1, -1, 0}},
         {"Ch1_Escape_Cell",           new object[] {false, "room_cc_prison_cells_ch1",    "room_cc_prisonlancer_ch1",      -1, -1, 3}},
         {"Ch1_Jevil_EnterRoom",       new object[] {false, "room_cc_prison_prejoker_ch1", "room_cc_joker_ch1",             -1, -1, 0}},
         {"Ch1_Jevil_EndBattle",       new object[] {false, null,                          "room_cc_joker_ch1",             -1, -1, 4}},
@@ -273,32 +276,35 @@ init
         {"Ch1_PreKing_Exit",          new object[] {false, "room_cc_preroof_ch1",         "room_cc_kingbattle_ch1",        -1, -1, 0}},
         {"Ch1_King_EndBattle",        new object[] {false, null,                          "room_cc_kingbattle_ch1",        -1, -1, 5}},
 
-        {"Ch2_Library",            new object[] {false, "room_library_ch2",                            "room_dw_cyber_intro_1_ch2",            -1, -1,  0}},
-        {"Ch2_ArcadeGameText",     new object[] {false, null,                                          "room_dw_cyber_queen_boxing_ch2",       -1, -1,  6}},
-        {"Ch2_ArcadeGameLeave",    new object[] {false, "room_dw_cyber_queen_boxing_ch2",              "room_dw_cyber_musical_door_ch2",       -1, -1,  0}},
-        {"Ch2_DJFight",            new object[] {false, null,                                          "room_dw_cyber_music_final_ch2",         1,  0,  0}},
-        {"Ch2_DJShopRoom",         new object[] {false, "room_dw_cyber_musical_door_ch2",              "room_dw_cyber_musical_shop_ch2",       -1, -1,  0}},
-        {"Ch2_CyberFields_Exit",   new object[] {false, null,                                          "room_dw_cyber_rollercoaster_ch2",      -1, -1,  7}},
-        {"Ch2_TrashZoneWarp",      new object[] {false, "room_dw_cyber_musical_door_ch2",              "room_dw_city_intro_ch2",               -1, -1,  0}},
-        {"Ch2_MansionWarp",        new object[] {false, "room_dw_mansion_entrance_ch2",                "room_dw_mansion_fire_paintings_ch2",   -1, -1,  3}},
-        {"Ch2_FreezeRing",         new object[] {false, null,                                          "room_dw_city_big_2_ch2",               -1, -1,  8}},
-        {"Ch2_Mouse2Puzzle",       new object[] {false, "room_dw_city_mice2_ch2",                      "room_dw_city_cheesemaze_ch2",          -1, -1,  0}},
-        {"Ch2_SGBerdly",           new object[] {false, null,                                          "room_dw_city_berdly_ch2",              -1, -1,  9}},
-        {"Ch2_SGBerdly_LeaveRoom", new object[] {false, "room_dw_city_berdly_ch2",                     "room_dw_city_poppup_ch2",              -1, -1,  0}},
-        {"Ch2_Berdly_Leave",       new object[] {false, "room_dw_city_berdly_ch2",                     "room_dw_city_traffic_4_ch2",           -1, -1,  0}},
-        {"Ch2_Berdly_EndFight",    new object[] {false, null,                                          "room_dw_city_berdly_ch2",               1,  0,  0}},
-        {"Ch2_SpamtonLeave",       new object[] {false, "room_dw_city_spamton_alley_ch2",              "room_dw_city_traffic_4_ch2",           -1, -1,  0}},
-        {"Ch2_CyberCity_Exit",     new object[] {false, "room_dw_city_mansion_front_ch2",              "room_dw_mansion_krisroom_ch2",         -1, -1,  0}},
-        {"Ch2_Mansion_Entrance",   new object[] {false, "room_dw_mansion_dining_a_ch2",                "room_dw_mansion_entrance_ch2",         -1, -1,  0}},
-        {"Ch2_Disk_Loaded",        new object[] {false, null,                                          "room_shop_ch2_spamton_ch2",            -1, -1, 10}},
-        {"Ch2_SpamtonNEO_End",     new object[] {false, "room_dw_mansion_b_east_ch2",                  "room_dw_mansion_b_east_a_ch2",         -1, -1,  0}},
-        {"Ch2_AcidLake_Enter",     new object[] {false, "room_dw_mansion_east_3f_ch2",                 "room_dw_mansion_acid_tunnel_ch2",      -1, -1,  0}},
-        {"Ch2_AcidLake_Exit",      new object[] {false, "room_dw_mansion_acid_tunnel_loop_rouxls_ch2", "room_dw_mansion_acid_tunnel_exit_ch2", -1, -1,  0}},
-        {"Ch2_Queen",              new object[] {false, "room_dw_mansion_east_4f_d_ch2",               "room_dw_mansion_top_ch2",              -1, -1,  0}},
-        {"Ch2_GigaQueen",          new object[] {false, "room_dw_mansion_top_ch2",                     "room_dw_mansion_top_post_ch2",         -1, -1,  0}},
-        {"Ch2_Fountain_Enter",     new object[] {false, null,                                          "room_dw_mansion_fountain_ch2",         -1, -1,  0}},
-        {"Ch2_SGSpamtonNEO_End",   new object[] {false, null,                                          "room_dw_mansion_fountain_ch2",          1,  0,  0}},
-        {"Ch2_Fountain_Exit",      new object[] {false, "room_dw_mansion_fountain_ch2",                "room_lw_computer_lab_ch2",             -1, -1,  0}}
+        {"Ch2_Library",            new object[] {false, "room_library_ch2",                            "room_dw_cyber_intro_1_ch2",                   -1, -1,  0}},
+        {"Ch2_ArcadeGameText",     new object[] {false, null,                                          "room_dw_cyber_queen_boxing_ch2",              -1, -1,  6}},
+        {"Ch2_ArcadeGameLeave",    new object[] {false, "room_dw_cyber_queen_boxing_ch2",              "room_dw_cyber_musical_door_ch2",              -1, -1,  0}},
+        {"Ch2_DJFight",            new object[] {false, null,                                          "room_dw_cyber_music_final_ch2",                1,  0,  0}},
+        {"Ch2_DJShopRoom",         new object[] {false, "room_dw_cyber_musical_door_ch2",              "room_dw_cyber_musical_shop_ch2",              -1, -1,  0}},
+        {"Ch2_Ragger2",            new object[] {false, "room_dw_cyber_teacup_final_ch2",              "room_dw_cyber_rollercoaster_ch2",             -1, -1,  0}},
+        {"Ch2_CyberFields_Exit",   new object[] {false, null,                                          "room_dw_cyber_rollercoaster_ch2",             -1, -1,  7}},
+        {"Ch2_TrashZoneWarp",      new object[] {false, "room_dw_cyber_musical_door_ch2",              "room_dw_city_intro_ch2",                      -1, -1,  0}},
+        {"Ch2_MansionWarp",        new object[] {false, "room_dw_cyber_musical_door_ch2",              "room_dw_mansion_entrance_ch2",                -1, -1,  0}},
+        {"Ch2_FreezeRing",         new object[] {false, null,                                          "room_dw_city_big_2_ch2",                      -1, -1,  8}},
+        {"Ch2_Mouse2Puzzle",       new object[] {false, "room_dw_city_mice2_ch2",                      "room_dw_city_cheesemaze_ch2",                 -1, -1,  0}},
+        {"Ch2_SGBerdly",           new object[] {false, null,                                          "room_dw_city_berdly_ch2",                     -1, -1,  9}},
+        {"Ch2_SGBerdly_LeaveRoom", new object[] {false, "room_dw_city_berdly_ch2",                     "room_dw_city_poppup_ch2",                     -1, -1,  0}},
+        {"Ch2_Berdly_Leave",       new object[] {false, "room_dw_city_berdly_ch2",                     "room_dw_city_traffic_4_ch2",                  -1, -1,  0}},
+        {"Ch2_SpamtonLeave",       new object[] {false, "room_dw_city_spamton_alley_ch2",              "room_dw_city_traffic_4_ch2",                  -1, -1,  0}},
+        {"Ch2_CyberCity_Exit",     new object[] {false, "room_dw_city_mansion_front_ch2",              "room_dw_mansion_krisroom_ch2",                -1, -1,  0}},
+        {"Ch2_Mansion_Entrance",   new object[] {false, "room_dw_mansion_dining_a_ch2",                "room_dw_mansion_entrance_ch2",                -1, -1,  0}},
+        {"Ch2_Mansion_Exit",       new object[] {false, "room_dw_mansion_entrance_ch2",                "room_dw_mansion_fire_paintings_ch2",          -1, -1,  0}},
+        {"Ch2_TasqueManager",      new object[] {false, "room_dw_mansion_tasquePaintings_ch2",         "room_dw_mansion_traffic_ch2",                 -1, -1,  0}},
+        {"Ch2_Mauswheel",          new object[] {false, "room_dw_mansion_kitchen_ch2",                 "room_dw_mansion_east_2f_transformed_new_ch2", -1, -1,  0}},
+        {"Ch2_Disk_Loaded",        new object[] {false, null,                                          "room_shop_ch2_spamton_ch2",                   -1, -1, 10}},
+        {"Ch2_SpamtonNEO_End",     new object[] {false, "room_dw_mansion_b_east_ch2",                  "room_dw_mansion_b_east_a_ch2",                -1, -1,  0}},
+        {"Ch2_AcidLake_Enter",     new object[] {false, "room_dw_mansion_east_3f_ch2",                 "room_dw_mansion_acid_tunnel_ch2",             -1, -1,  0}},
+        {"Ch2_AcidLake_Exit",      new object[] {false, "room_dw_mansion_acid_tunnel_loop_rouxls_ch2", "room_dw_mansion_acid_tunnel_exit_ch2",        -1, -1,  0}},
+        {"Ch2_Queen",              new object[] {false, "room_dw_mansion_east_4f_d_ch2",               "room_dw_mansion_top_ch2",                     -1, -1,  0}},
+        {"Ch2_GigaQueen",          new object[] {false, "room_dw_mansion_top_ch2",                     "room_dw_mansion_top_post_ch2",                -1, -1,  0}},
+        {"Ch2_Fountain_Enter",     new object[] {false, null,                                          "room_dw_mansion_fountain_ch2",                -1, -1,  0}},
+        {"Ch2_SGSpamtonNEO_End",   new object[] {false, null,                                          "room_dw_mansion_fountain_ch2",                 1,  0,  0}},
+        {"Ch2_Fountain_Exit",      new object[] {false, "room_dw_mansion_fountain_ch2",                "room_lw_computer_lab_ch2",                    -1, -1,  0}}
     };
 
     if(version != "SURVEY_PROGRAM" && timer.CurrentPhase == TimerPhase.NotRunning && timer.CurrentTimingMethod == TimingMethod.RealTime && (settings["AC_PauseTimer"] || settings["AC_PauseTimerOST"]))
@@ -376,7 +382,6 @@ update
         print("[DELTARUNE] Room: " + old.room + " (" + old.roomName + ")" + " -> " + current.room + " (" + current.roomName + ")");
 
         if(old.roomName == "room_cc_prison_cells_ch1" && current.roomName == "room_cc_prisonlancer_ch1" && settings["Ch1_Escape_Cell"]) vars.tempVar ++;
-        else if(old.roomName == "room_dw_cyber_musical_door_ch2" && current.roomName == "room_dw_mansion_entrance_ch2" && settings["Ch2_MansionWarp"]) vars.tempVar = 2;
 
         switch(version)
         {
@@ -477,11 +482,11 @@ split
                 pass = (old.doorCloseCon == 7 && current.doorCloseCon == 21);
                 break;
 
-            case 3: // Ch1_Escape_Cell, Ch2_MansionWarp
+            case 3: // Ch1_Escape_Cell
                 if(vars.tempVar == 2)
                 {
-                    pass = true;
                     vars.tempVar = 0;
+                    pass = true;
                 }
                 break;
 
