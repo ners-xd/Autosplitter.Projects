@@ -136,7 +136,7 @@ startup
     settings.Add("Ch1_PreKing_Exit",          false, "Exit Pre-King room");
     settings.Add("Ch1_King_EndBattle",        false, "End King battle");
     settings.Add("Ch1_Ending",                 true, "Ending");
-    settings.Add("Ch1_EndingOST",             false, "Ending (OST%)");
+    settings.Add("Ch1_EndingOST",             false, "(OST%) Ending");
 
     settings.Add("Ch1_AB", false, "All Bosses Splits");
     settings.CurrentDefaultParent = "Ch1_AB";
@@ -172,7 +172,7 @@ startup
     settings.Add("Ch2_Fountain_Enter",   false, "Enter Fountain");
     settings.Add("Ch2_Fountain_Exit",    false, "Exit Fountain");
     settings.Add("Ch2_Ending",            true, "Ending");
-    settings.Add("Ch2_EndingOST",        false, "Ending (OST%)");
+    settings.Add("Ch2_EndingOST",        false, "(OST%) Ending");
 
     settings.Add("Ch2_AB", false, "All Bosses Splits");
     settings.CurrentDefaultParent = "Ch2_AB";
