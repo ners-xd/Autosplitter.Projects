@@ -2,14 +2,14 @@
 
 state("DELTARUNE", "SURVEY_PROGRAM")
 {
-    double plot    : 0x48E5DC, 0x27C, 0x488, 0x500;
-    double choicer : 0x48E5DC, 0x27C, 0x28,  0x40;
+    double plot    : 0x48E5DC, 0x27C, 0x488, 0x500; // global.plot
+    double choicer : 0x48E5DC, 0x27C, 0x28,  0x40;  // global.choice
 
-    double lancerCon         : 0x48BDEC, 0x10, 0x60,  0x10,  0x10,  0x0;
-    double doorCloseCon      : 0x48BDEC, 0x4,  0x178, 0x178, 0x60,  0x10, 0x10, 0x0;
-    double jevilDance        : 0x48BDEC, 0x78, 0x60,  0x10,  0x10,  0x0;
+    double lancerCon         : 0x48BDEC, 0x10, 0x60,  0x10,  0x10,  0x0;             // obj_darkcastle_event.con
+    double doorCloseCon      : 0x48BDEC, 0x4,  0x178, 0x178, 0x60,  0x10, 0x10, 0x0; // obj_darkdoorevent.con
+    double jevilDance        : 0x48BDEC, 0x78, 0x60,  0x10,  0x10,  0x0;             // obj_joker_body.dancelv
     double jevilDance2       : 0x48BDEC, 0x7C, 0x60,  0x10,  0x10,  0x0;
-    double finalTextboxHalt  : 0x48BDEC, 0x98, 0x60,  0x10,  0x274, 0x0;
+    double finalTextboxHalt  : 0x48BDEC, 0x98, 0x60,  0x10,  0x274, 0x0;             // obj_writer.halt
     double finalTextboxHalt2 : 0x48BDEC, 0x9C, 0x60,  0x10,  0x274, 0x0;
 
     float kingPos : 0x6AEB80, 0x4, 0x178, 0x80, 0xC8, 0x8, 0xB4;
@@ -17,15 +17,15 @@ state("DELTARUNE", "SURVEY_PROGRAM")
 
 state("DELTARUNE", "Demo v1.08 / v1.09")
 {
-    double fight      : 0x6FCF38, 0x30, 0x4F8,  0x0;
-    double topEnemyHP : 0x6FCF38, 0x30, 0x2B38, 0x0, 0x64, 0x0;
+    double fight      : 0x6FCF38, 0x30, 0x4F8,  0x0;            // global.fighting
+    double topEnemyHP : 0x6FCF38, 0x30, 0x2B38, 0x0, 0x64, 0x0; // global.monsterhp[0]
 
     double lancerCon        : 0x6EF220, 0x128, 0x510, 0x20,  0x24, 0x10,  0xD8,  0x0;
-    double doorCloseCon     : 0x43DE48, 0x7C8, 0xC,   0x24,  0x10, 0x18,  0x0;
-    double namerEvent       : 0x6EF220, 0xD4,  0x5C,  0x20,  0x24, 0x10,  0x9C,  0x0;
-    double freezeRingTimer  : 0x43DE48, 0xC1C, 0xC,   0x24,  0x10, 0xC0,  0x0;
-    double snowgrave        : 0x6F1394, 0x4,   0x144, 0x144, 0x24, 0x10,  0xC0,  0x0;
-    double loadedDiskGreyBG : 0x43DE48, 0xA60, 0xC,   0x24,  0x10, 0x3D8, 0x0;
+    double doorCloseCon     : 0x43DE48, 0x7C8, 0xC,   0x24,  0x10, 0x18,  0x0;       
+    double namerEvent       : 0x6EF220, 0xD4,  0x5C,  0x20,  0x24, 0x10,  0x9C,  0x0; // DEVICE_NAMER.EVENT
+    double freezeRingTimer  : 0x43DE48, 0xC1C, 0xC,   0x24,  0x10, 0xC0,  0x0;        // obj_weirdEvent_addison_city_big_2.timer
+    double snowgrave        : 0x6F1394, 0x4,   0x144, 0x144, 0x24, 0x10,  0xC0,  0x0; // obj_spell_snowgrave.timer
+    double loadedDiskGreyBG : 0x43DE48, 0xA60, 0xC,   0x24,  0x10, 0x3D8, 0x0;        // obj_shop_ch2_spamton.greybgtimer
 
     float kingPos : 0x6F1394, 0x4, 0x140, 0x68, 0x3C, 0x8, 0xB0;
 
@@ -197,16 +197,16 @@ init
     var module = modules.First();
     int mms = module.ModuleMemorySize;
 
-    // Massive thanks to Jujstme and Ero for this (finding room names)
+    // Thanks to Jujstme and Ero for this (finding room names)
     var scanner = new SignatureScanner(game, module.BaseAddress, module.ModuleMemorySize);
     Func<int, string, IntPtr> scan = (o, sig) =>
     {
         IntPtr ptr = scanner.Scan(new SigScanTarget(o, sig) { OnFound = (p, s, addr) => p.ReadPointer(addr) });
-        if(ptr == IntPtr.Zero) throw new NullReferenceException("Signature scanning failed!");
+        if(ptr == IntPtr.Zero) throw new NullReferenceException("[DELTARUNE] Signature scanning failed");
         return ptr;
     };
-    IntPtr ptrRoomArray = scan(2, "8B 3D ???????? 2B EF");
-    vars.ptrRoomId = scan(2, "FF 35 ???????? E8 ???????? 83 C4 04 50 68");
+    IntPtr ptrRoomArray = scan(2, "8B 3D ?? ?? ?? ?? 2B EF");
+    vars.ptrRoomId = scan(2, "FF 35 ?? ?? ?? ?? E8 ?? ?? ?? ?? 83 C4 04 50 68");
     vars.getRoomName = (Func<string>)(() =>
     {
         IntPtr arrayMain = game.ReadPointer(ptrRoomArray);
@@ -236,7 +236,6 @@ init
 
             if(hash == "DCFB86F7A80D9906BBBAFA1B2C224848") 
                 version = "Demo v1.10";
-
             else
                 version = "Demo v1.08 / v1.09";
             break;
@@ -333,7 +332,7 @@ update
         {
             if(settings["AC_PauseTimer"] && !settings["AC_PauseTimerOST"])
             {
-                print("[DELTARUNE] ALL CHAPTERS: Chapter " + ch + " ended, timer paused");
+                print("[DELTARUNE] All Chapters: Chapter " + ch + " ended, timer paused");
                 timer.IsGameTimePaused = true;
                 vars.resetSplits();
             }
@@ -344,7 +343,7 @@ update
         {
             if(settings["AC_PauseTimerOST"] && !timer.IsGameTimePaused)
             {
-                print("[DELTARUNE] (OST%) ALL CHAPTERS: Chapter " + ch + " ended, timer paused");
+                print("[DELTARUNE] (OST%) All Chapters: Chapter " + ch + " ended, timer paused");
                 timer.IsGameTimePaused = true;
                 vars.resetSplits();
             }
@@ -353,7 +352,7 @@ update
 
         if(old.roomName == vars.ACContinueRooms[ch, 0] && current.roomName == vars.ACContinueRooms[ch, 1] && timer.IsGameTimePaused)
         {
-            print("[DELTARUNE] ALL CHAPTERS: Chapter " + ch + " started, timer resumed");
+            print("[DELTARUNE] All Chapters: Chapter " + ch + " started, timer resumed");
             timer.IsGameTimePaused = false;
             vars.forceSplit = settings["AC_Continue"];
         }
@@ -361,7 +360,7 @@ update
 
     if(old.room != current.room)
     {
-        print("[DELTARUNE] ROOM: " + old.room + " (" + old.roomName + ")" + " -> " + current.room + " (" + current.roomName + ")");
+        print("[DELTARUNE] Room: " + old.room + " (" + old.roomName + ")" + " -> " + current.room + " (" + current.roomName + ")");
 
         if(old.roomName == "room_cc_prison_cells_ch1" && current.roomName == "room_cc_prisonlancer_ch1" && settings["Ch1_Escape_Cell"]) vars.tempVar ++;
         else if(old.roomName == "room_dw_cyber_musical_door_ch2" && current.roomName == "room_dw_mansion_entrance_ch2" && settings["Ch2_MansionWarp"]) vars.tempVar = 2;
@@ -383,7 +382,7 @@ start
 {
     if(old.room != current.room && current.roomName == "PLACE_CONTACT_ch1")
     {
-        print("[DELTARUNE] START (Start Room for Chapter 1 detected)");
+        print("[DELTARUNE] Timer started (Start Room for Chapter 1 detected)");
         return true;
     }
 
@@ -391,7 +390,7 @@ start
     {
         if(old.namerEvent == 74 && current.namerEvent == 75)
         {
-            print("[DELTARUNE] START (Start Event for Chapter " + vars.chapter + " detected)");
+            print("[DELTARUNE] Timer started (Start Event for Chapter " + vars.chapter + " detected)");
             return true;
         }
     }
@@ -407,7 +406,7 @@ reset
 {
     if(old.room != current.room && current.roomName == "PLACE_CONTACT_ch1")
     {
-        print("[DELTARUNE] RESET (Start Room for Chapter 1 detected)");
+        print("[DELTARUNE] Timer reset (Start Room for Chapter 1 detected)");
         return true;
     }
 
@@ -415,7 +414,7 @@ reset
     {
         if(old.namerEvent == 74 && current.namerEvent == 75)
         {
-            print("[DELTARUNE] RESET (Start Event for Chapter " + vars.chapter + " detected)");
+            print("[DELTARUNE] Timer reset (Start Event for Chapter " + vars.chapter + " detected)");
             return true;
         }
     }
@@ -508,7 +507,7 @@ split
         if(pass)
         {
             vars.splits[splitKey][done] = true;
-            print("[DELTARUNE] SPLIT (" + splitKey + ")");
+            print("[DELTARUNE] Split triggered (" + splitKey + ")");
             return true;
         }
     }
