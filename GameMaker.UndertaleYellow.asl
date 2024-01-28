@@ -3,7 +3,7 @@
 state("Undertale Yellow", "v1.0")
 {
     // Global
-    double dialogue : 0x82FC70, 0x48, 0x10, 0x390, 0xA0;  // global.dialogue_open
+    double dialogue : 0x82FC70, 0x48, 0x10, 0x390, 0xA0; // global.dialogue_open
 
     // Self
     double startWaiter1     : 0x802990, 0x10,  0xD8,  0x48,  0x10,  0xC0, 0x0;                           // obj_mainmenu.waiter (room 2)
