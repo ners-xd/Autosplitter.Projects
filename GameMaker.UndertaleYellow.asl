@@ -34,12 +34,12 @@ startup
     vars.tempVar = false;
     vars.offset  = new Stopwatch();
 
-    settings.Add("F_KillCount", false, "Show kill count");
+    settings.Add("F_KillCount", false, "Show kill count (updates on room change)");
     settings.SetToolTip("F_KillCount", "A new row will appear on your layout with the current room and area kills.");
 
     settings.Add("F_StartOnContinue", false, "Start/Reset the timer when loading a save file");
 
-    settings.Add("F_Ruins",          false, "Exit Ruins");
+    settings.Add("F_Ruins",          false, "Exit Regular Ruins");
     settings.Add("F_FiveLights",     false, "Exit the five lights puzzle room");
     settings.Add("F_Decibat",        false, "Exit Decibat room");
     settings.Add("F_Dalv",           false, "Exit Dalv room");
