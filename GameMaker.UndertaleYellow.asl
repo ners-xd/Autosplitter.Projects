@@ -6,26 +6,28 @@ state("Undertale Yellow", "v1.0")
     double dialogue : 0x82FC70, 0x48, 0x10, 0x390, 0xA0; // global.dialogue_open
 
     // Self
-    double startWaiter1     : 0x802990, 0x10,  0xD8,  0x48,  0x10,  0xC0, 0x0;                           // obj_mainmenu.waiter (room 2)
-    double startWaiter2     : 0x802990, 0x18,  0xD8,  0x48,  0x10,  0xC0, 0x0;                           // obj_mainmenu.waiter (room 3)
-    double neutralEndScene  : 0x802990, 0x758, 0x1A0, 0x760, 0x88,  0x70, 0x38,  0x48, 0x10,  0x60, 0x0; // obj_flowey_battle_final_ending_cutscene.scene
-    double pacifistEndScene : 0x802990, 0x7F8, 0xD8,  0x90,  0x368, 0xE0, 0x398, 0x48, 0x10,  0x60, 0x0; // obj_newhome_03_cutscene_postfight_spare.scene
-    double soulSpeed        : 0x802990, 0x5A0, 0x178, 0x88,  0x78,  0x38, 0x48,  0x10, 0x490, 0x0;       // obj_heart_battle_fighting_parent.walk_speed
-    double genoEndScene     : 0x802990, 0x860, 0x1C0, 0x6B0, 0x38,  0x48, 0x10,  0x10, 0x20;             // obj_castle_throne_room_controller.scene
-    double ropeWaiter       : 0x802990, 0x68,  0x1A0, 0x1B0, 0x90,  0x70, 0x38,  0x48, 0x10,  0xC0, 0x0; // obj_darkruins_01_rope.waiter
+    double startWaiter1      : 0x802990, 0x10,  0xD8,  0x48,  0x10,  0xC0, 0x0;                           // obj_mainmenu.waiter (room 2)
+    double startWaiter2      : 0x802990, 0x18,  0xD8,  0x48,  0x10,  0xC0, 0x0;                           // obj_mainmenu.waiter (room 3)
+    double neutralEndScene   : 0x802990, 0x758, 0x1A0, 0x760, 0x88,  0x70, 0x38,  0x48, 0x10,  0x60, 0x0; // obj_flowey_battle_final_ending_cutscene.scene
+    double pacifistEndScene  : 0x802990, 0x7F8, 0xD8,  0x90,  0x368, 0xE0, 0x398, 0x48, 0x10,  0x60, 0x0; // obj_newhome_03_cutscene_postfight_spare.scene
+    double pacifistEndScene2 : 0x802990, 0x7F8, 0x1E8, 0x5F0, 0x20,  0x38, 0x48,  0x10, 0x60,  0x0;       // ^ Backup in case the first one fails
+    double soulSpeed         : 0x802990, 0x5A0, 0x178, 0x88,  0x78,  0x38, 0x48,  0x10, 0x490, 0x0;       // obj_heart_battle_fighting_parent.walk_speed
+    double genoEndScene      : 0x802990, 0x860, 0x1C0, 0x6B0, 0x38,  0x48, 0x10,  0x10, 0x20;             // obj_castle_throne_room_controller.scene
+    double ropeWaiter        : 0x802990, 0x68,  0x1A0, 0x1B0, 0x90,  0x70, 0x38,  0x48, 0x10,  0xC0, 0x0; // obj_darkruins_01_rope.waiter
 }
 
 state("Undertale Yellow", "v1.1")
 {
     double dialogue : 0x82FC70, 0x48, 0x10, 0x390, 0xA0; 
 
-    double startWaiter1     : 0x802990, 0x10,  0xD8,  0x48,  0x10,  0xE0, 0x0;                         
-    double startWaiter2     : 0x802990, 0x18,  0xD8,  0x48,  0x10,  0xE0, 0x0;                         
-    double neutralEndScene  : 0x802990, 0x758, 0x1A0, 0x760, 0x88,  0x70, 0x38,  0x48, 0x10,  0x60, 0x0;
-    double pacifistEndScene : 0x802990, 0x7F8, 0xD8,  0x90,  0x368, 0xE0, 0x398, 0x48, 0x10,  0x60, 0x0;      
-    double soulSpeed        : 0x802990, 0x5A0, 0x178, 0x88,  0x78,  0x38, 0x48,  0x10, 0x490, 0x0;      
-    double genoEndScene     : 0x802990, 0x860, 0x1C0, 0x1C0, 0x38,  0x48, 0x10,  0x60, 0x0;             
-    double ropeWaiter       : 0x802990, 0x68,  0x1A0, 0x1B0, 0x90,  0x70, 0x38,  0x48, 0x10,  0xE0, 0x0;
+    double startWaiter1      : 0x802990, 0x10,  0xD8,  0x48,  0x10,  0xE0, 0x0;                         
+    double startWaiter2      : 0x802990, 0x18,  0xD8,  0x48,  0x10,  0xE0, 0x0;                         
+    double neutralEndScene   : 0x802990, 0x758, 0x1A0, 0x760, 0x88,  0x70, 0x38,  0x48, 0x10,  0x60, 0x0;
+    double pacifistEndScene  : 0x802990, 0x7F8, 0xD8,  0x90,  0x368, 0xE0, 0x398, 0x48, 0x10,  0x60, 0x0;   
+    double pacifistEndScene2 : 0x802990, 0x7F8, 0x1E8, 0x100, 0x20,  0x38, 0x48,  0x10, 0x60,  0x0;    
+    double soulSpeed         : 0x802990, 0x5A0, 0x178, 0x88,  0x78,  0x38, 0x48,  0x10, 0x490, 0x0;      
+    double genoEndScene      : 0x802990, 0x860, 0x1C0, 0x1C0, 0x38,  0x48, 0x10,  0x60, 0x0;             
+    double ropeWaiter        : 0x802990, 0x68,  0x1A0, 0x1B0, 0x90,  0x70, 0x38,  0x48, 0x10,  0xE0, 0x0;
 }
 
 startup
@@ -39,37 +41,40 @@ startup
 
     settings.Add("F_StartOnContinue", false, "Start/Reset the timer when loading a save file");
 
-    settings.Add("F_Ruins",          false, "Exit Regular Ruins");
-    settings.Add("F_FiveLights",     false, "Exit the five lights puzzle room");
-    settings.Add("F_Decibat",        false, "Exit Decibat room");
-    settings.Add("F_Dalv",           false, "Exit Dalv room");
-    settings.Add("F_GoldenPear",     false, "Obtain Golden Pear");
-    settings.Add("F_DarkRuins",      false, "Exit Dark Ruins");
-    settings.Add("F_Honeydew",       false, "Enter Honeydew Resort");
-    settings.Add("F_GoldenCoffee",   false, "Obtain Golden Coffee");
-    settings.Add("F_EnterMartlet",   false, "Enter Martlet room");
-    settings.Add("F_ExitMartlet",    false, "Exit Martlet room");
-    settings.Add("F_ElBailador",     false, "Enter Dimensional Bag room");
-    settings.Add("F_FForCeroba",     false, "End Feisty Four / Genocide Ceroba battle");
-    settings.Add("F_Starlo",         false, "Exit Starlo room");
-    settings.Add("F_GoldenCactus",   false, "Obtain Golden Cactus");
-    settings.Add("F_GoldenBandana",  false, "Obtain Golden Bandana");
-    settings.Add("F_Guardener",      false, "Exit Guardener room");
-    settings.Add("F_GreenhouseSkip", false, "Greenhouse Skip");
+    settings.Add("F_Ruins",            false, "Exit Regular Ruins");
+    settings.Add("F_FiveLights",       false, "Exit the five lights puzzle room");
+    settings.Add("F_Decibat",          false, "Exit Decibat room");
+    settings.Add("F_Dalv",             false, "Exit Dalv room");
+    settings.Add("F_GoldenPear",       false, "Obtain Golden Pear");
+    settings.Add("F_GoldenPearExit",   false, "Exit Golden Pear room");
+    settings.Add("F_DarkRuins",        false, "Exit Dark Ruins");
+    settings.Add("F_Honeydew",         false, "Enter Honeydew Resort");
+    settings.Add("F_GoldenCoffee",     false, "Obtain Golden Coffee");
+    settings.Add("F_GoldenCoffeeExit", false, "Exit Golden Coffee room");
+    settings.Add("F_EnterMartlet",     false, "Enter Martlet room");
+    settings.Add("F_ExitMartlet",      false, "Exit Martlet room");
+    settings.Add("F_ElBailador",       false, "Enter the dimensional bag room");
+    settings.Add("F_FForCeroba",       false, "End Feisty Four / Genocide Ceroba battle");
+    settings.Add("F_Starlo",           false, "Exit Starlo room");
+    settings.Add("F_GoldenCactus",     false, "Obtain Golden Cactus");
+    settings.Add("F_GoldenCactusExit", false, "Exit Golden Cactus room");
+    settings.Add("F_GoldenBandana",    false, "Obtain Golden Bandana");
+    settings.Add("F_Guardener",        false, "Exit Guardener room");
+    settings.Add("F_GreenhouseSkip",   false, "Greenhouse Skip");
     settings.SetToolTip("F_GreenhouseSkip", "This autosplit triggers when you exit the room with the savepoint after Guardener\n(most common split location for Greenhouse Skip).");
-    settings.Add("F_Axis",           false, "Exit Axis room");
-    settings.Add("F_Flowey1",        false, "Flowey Flashback");
-    settings.Add("F_Zenith1",        false, "Zenith Flashback");
-    settings.Add("F_Zenith2",        false, "End Zenith battle");
-    settings.Add("F_NewHome",        false, "Enter New Home");
-    settings.Add("F_Ceroba1",        false, "Ceroba Flashback 1");
-    settings.Add("F_Ceroba2",        false, "Ceroba Flashback 2");
-    settings.Add("F_Ceroba3",        false, "End Pacifist Ceroba battle");
-    settings.Add("F_Neutral",         true, "Neutral Ending");
-    settings.Add("F_Pacifist",        true, "True Pacifist Ending");
-    settings.Add("F_FPacifist",       true, "Flawed Pacifist Ending");
-    settings.Add("F_Genocide",        true, "Genocide Ending");
-    settings.Add("F_Rope",            true, "Rope Ending");
+    settings.Add("F_Axis",             false, "Exit Axis room");
+    settings.Add("F_Flowey1",          false, "Flowey Flashback");
+    settings.Add("F_Zenith1",          false, "Zenith Martlet Flashback");
+    settings.Add("F_Zenith2",          false, "End Zenith Martlet battle");
+    settings.Add("F_NewHome",          false, "Enter New Home");
+    settings.Add("F_Ceroba1",          false, "Ceroba Flashback 1");
+    settings.Add("F_Ceroba2",          false, "Ceroba Flashback 2");
+    settings.Add("F_Ceroba3",          false, "End Pacifist Ceroba battle");
+    settings.Add("F_Neutral",           true, "Neutral Ending");
+    settings.Add("F_Pacifist",          true, "True Pacifist Ending");
+    settings.Add("F_FPacifist",         true, "Flawed Pacifist Ending");
+    settings.Add("F_Genocide",          true, "Genocide Ending");
+    settings.Add("F_Rope",              true, "Rope Ending");
 
     // Thanks to Ero for this
     var cache = new Dictionary<string, LiveSplit.UI.Components.ILayoutComponent>();
@@ -148,36 +153,39 @@ init
     vars.splits = new Dictionary<string, object[]>()
     {
         // Object variables in order: done, old room, new room, special condition
-        {"F_Ruins",          new object[] {false,  10,  11, 0}},
-        {"F_FiveLights",     new object[] {false,  18,  19, 0}},
-        {"F_Decibat",        new object[] {false,  25,  26, 0}},
-        {"F_Dalv",           new object[] {false,  34,  37, 0}},
-        {"F_GoldenPear",     new object[] {false,  -1,  29, 1}},
-        {"F_DarkRuins",      new object[] {false,  35,  43, 0}},
-        {"F_Honeydew",       new object[] {false,  58,  59, 0}},
-        {"F_GoldenCoffee",   new object[] {false,  -1,  63, 2}},
-        {"F_EnterMartlet",   new object[] {false,  70,  71, 0}},
-        {"F_ExitMartlet",    new object[] {false,  71,  72, 0}},
-        {"F_ElBailador",     new object[] {false,  -1, 109, 0}},
-        {"F_FForCeroba",     new object[] {false, 180, 127, 0}},
-        {"F_Starlo",         new object[] {false, 135, 136, 0}},
-        {"F_GoldenCactus",   new object[] {false,  -1,  83, 3}},
-        {"F_GoldenBandana",  new object[] {false,  -1,  -1, 4}}, // Can be obtained in different rooms depending on the route
-        {"F_Guardener",      new object[] {false, 191, 190, 0}},
-        {"F_GreenhouseSkip", new object[] {false, 190, 281, 0}},
-        {"F_Axis",           new object[] {false, 204, 206, 0}},
-        {"F_Flowey1",        new object[] {false, 234, 233, 0}},
-        {"F_Zenith1",        new object[] {false,  -1, 260, 0}},
-        {"F_Zenith2",        new object[] {false, 180, 221, 0}},
-        {"F_NewHome",        new object[] {false, 259, 253, 0}},
-        {"F_Ceroba1",        new object[] {false, 180, 246, 0}},
-        {"F_Ceroba2",        new object[] {false, 180, 250, 0}},
-        {"F_Ceroba3",        new object[] {false, 180, 255, 0}},
-        {"F_Neutral",        new object[] {false,  -1, 235, 5}},
-        {"F_Pacifist",       new object[] {false,  -1, 255, 6}}, // Special offset required
-        {"F_FPacifist",      new object[] {false,  -1, 180, 7}},
-        {"F_Genocide",       new object[] {false,  -1, 268, 8}},
-        {"F_Rope",           new object[] {false,  -1,  13, 9}}
+        {"F_Ruins",            new object[] {false,  10,  11, 0}},
+        {"F_FiveLights",       new object[] {false,  18,  19, 0}},
+        {"F_Decibat",          new object[] {false,  25,  26, 0}},
+        {"F_Dalv",             new object[] {false,  34,  37, 0}},
+        {"F_GoldenPear",       new object[] {false,  -1,  29, 1}},
+        {"F_GoldenPearExit",   new object[] {false,  29,  28, 0}},
+        {"F_DarkRuins",        new object[] {false,  35,  43, 0}},
+        {"F_Honeydew",         new object[] {false,  58,  59, 0}},
+        {"F_GoldenCoffee",     new object[] {false,  -1,  63, 2}},
+        {"F_GoldenCoffeeExit", new object[] {false,  63,  59, 0}},
+        {"F_EnterMartlet",     new object[] {false,  70,  71, 0}},
+        {"F_ExitMartlet",      new object[] {false,  71,  72, 0}},
+        {"F_ElBailador",       new object[] {false,  -1, 109, 0}},
+        {"F_FForCeroba",       new object[] {false, 180, 127, 0}},
+        {"F_Starlo",           new object[] {false, 135, 136, 0}},
+        {"F_GoldenCactus",     new object[] {false,  -1,  83, 3}},
+        {"F_GoldenCactusExit", new object[] {false,  83,  82, 0}},
+        {"F_GoldenBandana",    new object[] {false,  -1,  -1, 4}}, // Can be obtained in different rooms depending on the route
+        {"F_Guardener",        new object[] {false, 191, 190, 0}},
+        {"F_GreenhouseSkip",   new object[] {false, 190, 281, 0}},
+        {"F_Axis",             new object[] {false, 204, 206, 0}},
+        {"F_Flowey1",          new object[] {false, 234, 233, 0}},
+        {"F_Zenith1",          new object[] {false,  -1, 260, 0}},
+        {"F_Zenith2",          new object[] {false, 180, 221, 0}},
+        {"F_NewHome",          new object[] {false, 259, 253, 0}},
+        {"F_Ceroba1",          new object[] {false, 180, 246, 0}},
+        {"F_Ceroba2",          new object[] {false, 180, 250, 0}},
+        {"F_Ceroba3",          new object[] {false, 180, 255, 0}},
+        {"F_Neutral",          new object[] {false,  -1, 235, 5}},
+        {"F_Pacifist",         new object[] {false,  -1, 255, 6}}, // Special offset required
+        {"F_FPacifist",        new object[] {false,  -1, 180, 7}},
+        {"F_Genocide",         new object[] {false,  -1, 268, 8}},
+        {"F_Rope",             new object[] {false,  -1,  13, 9}}
     };
 
     switch(hash)
@@ -337,7 +345,7 @@ update
         print("[Undertale Yellow] Room: " + old.room + " -> " + current.room);
     }
 
-    if(current.room == 255 && !vars.offset.IsRunning && current.pacifistEndScene == 261 && settings["F_Pacifist"]) 
+    if(current.room == 255 && !vars.offset.IsRunning && (current.pacifistEndScene == 261 || current.pacifistEndScene2 == 261) && settings["F_Pacifist"]) 
         vars.offset.Start(); // Start the stopwatch after Ceroba faces down
 
     else if(current.room == 235 && current.neutralEndScene == 4 && current.dialogue == 1 && settings["F_Neutral"]) // Entered the cutscene at the end of Neutral
