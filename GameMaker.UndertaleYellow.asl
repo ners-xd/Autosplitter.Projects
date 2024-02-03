@@ -102,10 +102,10 @@ startup
     });
 
     vars.killTextKey = "Kills (Room | Area)";
-    vars.dontUpdate = new HashSet<int> { 180, 182, 185 }; // Battle Room, Shops, Death Screen
+    vars.dontUpdate = new HashSet<int> { 180, 182, 185, 246, 250 }; // Battle room, shops, game over screen, Chujin's bedroom, Chujin's basement
     vars.areas = new List<Tuple<int, int, int, int>>
     {
-        // min room, max room, area, max kills per room
+        // Min room, max room, area, max kills per room
         Tuple.Create(13,   42, 1, 5), // Dark Ruins
         Tuple.Create(43,   72, 2, 5), // Snowdin
         Tuple.Create(77,  140, 3, 3), // Dunes
