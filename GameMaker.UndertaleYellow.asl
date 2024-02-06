@@ -63,8 +63,8 @@ startup
     settings.Add("F_GreenhouseSkip",   false, "Greenhouse Skip");
     settings.SetToolTip("F_GreenhouseSkip", "This autosplit triggers when you exit the room with the savepoint after Guardener\n(most common split location for Greenhouse Skip).");
     settings.Add("F_Axis",             false, "Exit Axis room");
-    settings.Add("F_Flowey1",          false, "Flowey Flashback");
-    settings.Add("F_Zenith1",          false, "Zenith Martlet Flashback");
+    settings.Add("F_Flowey1",          false, "Flowey Flashback (Phase 1 End)");
+    settings.Add("F_Zenith1",          false, "Zenith Martlet Flashback (Phase 1 End)");
     settings.Add("F_Zenith2",          false, "End Zenith Martlet battle");
     settings.Add("F_NewHome",          false, "Enter New Home");
     settings.Add("F_Ceroba1",          false, "Ceroba Flashback 1");
