@@ -71,7 +71,7 @@ startup
     settings.Add("F_Ceroba2",          false, "Ceroba Flashback 2");
     settings.Add("F_Ceroba3",          false, "End Pacifist Ceroba battle");
     settings.Add("F_Neutral",           true, "Neutral Ending");
-    settings.Add("F_Pacifist",          true, "True Pacifist Ending");
+    settings.Add("F_Pacifist",          true, "True Pacifist Ending (may not work sometimes)");
     settings.Add("F_FPacifist",         true, "Flawed Pacifist Ending");
     settings.Add("F_Genocide",          true, "Genocide Ending");
     settings.Add("F_Rope",              true, "Rope Ending");
