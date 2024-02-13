@@ -6,28 +6,24 @@ state("Undertale Yellow", "v1.0")
     double dialogue : 0x82FC70, 0x48, 0x10, 0x390, 0xA0; // global.dialogue_open
 
     // Self
-    double startWaiter1      : 0x802990, 0x10,  0xD8,  0x48,  0x10,  0xC0, 0x0;                           // obj_mainmenu.waiter (room 2)
-    double startWaiter2      : 0x802990, 0x18,  0xD8,  0x48,  0x10,  0xC0, 0x0;                           // obj_mainmenu.waiter (room 3)
-    double neutralEndScene   : 0x802990, 0x758, 0x1A0, 0x760, 0x88,  0x70, 0x38,  0x48, 0x10,  0x60, 0x0; // obj_flowey_battle_final_ending_cutscene.scene
-    double pacifistEndScene  : 0x802990, 0x7F8, 0xD8,  0x90,  0x368, 0xE0, 0x398, 0x48, 0x10,  0x60, 0x0; // obj_newhome_03_cutscene_postfight_spare.scene
-    double pacifistEndScene2 : 0x802990, 0x7F8, 0x1E8, 0x5F0, 0x20,  0x38, 0x48,  0x10, 0x60,  0x0;       // ^ Backup in case the first one fails
-    double soulSpeed         : 0x802990, 0x5A0, 0x178, 0x88,  0x78,  0x38, 0x48,  0x10, 0x490, 0x0;       // obj_heart_battle_fighting_parent.walk_speed
-    double genoEndScene      : 0x802990, 0x860, 0x1C0, 0x6B0, 0x38,  0x48, 0x10,  0x10, 0x20;             // obj_castle_throne_room_controller.scene
-    double ropeWaiter        : 0x802990, 0x68,  0x1A0, 0x1B0, 0x90,  0x70, 0x38,  0x48, 0x10,  0xC0, 0x0; // obj_darkruins_01_rope.waiter
+    double startWaiter       : 0xA3FD40, 0xD8,  0x48,  0x10, 0xC0,  0x0;                                  // obj_mainmenu.waiter
+    double neutralEndScene   : 0xA3FD40, 0x1A0, 0x760, 0x88, 0x70,  0x38,  0x48,  0x10, 0x60,  0x0;       // obj_flowey_battle_final_ending_cutscene.scene
+    double pacifistEndScene  : 0xA3FD40, 0x1E8, 0x30,  0x38, 0x198, 0x198, 0x198, 0x48, 0x10,  0x60, 0x0; // obj_newhome_03_cutscene_postfight_spare.scene
+    double soulSpeed         : 0xA3FD40, 0x178, 0x88,  0x70, 0x78,  0x1A0, 0x48,  0x10, 0x490, 0x0;       // obj_heart_battle_fighting_parent.walk_speed
+    double genoEndScene      : 0xA3FD40, 0x1A0, 0x4F0, 0x70, 0x38,  0x48,  0x10,  0x60, 0x0;              // obj_castle_throne_room_controller.scene
+    double ropeWaiter        : 0xA3FD40, 0x1A0, 0x1B0, 0x90, 0x70,  0x38,  0x48,  0x10, 0xC0,  0x0;       // obj_darkruins_01_rope.waiter
 }
 
 state("Undertale Yellow", "v1.1")
 {
     double dialogue : 0x82FC70, 0x48, 0x10, 0x390, 0xA0; 
 
-    double startWaiter1      : 0x802990, 0x10,  0xD8,  0x48,  0x10,  0xE0, 0x0;                         
-    double startWaiter2      : 0x802990, 0x18,  0xD8,  0x48,  0x10,  0xE0, 0x0;                         
-    double neutralEndScene   : 0x802990, 0x758, 0x1A0, 0x760, 0x88,  0x70, 0x38,  0x48, 0x10,  0x60, 0x0;
-    double pacifistEndScene  : 0x802990, 0x7F8, 0xD8,  0x90,  0x368, 0xE0, 0x398, 0x48, 0x10,  0x60, 0x0;   
-    double pacifistEndScene2 : 0x802990, 0x7F8, 0x1E8, 0x100, 0x20,  0x38, 0x48,  0x10, 0x60,  0x0;    
-    double soulSpeed         : 0x802990, 0x5A0, 0x178, 0x88,  0x78,  0x38, 0x48,  0x10, 0x490, 0x0;      
-    double genoEndScene      : 0x802990, 0x860, 0x1C0, 0x1C0, 0x38,  0x48, 0x10,  0x60, 0x0;             
-    double ropeWaiter        : 0x802990, 0x68,  0x1A0, 0x1B0, 0x90,  0x70, 0x38,  0x48, 0x10,  0xE0, 0x0;
+    double startWaiter       : 0xA3FD40, 0xD8,  0x48,  0x10, 0xE0,  0x0;                        
+    double neutralEndScene   : 0xA3FD40, 0x1A0, 0x760, 0x88, 0x70,  0x38,  0x48,  0x10, 0x60,  0x0;
+    double pacifistEndScene  : 0xA3FD40, 0x1E8, 0x30,  0x38, 0x198, 0x198, 0x198, 0x48, 0x10,  0x60, 0x0;   
+    double soulSpeed         : 0xA3FD40, 0x178, 0x88,  0x70, 0x78,  0x1A0, 0x48,  0x10, 0x490, 0x0;
+    double genoEndScene      : 0xA3FD40, 0x1A0, 0x4F0, 0x70, 0x38,  0x48,  0x10,  0x60, 0x0;             
+    double ropeWaiter        : 0xA3FD40, 0x1A0, 0x1B0, 0x90, 0x70,  0x38,  0x48,  0x10, 0xE0,  0x0;
 }
 
 startup
@@ -71,7 +67,7 @@ startup
     settings.Add("F_Ceroba2",          false, "Ceroba Flashback 2");
     settings.Add("F_Ceroba3",          false, "End Pacifist Ceroba battle");
     settings.Add("F_Neutral",           true, "Neutral Ending");
-    settings.Add("F_Pacifist",          true, "True Pacifist Ending (may not work sometimes)");
+    settings.Add("F_Pacifist",          true, "True Pacifist Ending");
     settings.Add("F_FPacifist",         true, "Flawed Pacifist Ending");
     settings.Add("F_Genocide",          true, "Genocide Ending");
     settings.Add("F_Rope",              true, "Rope Ending");
@@ -230,26 +226,20 @@ init
 
 start
 {
-    if(current.room == 2)
-        return (old.startWaiter1 == 0 && current.startWaiter1 == 1);
-
-    else if(current.room == 3)
-        return (old.startWaiter2 == 0 && current.startWaiter2 == 1);
+    if(current.room == 2 || current.room == 3)
+        return (old.startWaiter == 0 && current.startWaiter == 1);
 
     else
-        return (old.room <= 3 && current.room >= 6 && old.startWaiter2 == 0 && settings["F_StartOnContinue"]);
+        return (old.room <= 3 && current.room >= 6 && old.startWaiter == 0 && settings["F_StartOnContinue"]);
 }
 
 reset
 {
-    if(current.room == 2)
-        return (old.startWaiter1 == 0 && current.startWaiter1 == 1);
-
-    else if(current.room == 3)
-        return (old.startWaiter2 == 0 && current.startWaiter2 == 1);
+    if(current.room == 2 || current.room == 3)
+        return (old.startWaiter == 0 && current.startWaiter == 1);
 
     else
-        return (old.room <= 3 && current.room >= 6 && old.startWaiter2 == 0 && settings["F_StartOnContinue"]);       
+        return (old.room <= 3 && current.room >= 6 && old.startWaiter == 0 && settings["F_StartOnContinue"]);       
 }
 
 onReset
