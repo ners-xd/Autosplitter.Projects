@@ -49,6 +49,7 @@ startup
     settings.Add("F_GoldenCoffeeExit", false, "Exit Golden Coffee room");
     settings.Add("F_EnterMartlet",     false, "Enter Martlet room");
     settings.Add("F_ExitMartlet",      false, "Exit Martlet room");
+    settings.Add("F_ExitElevator",     false, "Exit East Mines elevator");
     settings.Add("F_ElBailador",       false, "Enter the dimensional bag room");
     settings.Add("F_FForCeroba",       false, "End Feisty Four / Genocide Ceroba battle");
     settings.Add("F_Starlo",           false, "Exit Starlo room");
@@ -161,6 +162,7 @@ init
         {"F_GoldenCoffeeExit", new object[] {false,  63,  59, 0}},
         {"F_EnterMartlet",     new object[] {false,  70,  71, 0}},
         {"F_ExitMartlet",      new object[] {false,  71,  72, 0}},
+        {"F_ExitElevator",     new object[] {false,  93,  94, 0}},
         {"F_ElBailador",       new object[] {false,  -1, 109, 0}},
         {"F_FForCeroba",       new object[] {false, 180, 127, 0}},
         {"F_Starlo",           new object[] {false, 135, 136, 0}},
