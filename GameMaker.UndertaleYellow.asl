@@ -383,7 +383,7 @@ split
                 break;
 
             case 6: // F_Pacifist
-                if(vars.offset.ElapsedMilliseconds >= 2233)
+                if(vars.offset.ElapsedMilliseconds >= 2250)
                 {
                     vars.offset.Reset();
                     pass = true;
