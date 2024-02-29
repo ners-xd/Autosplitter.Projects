@@ -8,10 +8,10 @@ state("Undertale Yellow", "v1.0")
     // Self
     double startWaiter      : 0xA3FD40, 0xD8,  0x48,  0x10, 0xC0,  0x0;                                  // obj_mainmenu.waiter
     double neutralEndScene  : 0xA3FD40, 0x1A0, 0x760, 0x88, 0x70,  0x38,  0x48,  0x10, 0x60,  0x0;       // obj_flowey_battle_final_ending_cutscene.scene
-    double pacifistEndScene : 0xA3FD40, 0x1E8, 0x30,  0x38, 0x198, 0x198, 0x198, 0x48, 0x10,  0x60, 0x0; // obj_newhome_03_cutscene_postfight_spare.scene
     double soulSpeed        : 0xA3FD40, 0x178, 0x88,  0x70, 0x78,  0x1A0, 0x48,  0x10, 0x490, 0x0;       // obj_heart_battle_fighting_parent.walk_speed
     double genoEndScene     : 0xA3FD40, 0x1A0, 0x4F0, 0x70, 0x38,  0x48,  0x10,  0x60, 0x0;              // obj_castle_throne_room_controller.scene
     double ropeWaiter       : 0xA3FD40, 0x1A0, 0x1B0, 0x90, 0x70,  0x38,  0x48,  0x10, 0xC0,  0x0;       // obj_darkruins_01_rope.waiter
+    float  cerobaPos        : 0xA60DA0, 0x8,   0x90,  0x8,  0x68,  0x10,  0xEC;                          // obj_ceroba_npc.y
 }
 
 state("Undertale Yellow", "v1.1")
@@ -19,18 +19,17 @@ state("Undertale Yellow", "v1.1")
     double dialogue : 0x82FC70, 0x48, 0x10, 0x390, 0xA0; 
 
     double startWaiter      : 0xA3FD40, 0xD8,  0x48,  0x10, 0xE0,  0x0;                        
-    double neutralEndScene  : 0xA3FD40, 0x1A0, 0x760, 0x88, 0x70,  0x38,  0x48,  0x10, 0x60,  0x0;
-    double pacifistEndScene : 0xA3FD40, 0x1E8, 0x30,  0x38, 0x198, 0x198, 0x198, 0x48, 0x10,  0x60, 0x0;   
+    double neutralEndScene  : 0xA3FD40, 0x1A0, 0x760, 0x88, 0x70,  0x38,  0x48,  0x10, 0x60,  0x0;  
     double soulSpeed        : 0xA3FD40, 0x178, 0x88,  0x70, 0x78,  0x1A0, 0x48,  0x10, 0x490, 0x0;
     double genoEndScene     : 0xA3FD40, 0x1A0, 0x4F0, 0x70, 0x38,  0x48,  0x10,  0x60, 0x0;             
     double ropeWaiter       : 0xA3FD40, 0x1A0, 0x1B0, 0x90, 0x70,  0x38,  0x48,  0x10, 0xE0,  0x0;
+    float  cerobaPos        : 0xA60DA0, 0x8,   0x90,  0x8,  0x68,  0x10,  0xEC;
 }
 
 startup
 {
     refreshRate  = 30;
     vars.tempVar = false;
-    vars.offset  = new Stopwatch();
 
     settings.Add("F_KillCount", false, "Show kill count (updates on room changes)");
     settings.SetToolTip("F_KillCount", "A new row will appear on your layout with the current room and area kills.");
@@ -180,7 +179,7 @@ init
         {"F_Ceroba2",          new object[] {false, 180, 250, 0}},
         {"F_Ceroba3",          new object[] {false, 180, 255, 0}},
         {"F_Neutral",          new object[] {false,  -1, 235, 5}},
-        {"F_Pacifist",         new object[] {false,  -1, 255, 6}}, // Special offset required
+        {"F_Pacifist",         new object[] {false,  -1, 255, 6}},
         {"F_FPacifist",        new object[] {false,  -1, 180, 7}},
         {"F_Genocide",         new object[] {false,  -1, 268, 8}},
         {"F_Rope",             new object[] {false,  -1,  13, 9}}
@@ -246,7 +245,6 @@ reset
 
 onReset
 {
-    vars.offset.Reset();
     vars.tempVar = false;
 
     if(game != null)
@@ -337,10 +335,7 @@ update
         print("[Undertale Yellow] Room: " + old.room + " -> " + current.room);
     }
 
-    if(current.room == 255 && !vars.offset.IsRunning && (current.pacifistEndScene == 261 || current.pacifistEndScene2 == 261) && settings["F_Pacifist"]) 
-        vars.offset.Start(); // Start the stopwatch after Ceroba faces down
-
-    else if(current.room == 235 && current.neutralEndScene == 4 && current.dialogue == 1 && settings["F_Neutral"]) // Entered the cutscene at the end of Neutral
+    if(current.room == 235 && current.neutralEndScene == 4 && current.dialogue == 1 && settings["F_Neutral"]) // Entered the cutscene at the end of Neutral
         vars.tempVar = true; // Added for the ending autosplit check because neutralEndScene takes random values in the Flowey battle and makes the split trigger
 }
 
@@ -385,11 +380,7 @@ split
                 break;
 
             case 6: // F_Pacifist
-                if(vars.offset.ElapsedMilliseconds >= 2250)
-                {
-                    vars.offset.Reset();
-                    pass = true;
-                }
+                pass = (old.cerobaPos <= 387 && current.cerobaPos >= 387);
                 break;
 
             case 7: // F_FPacifist
