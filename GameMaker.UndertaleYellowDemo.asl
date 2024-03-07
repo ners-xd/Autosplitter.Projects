@@ -6,18 +6,16 @@ state("Undertale Yellow", "Demo v1.1")
     int room : 0x5CB860;
 
     // Global
-    double tinyPuzzle : 0x3C9730, 0x34, 0x10, 0x1A8, 0x0;
-    double pearFlag   : 0x3C9730, 0x34, 0x10, 0x184, 0x0, 0x4, 0x4, 0x130;
+    double tinyPuzzle : 0x3C9730, 0x34, 0x10, 0x1A8, 0x0;                  // global.tinypuzzle
+    double pearFlag   : 0x3C9730, 0x34, 0x10, 0x184, 0x0, 0x4, 0x4, 0x130; // global.flag[19]
 
     // Self
-    double startFade1 : 0x5CB8EC, 0x8, 0x84, 0x150, 0x34, 0x10, 0xA0, 0x0;
-    double startFade2 : 0x5CB8EC, 0xC, 0x84, 0x150, 0x34, 0x10, 0xA0, 0x0;
+    double startWaiter : 0x5CB89C, 0x84, 0x150, 0x34, 0x10, 0x70, 0x0; // obj_mainmenu.waiter
 }
 
 startup
 {
-    refreshRate  = 30;
-    vars.started = false;
+    refreshRate = 30;
 
     settings.Add("D_Flowey",      false, "Exit Flowey room");
     settings.Add("D_Decibat",     false, "Exit Decibat room");
@@ -63,36 +61,25 @@ init
 
 start
 {
-    if(current.room == 2)
-        return (current.startFade1 > 0.5 && current.startFade1 < 0.6);
-
-    else if(current.room == 3)
-        return (current.startFade2 > 0.5 && current.startFade2 < 0.6);   
+    if(current.room == 2 || current.room == 3)
+        return (old.startWaiter == 0 && current.startWaiter == 1);   
 }
 
 reset
 {
-    if(vars.started == false)
-        return false; // Fix for an issue where the timer would reset immediately after starting
-
-    if(current.room == 2)
-        return (current.startFade1 > 0.5 && current.startFade1 < 0.6);
-
-    else if(current.room == 3)
-        return (current.startFade2 > 0.5 && current.startFade2 < 0.6);       
+    if(current.room == 2 || current.room == 3)
+        return (old.startWaiter == 0 && current.startWaiter == 1);      
 }
 
 onReset
 {
-    vars.started = false;
-
     if(game != null)
     {
         foreach(string split in vars.splits.Keys) 
             vars.splits[split][0] = false;
+
+        print("[Undertale Yellow Demo] All splits have been reset to initial state");
     }
-        
-    print("[Undertale Yellow Demo] All splits have been reset to initial state");
 }
 
 update
@@ -101,12 +88,7 @@ update
         return false;
 
     if(old.room != current.room)
-    {
-        if((old.room == 2 || old.room == 3) && current.room == 5)
-            vars.started = true;
-
         print("[Undertale Yellow Demo] Room: " + old.room + " -> " + current.room);
-    }
 }
 
 split
