@@ -122,7 +122,7 @@ init
 start
 {
     if(current.roomName == "rm_menu_start" || current.roomName == "rm_load")
-        return (old.namePhase == 2 && current.namePhase == 3);
+        return (old.namePhase != 3 && current.namePhase == 3);
 
     else if(old.roomName == "rm_credits_short" && current.roomName == "rm_star1")
         return (settings["Enter_StarlightIsles"]);
@@ -131,7 +131,7 @@ start
 reset
 {
     if(current.roomName == "rm_menu_start" || current.roomName == "rm_load")
-        return (old.namePhase == 2 && current.namePhase == 3);
+        return (old.namePhase != 3 && current.namePhase == 3);
 
     else if(old.roomName == "rm_credits_short" && current.roomName == "rm_star1")
         return (settings["Enter_StarlightIsles"]);
