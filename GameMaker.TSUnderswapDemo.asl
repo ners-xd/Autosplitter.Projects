@@ -2,33 +2,33 @@
 
 state("TS!Underswap", "v1.0.8")
 {
-	double namePhase : 0x6EFDE8, 0x84, 0x14C, 0x2C, 0x10, 0x264, 0x0; // obj_namehandler.phase
+    double namePhase : 0x6EFDE8, 0x84, 0x14C, 0x2C, 0x10, 0x264, 0x0; // obj_namehandler.phase
 }
 
 state("TS!Underswap", "v2.0.4")
 {
-	double namePhase : 0xD8AB08, 0xE0, 0x48,  0x10, 0x310, 0x0;
-	double liftState : 0xDAB2F0, 0x8,  0x48,  0x10, 0x3E0, 0x0; 	   // obj_crys_lift.state
-	float  playerX	 : 0xB680E8, 0x0,  0x868, 0x18, 0x68,  0x10, 0xF0; // obj_player.x
+    double namePhase : 0xD8AB08, 0xE0, 0x48,  0x10, 0x310, 0x0;
+    double liftState : 0xDAB2F0, 0x8,  0x48,  0x10, 0x3E0, 0x0;        // obj_crys_lift.state
+    float  playerX   : 0xB680E8, 0x0,  0x868, 0x18, 0x68,  0x10, 0xF0; // obj_player.x
 }
 
 state("TS!Underswap", "v2.0.5")
 {
-	double namePhase : 0xD8AB08, 0xE0, 0x48,  0x10, 0x3E0, 0x0;
-	double liftState : 0xDAB2F0, 0x8,  0x48,  0x10, 0x3E0, 0x0;
-	float  playerX 	 : 0xB680E8, 0x0,  0x868, 0x18, 0x68,  0x10, 0xF0;
+    double namePhase : 0xD8AB08, 0xE0, 0x48,  0x10, 0x3E0, 0x0;
+    double liftState : 0xDAB2F0, 0x8,  0x48,  0x10, 0x3E0, 0x0;
+    float  playerX   : 0xB680E8, 0x0,  0x868, 0x18, 0x68,  0x10, 0xF0;
 }
 
 startup
 {
-	refreshRate = 30;
+    refreshRate = 30;
 
-	settings.Add("Exit_RuinedHome", 	 false, "Exit Ruined Home (IL End)");
-	settings.Add("Enter_StarlightIsles", false, "Enter Starlight Isles (IL Start)");
-	settings.Add("v1_Ending", 			  true, "v1.0 Ending");
-	settings.Add("v2_Ending", 			  true, "v2.0 Ending");
-	settings.Add("v2_DirtyHacker", 		  true, "v2.0 Dirty Hacker Ending");
-	settings.Add("Exit_StarlightIsles",  false, "Exit Starlight Isles (IL End)");
+    settings.Add("Exit_RuinedHome",      false, "Exit Ruined Home (IL End)");
+    settings.Add("Enter_StarlightIsles", false, "Enter Starlight Isles (IL Start)");
+    settings.Add("v1_Ending",             true, "v1.0 Ending");
+    settings.Add("v2_Ending",             true, "v2.0 Ending");
+    settings.Add("v2_DirtyHacker",        true, "v2.0 Dirty Hacker Ending");
+    settings.Add("Exit_StarlightIsles",  false, "Exit Starlight Isles (IL End)");
 }
 
 init
@@ -77,17 +77,17 @@ init
 
     switch(hash)
     {
-    	case "BB9CF694EB1353F3C168362FAF76F580":
-			version = "v1.0.8";
-			break;
+        case "BB9CF694EB1353F3C168362FAF76F580":
+            version = "v1.0.8";
+            break;
 
-    	case "675707015AFC412444119698E30E0F52":
-			version = "v2.0.4";
-			break;
+        case "675707015AFC412444119698E30E0F52":
+            version = "v2.0.4";
+            break;
 
-    	case "9AA62DA009DF346C43E7B55C912844A2": 
-			version = "v2.0.5";
-			break;
+        case "9AA62DA009DF346C43E7B55C912844A2": 
+            version = "v2.0.5";
+            break;
 
         default:
             version = "Unknown";
@@ -105,25 +105,25 @@ init
     vars.splits = new Dictionary<string, object[]>()
     {
         // Object variables in order: done, old room, new room, special condition
-        {"Exit_RuinedHome", 	 new object[] {false, "rm_ruina_final",    null, 			     1}},
-        {"Enter_StarlightIsles", new object[] {false, null, 			   "rm_star1",		     2}},
-        {"v1_Ending",			 new object[] {false, "rm_star3", 		   "rm_demoend",	     0}},
-        {"v2_Ending", 			 new object[] {false, null, 			   "rm_crys_entermines", 3}},
-        {"v2_DirtyHacker",		 new object[] {false, "rm_stars_cb_arena", "rm_init",		     0}},
-        {"Exit_StarlightIsles",  new object[] {false, null, 			   "rm_stars_bridge",    4}}
+        {"Exit_RuinedHome",      new object[] {false, "rm_ruina_final",    null,                 1}},
+        {"Enter_StarlightIsles", new object[] {false, null,                "rm_star1",           2}},
+        {"v1_Ending",            new object[] {false, "rm_star3",          "rm_demoend",         0}},
+        {"v2_Ending",            new object[] {false, null,                "rm_crys_entermines", 3}},
+        {"v2_DirtyHacker",       new object[] {false, "rm_stars_cb_arena", "rm_init",            0}},
+        {"Exit_StarlightIsles",  new object[] {false, null,                "rm_stars_bridge",    4}}
     };
 }
 
 start
 {
-	if(current.roomName == "rm_menu_start" || current.roomName == "rm_load")
-		return (old.namePhase == 2 && current.namePhase == 3);
+    if(current.roomName == "rm_menu_start" || current.roomName == "rm_load")
+        return (old.namePhase == 2 && current.namePhase == 3);
 }
 
 reset
 {
-	if(current.roomName == "rm_menu_start" || current.roomName == "rm_load")
-		return (old.namePhase == 2 && current.namePhase == 3);
+    if(current.roomName == "rm_menu_start" || current.roomName == "rm_load")
+        return (old.namePhase == 2 && current.namePhase == 3);
 }
 
 onReset
@@ -139,13 +139,13 @@ onReset
 
 update
 {
-	if(version == "Unknown")
-		return false;
+    if(version == "Unknown")
+        return false;
 
     current.room = game.ReadValue<int>((IntPtr)vars.ptrRoomID);
     current.roomName = vars.getRoomName();
     if(old.room != current.room)
-		print("[TS!Underswap Demo] Room: " + old.room + " (" + old.roomName + ")" + " -> " + current.room + " (" + current.roomName + ")");
+        print("[TS!Underswap Demo] Room: " + old.room + " (" + old.roomName + ")" + " -> " + current.room + " (" + current.roomName + ")");
 }
 
 split
