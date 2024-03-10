@@ -23,12 +23,18 @@ startup
 {
     refreshRate = 30;
 
-    settings.Add("Exit_RuinedHome",      false, "Exit Ruined Home (IL End)");
-    settings.Add("Enter_StarlightIsles", false, "Enter Starlight Isles (IL Start)");
-    settings.Add("v1_Ending",             true, "v1.0 Ending");
-    settings.Add("v2_Ending",             true, "v2.0 Ending");
-    settings.Add("v2_DirtyHacker",        true, "v2.0 Dirty Hacker Ending");
-    settings.Add("Exit_StarlightIsles",  false, "Exit Starlight Isles (IL End)");
+    settings.Add("FG", true, "Full Game");
+    settings.CurrentDefaultParent = "FG";
+    settings.Add("v1_Ending",      true, "v1.0 Ending");
+    settings.Add("v2_Ending",      true, "v2.0 Ending");
+    settings.Add("v2_DirtyHacker", true, "v2.0 Dirty Hacker Ending");
+
+    settings.CurrentDefaultParent = null;
+    settings.Add("IL", false, "Individual Levels");
+    settings.CurrentDefaultParent = "IL";
+    settings.Add("Exit_RuinedHome",      false, "Exit Ruined Home");
+    settings.Add("Enter_StarlightIsles", false, "Start/Reset the timer when entering Starlight Isles");
+    settings.Add("Exit_StarlightIsles",  false, "Exit Starlight Isles");
 }
 
 init
@@ -106,11 +112,10 @@ init
     {
         // Object variables in order: done, old room, new room, special condition
         {"Exit_RuinedHome",      new object[] {false, "rm_ruina_final",    null,                 1}},
-        {"Enter_StarlightIsles", new object[] {false, null,                "rm_star1",           2}},
         {"v1_Ending",            new object[] {false, "rm_star3",          "rm_demoend",         0}},
-        {"v2_Ending",            new object[] {false, null,                "rm_crys_entermines", 3}},
+        {"v2_Ending",            new object[] {false, null,                "rm_crys_entermines", 2}},
         {"v2_DirtyHacker",       new object[] {false, "rm_stars_cb_arena", "rm_init",            0}},
-        {"Exit_StarlightIsles",  new object[] {false, null,                "rm_stars_bridge",    4}}
+        {"Exit_StarlightIsles",  new object[] {false, null,                "rm_stars_bridge",    3}}
     };
 }
 
@@ -118,12 +123,18 @@ start
 {
     if(current.roomName == "rm_menu_start" || current.roomName == "rm_load")
         return (old.namePhase == 2 && current.namePhase == 3);
+
+    else if(old.roomName == "rm_credits_short" && current.roomName == "rm_star1")
+        return (settings["Enter_StarlightIsles"]);
 }
 
 reset
 {
     if(current.roomName == "rm_menu_start" || current.roomName == "rm_load")
         return (old.namePhase == 2 && current.namePhase == 3);
+
+    else if(old.roomName == "rm_credits_short" && current.roomName == "rm_star1")
+        return (settings["Enter_StarlightIsles"]);
 }
 
 onReset
@@ -172,15 +183,11 @@ split
                 pass = (current.roomName.StartsWith("rm_credits")); // The room is named rm_credits in v1.0 and rm_credits_short in v2.0
                 break;
 
-            case 2: // Enter_StarlightIsles
-                pass = (old.roomName.StartsWith("rm_credits"));
-                break;
-
-            case 3: // v2_Ending
+            case 2: // v2_Ending
                 pass = (old.liftState == 0 && current.liftState != 0);
                 break;
 
-            case 4: // Exit_StarlightIsles
+            case 3: // Exit_StarlightIsles
                 pass = (current.playerX >= 1362);
                 break;
         }
