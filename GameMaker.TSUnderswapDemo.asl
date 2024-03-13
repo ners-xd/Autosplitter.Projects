@@ -214,7 +214,6 @@ update
 
         print("[TS!Underswap Demo] Room: " + old.room + " (" + old.roomName + ")" + " -> " + current.room + " (" + current.roomName + ")");
     }
-    if(old.text != current.text) print(old.text + " -> " + current.text);
 
     if(settings["KillCount"] && old.kills != current.kills)
         vars.setText("Kills", current.kills);
