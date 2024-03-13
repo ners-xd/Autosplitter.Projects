@@ -248,7 +248,7 @@ split
                 break;
 
             case 3: // v2_DirtyHacker
-                pass = ((old.text == @"* (Click...)" || old.text == @"*?") && current.text == "dogsong"); // For some reason this pointer also tracks the current song that's playing if there's no textbox up which is pretty funny
+                pass = (current.text == "dogsong"); // For some reason this pointer also tracks the current song that's playing if there's no textbox up which is pretty funny
                 break;
 
             case 4: // Exit_StarlightIsles
