@@ -30,7 +30,7 @@ state("TS!Underswap", "v2.0.5")
 
     float playerX : 0xB680E8, 0x0, 0x868, 0x18, 0x68, 0x10, 0xF0;
 
-    string128 text : 0xD8AB08, 0xE0, 0x48, 0x10, 0x190, 0x0, 0x0, 0x0;
+    string128 text : 0xD8AB08, 0xE0, 0x48, 0x10, 0xB0, 0x0, 0x0, 0x0;
 }
 
 startup
@@ -214,6 +214,7 @@ update
 
         print("[TS!Underswap Demo] Room: " + old.room + " (" + old.roomName + ")" + " -> " + current.room + " (" + current.roomName + ")");
     }
+    if(old.text != current.text) print(old.text + " -> " + current.text);
 
     if(settings["KillCount"] && old.kills != current.kills)
         vars.setText("Kills", current.kills);
@@ -248,7 +249,7 @@ split
                 break;
 
             case 3: // v2_DirtyHacker
-                pass = (old.text == @"* (Click...)" && current.text == null);
+                pass = ((old.text == @"* (Click...)" || old.text == @"*?") && current.text == "dogsong"); // For some reason this pointer also tracks the current song that's playing if there's no textbox up which is pretty funny
                 break;
 
             case 4: // Exit_StarlightIsles
