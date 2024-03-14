@@ -6,15 +6,19 @@ state("TS!Underswap", "v1.0.8")
     double kills : 0x6FCAF4, 0x30, 0x600, 0x20; // global.playerkills
 
     // Self
-    double namePhase : 0x6EFDE8, 0x84, 0x14C, 0x2C, 0x10, 0x264, 0x0; // obj_namehandler.phase
+    double namePhase  : 0x6EFDE8, 0x84,  0x14C, 0x2C, 0x10, 0x264, 0x0; // obj_namehandler.phase
+    double menuFade   : 0x6EFDE8, 0x24C, 0x84,  0x2C, 0x10, 0x12C, 0x0; // obj_menuhandler.bfadealpha
+    double menuOption : 0x6EFDE8, 0x24C, 0x84,  0x2C, 0x10, 0x1BC, 0x0; // obj_menuhandler.selected
 }
 
 state("TS!Underswap", "v2.0.4")
 {
     double kills : 0xB7B040, 0x48, 0x10, 0x170, 0x20;
 
-    double namePhase : 0xD8AB08, 0xE0, 0x48, 0x10, 0x310, 0x0;
-    double liftState : 0xDAB2F0, 0x8,  0x48, 0x10, 0x3E0, 0x0; // obj_crys_lift.state
+    double namePhase  : 0xD8AB08, 0xE0,  0x48, 0x10, 0x310, 0x0;
+    double menuFade   : 0xB4B710, 0xA70, 0x18, 0x48, 0x10,  0x300, 0x0;
+    double menuOption : 0xB4B710, 0xA70, 0x18, 0x48, 0x10,  0x3D0, 0x0;
+    double liftState  : 0xDAB2F0, 0x8,   0x48, 0x10, 0x3E0, 0x0; // obj_crys_lift.state
 
     float playerX : 0xB680E8, 0x0, 0x868, 0x18, 0x68, 0x10, 0xF0; // obj_player.x
 
@@ -25,8 +29,10 @@ state("TS!Underswap", "v2.0.5")
 {
     double kills : 0xB7B040, 0x48, 0x10, 0x170, 0x20;
 
-    double namePhase : 0xD8AB08, 0xE0, 0x48, 0x10, 0x3E0, 0x0;
-    double liftState : 0xDAB2F0, 0x8,  0x48, 0x10, 0x3E0, 0x0;
+    double namePhase  : 0xD8AB08, 0xE0,  0x48, 0x10, 0x3E0, 0x0;
+    double menuFade   : 0xB4B710, 0xA70, 0x18, 0x48, 0x10,  0x20,  0x0;
+    double menuOption : 0xB4B710, 0xA70, 0x18, 0x48, 0x10,  0x3E0, 0x0;
+    double liftState  : 0xDAB2F0, 0x8,   0x48, 0x10, 0x3E0, 0x0;
 
     float playerX : 0xB680E8, 0x0, 0x868, 0x18, 0x68, 0x10, 0xF0;
 
@@ -39,6 +45,8 @@ startup
 
     settings.Add("KillCount", false, "Show kill count");
     settings.SetToolTip("KillCount", "A new row will appear on your layout with the total amount of kills\non the current save file.");
+
+    settings.Add("StartOnContinue", false, "Start/Reset the timer when loading a save file");
 
     settings.Add("FG", true, "Full Game");
     settings.CurrentDefaultParent = "FG";
@@ -174,7 +182,12 @@ init
 start
 {
     if(current.roomName == "rm_menu_start" || current.roomName == "rm_load")
+    {
+        if(current.menuOption == 1)
+            return (old.menuFade == 0 && current.menuFade > 0 && settings["StartOnContinue"]);
+        
         return (old.namePhase != 3 && current.namePhase == 3);
+    }
 
     else if(old.roomName == "rm_credits_short" && current.roomName == "rm_star1")
         return (settings["Enter_StarlightIsles"]);
@@ -183,7 +196,12 @@ start
 reset
 {
     if(current.roomName == "rm_menu_start" || current.roomName == "rm_load")
+    {
+        if(current.menuOption == 1)
+            return (old.menuFade == 0 && current.menuFade > 0 && settings["StartOnContinue"]);
+        
         return (old.namePhase != 3 && current.namePhase == 3);
+    }
 
     else if(old.roomName == "rm_credits_short" && current.roomName == "rm_star1")
         return (settings["Enter_StarlightIsles"]);
