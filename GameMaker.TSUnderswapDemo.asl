@@ -171,11 +171,11 @@ init
     vars.splits = new Dictionary<string, object[]>()
     {
         // Object variables in order: done, old room, new room, special condition
-        {"Exit_RuinedHome",      new object[] {false, "rm_ruina_final", null,                 1}},
-        {"v1_Ending",            new object[] {false, "rm_star3",       "rm_demoend",         0}},
-        {"v2_Ending",            new object[] {false, null,             "rm_crys_entermines", 2}},
-        {"v2_DirtyHacker",       new object[] {false, null,             "rm_terribleend",     3}},
-        {"Exit_StarlightIsles",  new object[] {false, null,             "rm_stars_bridge",    4}}
+        {"Exit_RuinedHome",     new object[] {false, "rm_ruina_final", null,                 1}},
+        {"v1_Ending",           new object[] {false, "rm_star3",       "rm_demoend",         0}},
+        {"v2_Ending",           new object[] {false, null,             "rm_crys_entermines", 2}},
+        {"v2_DirtyHacker",      new object[] {false, null,             "rm_terribleend",     3}},
+        {"Exit_StarlightIsles", new object[] {false, null,             "rm_stars_bridge",    4}}
     };
 }
 
