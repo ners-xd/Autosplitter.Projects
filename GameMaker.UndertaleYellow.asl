@@ -58,6 +58,7 @@ startup
     settings.Add("F_Guardener",        false, "Exit Guardener room");
     settings.Add("F_GreenhouseSkip",   false, "Greenhouse Skip");
     settings.SetToolTip("F_GreenhouseSkip", "This autosplit triggers when you exit the room with the savepoint after Guardener\n(most common split location for Greenhouse Skip).");
+    settings.Add("F_ExitSWElevator",   false, "Exit Steamworks elevator");
     settings.Add("F_Axis",             false, "Exit Axis room");
     settings.Add("F_Flowey1",          false, "Flowey Flashback (Phase 1 End)");
     settings.Add("F_Zenith1",          false, "Zenith Martlet Flashback (Phase 1 End)");
@@ -170,6 +171,7 @@ init
         {"F_GoldenBandana",    new object[] {false,  -1,  -1, 4}}, // Can be obtained in different rooms depending on the route
         {"F_Guardener",        new object[] {false, 191, 190, 0}},
         {"F_GreenhouseSkip",   new object[] {false, 190, 281, 0}},
+        {"F_ExitSWElevator",   new object[] {false, 209, 202, 0}},
         {"F_Axis",             new object[] {false, 204, 206, 0}},
         {"F_Flowey1",          new object[] {false, 234, 233, 0}},
         {"F_Zenith1",          new object[] {false,  -1, 260, 0}},
