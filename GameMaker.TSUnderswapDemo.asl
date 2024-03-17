@@ -287,7 +287,7 @@ split
                 break;
 
             case 1: // Exit_RuinedHome
-                pass = (current.roomName == "rm_credits" || current.roomName == "rm_credits_short"); // Same thing here
+                pass = (current.roomName == "rm_credits" || current.roomName == "rm_credits_short"); // The room name is different depending on the game version
                 break;
 
             case 2: // Exit_Muffet
