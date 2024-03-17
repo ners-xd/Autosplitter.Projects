@@ -203,8 +203,8 @@ init
         {"Exit_FerrisWheel",    new object[] {false, "rm_stars_ferriswheel", "rm_stars_crossroads", 0}},
         {"Enter_CBArena",       new object[] {false, "rm_stars_residential", "rm_stars_cb_arena",   0}},
         {"v2_DirtyHacker",      new object[] {false, null,                   "rm_terribleend",      3}},
-        {"Exit_StarlightIsles", new object[] {false, null,                   "rm_stars_bridge",     4}}
-        {"v2_Ending",           new object[] {false, null,                   "rm_crys_entermines",  5}},
+        {"Exit_StarlightIsles", new object[] {false, null,                   "rm_stars_bridge",     4}},
+        {"v2_Ending",           new object[] {false, null,                   "rm_crys_entermines",  5}}
     };
 }
 
