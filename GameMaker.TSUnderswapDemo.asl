@@ -62,8 +62,10 @@ startup
     settings.Add("Exit_RuinedHome",      false, "Exit Ruined Home");
     settings.Add("v1_Ending",             true, "v1.0 Ending");
     // -------------------------------------------------------------------------------------------
+    settings.Add("Enter_SubDoggo",      false, "Enter Sub-Doggo room");
     settings.Add("Exit_SubDoggo",       false, "Exit Sub-Doggo room");
     settings.Add("Exit_Dogi",           false, "Exit Dogi room");
+    settings.Add("Exit_TripleRock",     false, "Exit Triple Rock Puzzle room");
     settings.Add("Exit_Muffet",         false, "Exit Muffet room");
     settings.Add("Exit_KoffinKeep",     false, "Exit Koffin Keep");
     settings.Add("Exit_HarryLarry",     false, "Exit Harry & Larry room");
@@ -195,8 +197,10 @@ init
         {"Exit_RuinedHome",      new object[] {false, "rm_ruina_final",  null,             1}},
         {"v1_Ending",            new object[] {false, "rm_star3",        "rm_demoend",     0}},
 
+        {"Enter_SubDoggo",      new object[] {false, "rm_star8",             "rm_star9_doggo",      0}},
         {"Exit_SubDoggo",       new object[] {false, "rm_star9_doggo",       "rm_star10",           0}},
         {"Exit_Dogi",           new object[] {false, "rm_star13_marriage",   "rm_star14",           0}},
+        {"Exit_TripleRock",     new object[] {false, "rm_star15",            "rm_star16",           0}},
         {"Exit_Muffet",         new object[] {false, null,                   "rm_star19_outcave",   2}},
         {"Exit_KoffinKeep",     new object[] {false, "rm_stark_front",       "rm_star23_chase2",    0}},
         {"Exit_HarryLarry",     new object[] {false, "rm_stars_mountain4",   "rm_stars_mountain3",  0}},
