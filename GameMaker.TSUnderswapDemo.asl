@@ -69,9 +69,9 @@ startup
     settings.Add("Exit_HarryLarry",     false, "Exit Harry & Larry room");
     settings.Add("Exit_FerrisWheel",    false, "Exit Ferris Wheel room");
     settings.Add("Enter_CBArena",       false, "Enter Crossbones arena");
-    settings.Add("v2_Ending",            true, "v2.0 Ending");
     settings.Add("v2_DirtyHacker",       true, "v2.0 Dirty Hacker Ending");
     settings.Add("Exit_StarlightIsles", false, "Exit Starlight Isles");
+    settings.Add("v2_Ending",            true, "v2.0 Ending");
     // -------------------------------------------------------------------------------------------
 
     // Thanks to Ero for this
@@ -202,9 +202,9 @@ init
         {"Exit_HarryLarry",     new object[] {false, "rm_stars_mountain4",   "rm_stars_mountain3",  0}},
         {"Exit_FerrisWheel",    new object[] {false, "rm_stars_ferriswheel", "rm_stars_crossroads", 0}},
         {"Enter_CBArena",       new object[] {false, "rm_stars_residential", "rm_stars_cb_arena",   0}},
-        {"v2_Ending",           new object[] {false, null,                   "rm_crys_entermines",  3}},
-        {"v2_DirtyHacker",      new object[] {false, null,                   "rm_terribleend",      4}},
-        {"Exit_StarlightIsles", new object[] {false, null,                   "rm_stars_bridge",     5}}
+        {"v2_DirtyHacker",      new object[] {false, null,                   "rm_terribleend",      3}},
+        {"Exit_StarlightIsles", new object[] {false, null,                   "rm_stars_bridge",     4}}
+        {"v2_Ending",           new object[] {false, null,                   "rm_crys_entermines",  5}},
     };
 }
 
@@ -294,16 +294,16 @@ split
                 pass = (old.roomName == "rm_star17_long" || old.roomName == "rm_star18_cave"); // You can exit from two different rooms depending on the route
                 break;
 
-            case 3: // v2_Ending
-                pass = (old.liftState == 0 && current.liftState != 0);
-                break;
-
-            case 4: // v2_DirtyHacker
+            case 3: // v2_DirtyHacker
                 pass = (current.text == "dogsong"); // For some reason this pointer also tracks the current song that's playing if there's no textbox open
                 break;
 
-            case 5: // Exit_StarlightIsles
+            case 4: // Exit_StarlightIsles
                 pass = (current.playerX >= 1362);
+                break;
+                
+            case 5: // v2_Ending
+                pass = (old.liftState == 0 && current.liftState != 0);
                 break;
         }
 
