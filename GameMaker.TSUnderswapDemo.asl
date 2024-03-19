@@ -58,7 +58,7 @@ startup
     settings.Add("Enter_MadDummyBridge", false, "Enter Mad Dummy bridge room");
     settings.Add("Exit_Sewers",          false, "Exit Sewers");
     settings.Add("Exit_Greasers",        false, "Exit Greasers room");
-    settings.Add("Exit_Mettacrit",       false, "Exit Mettacrit room");
+    settings.Add("Exit_Mettalot",        false, "Exit Mettalot room");
     settings.Add("Exit_RuinedHome",      false, "Exit Ruined Home");
     settings.Add("v1_Ending",             true, "v1.0 Ending");
     // -------------------------------------------------------------------------------------------
