@@ -194,7 +194,7 @@ init
         {"Enter_MadDummyBridge", new object[] {false, "rm_ruin23",       "rm_ruin24",      0}},
         {"Exit_Sewers",          new object[] {false, "rm_ruins5",       "rm_ruinc_main",  0}},
         {"Exit_Greasers",        new object[] {false, "rm_ruinc_alley1", "rm_ruinc_main",  0}},
-        {"Exit_Mettacrit",       new object[] {false, "rm_ruinc_square", "rm_ruinc_end",   0}},
+        {"Exit_Mettalot",        new object[] {false, "rm_ruinc_square", "rm_ruinc_end",   0}},
         {"Exit_RuinedHome",      new object[] {false, "rm_ruina_final",  null,             1}},
         {"v1_Ending",            new object[] {false, "rm_star3",        "rm_demoend",     0}},
 
