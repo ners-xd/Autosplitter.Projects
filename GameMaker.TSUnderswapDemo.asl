@@ -93,6 +93,8 @@ startup
         dynamic tc = lc.Component;
         tc.Settings.Text1 = text1;
         tc.Settings.Text2 = text2.ToString();
+        tc.Settings.OverrideFont2 = true;
+        tc.Settings.Font2 = timer.LayoutSettings.TimesFont;
     });
 
     vars.removeAllTexts = (Action)(() =>
