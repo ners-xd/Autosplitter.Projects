@@ -61,19 +61,19 @@ startup
     settings.Add("Exit_RuinedHome",      false, "Exit Ruined Home");
     settings.Add("v1_Ending",             true, "v1.0 Ending");
     // -------------------------------------------------------------------------------------------
-    settings.Add("Enter_SubDoggo",      false, "Enter Sub-Doggo room");
-    settings.Add("Exit_SubDoggo",       false, "Exit Sub-Doggo room");
-    settings.Add("Exit_Dogi",           false, "Exit Dogi room");
-    settings.Add("Exit_TripleRock",     false, "Exit Triple Rock Puzzle room");
-    settings.Add("Exit_Muffet",         false, "Exit Muffet room");
-    settings.Add("Exit_KoffinKeep",     false, "Exit Koffin Keep");
-    settings.Add("Exit_HarryLarry",     false, "Exit Harry & Larry room");
-    settings.Add("Exit_FerrisWheel",    false, "Exit Ferris Wheel room");
-    settings.Add("Enter_CBArena",       false, "Enter Crossbones arena");
-    settings.Add("Exit_CBArena",        false, "Exit Crossbones arena");
-    settings.Add("v2_DirtyHacker",       true, "v2.0 Dirty Hacker Ending");
-    settings.Add("Exit_StarlightIsles", false, "Exit Starlight Isles");
-    settings.Add("v2_Ending",            true, "v2.0 Ending");
+    settings.Add("Enter_SubDoggo",       false, "Enter Sub-Doggo room");
+    settings.Add("Exit_SubDoggo",        false, "Exit Sub-Doggo room");
+    settings.Add("Exit_Dogi",            false, "Exit Dogi room");
+    settings.Add("Exit_TripleRock",      false, "Exit Triple Rock Puzzle room");
+    settings.Add("Exit_Muffet",          false, "Exit Muffet room");
+    settings.Add("Exit_KoffinKeep",      false, "Exit Koffin Keep");
+    settings.Add("Exit_HarryLarry",      false, "Exit Harry & Larry room");
+    settings.Add("Exit_FerrisWheel",     false, "Exit Ferris Wheel room");
+    settings.Add("Enter_CBArena",        false, "Enter Crossbones arena");
+    settings.Add("Exit_CBArena",         false, "Exit Crossbones arena");
+    settings.Add("v2_DirtyHacker",        true, "v2.0 Dirty Hacker Ending");
+    settings.Add("Exit_StarlightIsles",  false, "Exit Starlight Isles");
+    settings.Add("v2_Ending",             true, "v2.0 Ending");
     // -------------------------------------------------------------------------------------------
 
     // Thanks to Ero for this
