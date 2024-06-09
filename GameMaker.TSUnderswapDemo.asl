@@ -186,30 +186,30 @@ init
     vars.splits = new Dictionary<string, object[]>()
     {
         // Object variables in order: done, old room, new room, special condition
-        {"Exit_LongHallway",     new object[] {false, "rm_ruin6_long",   "rm_ruin7",       0}},
-        {"Exit_TripleFlower",    new object[] {false, "rm_ruin9_gl2",    "rm_ruin14",      0}},
-        {"Exit_RuinedKnights",   new object[] {false, "rm_ruin16",       "rm_ruin16B",     0}},
-        {"Exit_SingleRock",      new object[] {false, "rm_ruin21_g2r2",  "rm_ruin22_g2r3", 0}},
-        {"Enter_MadDummyBridge", new object[] {false, "rm_ruin23",       "rm_ruin24",      0}},
-        {"Exit_Sewers",          new object[] {false, "rm_ruins5",       "rm_ruinc_main",  0}},
-        {"Exit_Greasers",        new object[] {false, "rm_ruinc_alley1", "rm_ruinc_main",  0}},
-        {"Exit_Mettalot",        new object[] {false, "rm_ruinc_square", "rm_ruinc_end",   0}},
-        {"Exit_RuinedHome",      new object[] {false, "rm_ruina_final",  null,             1}},
-        {"v1_Ending",            new object[] {false, "rm_star3",        "rm_demoend",     0}},
+        {"Exit_LongHallway",     new object[] {false, "rm_ruin6_long",        "rm_ruin7",            0}},
+        {"Exit_TripleFlower",    new object[] {false, "rm_ruin9_gl2",         "rm_ruin14",           0}},
+        {"Exit_RuinedKnights",   new object[] {false, "rm_ruin16",            "rm_ruin16B",          0}},
+        {"Exit_SingleRock",      new object[] {false, "rm_ruin21_g2r2",       "rm_ruin22_g2r3",      0}},
+        {"Enter_MadDummyBridge", new object[] {false, "rm_ruin23",            "rm_ruin24",           0}},
+        {"Exit_Sewers",          new object[] {false, "rm_ruins5",            "rm_ruinc_main",       0}},
+        {"Exit_Greasers",        new object[] {false, "rm_ruinc_alley1",      "rm_ruinc_main",       0}},
+        {"Exit_Mettalot",        new object[] {false, "rm_ruinc_square",      "rm_ruinc_end",        0}},
+        {"Exit_RuinedHome",      new object[] {false, "rm_ruina_final",       null,                  1}},
+        {"v1_Ending",            new object[] {false, "rm_star3",             "rm_demoend",          0}},
 
-        {"Enter_SubDoggo",      new object[] {false, "rm_star8",             "rm_star9_doggo",      0}},
-        {"Exit_SubDoggo",       new object[] {false, "rm_star9_doggo",       "rm_star10",           0}},
-        {"Exit_Dogi",           new object[] {false, "rm_star13_marriage",   "rm_star14",           0}},
-        {"Exit_TripleRock",     new object[] {false, "rm_star15",            "rm_star16",           0}},
-        {"Exit_Muffet",         new object[] {false, null,                   "rm_star19_outcave",   2}},
-        {"Exit_KoffinKeep",     new object[] {false, "rm_stark_front",       "rm_star23_chase2",    0}},
-        {"Exit_HarryLarry",     new object[] {false, "rm_stars_mountain4",   "rm_stars_mountain3",  0}},
-        {"Exit_FerrisWheel",    new object[] {false, "rm_stars_ferriswheel", "rm_stars_crossroads", 0}},
-        {"Enter_CBArena",       new object[] {false, "rm_stars_residential", "rm_stars_cb_arena",   0}},
-        {"Exit_CBArena",        new object[] {false, "rm_stars_cb_arena",    "rm_stars_bridge",     0}},
-        {"v2_DirtyHacker",      new object[] {false, null,                   "rm_terribleend",      3}},
-        {"Exit_StarlightIsles", new object[] {false, null,                   "rm_stars_bridge",     4}},
-        {"v2_Ending",           new object[] {false, null,                   "rm_crys_entermines",  5}}
+        {"Enter_SubDoggo",       new object[] {false, "rm_star8",             "rm_star9_doggo",      0}},
+        {"Exit_SubDoggo",        new object[] {false, "rm_star9_doggo",       "rm_star10",           0}},
+        {"Exit_Dogi",            new object[] {false, "rm_star13_marriage",   "rm_star14",           0}},
+        {"Exit_TripleRock",      new object[] {false, "rm_star15",            "rm_star16",           0}},
+        {"Exit_Muffet",          new object[] {false, null,                   "rm_star19_outcave",   2}},
+        {"Exit_KoffinKeep",      new object[] {false, "rm_stark_front",       "rm_star23_chase2",    0}},
+        {"Exit_HarryLarry",      new object[] {false, "rm_stars_mountain4",   "rm_stars_mountain3",  0}},
+        {"Exit_FerrisWheel",     new object[] {false, "rm_stars_ferriswheel", "rm_stars_crossroads", 0}},
+        {"Enter_CBArena",        new object[] {false, "rm_stars_residential", "rm_stars_cb_arena",   0}},
+        {"Exit_CBArena",         new object[] {false, "rm_stars_cb_arena",    "rm_stars_bridge",     0}},
+        {"v2_DirtyHacker",       new object[] {false, null,                   "rm_terribleend",      3}},
+        {"Exit_StarlightIsles",  new object[] {false, null,                   "rm_stars_bridge",     4}},
+        {"v2_Ending",            new object[] {false, null,                   "rm_crys_entermines",  5}}
     };
 }
 
