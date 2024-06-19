@@ -38,6 +38,19 @@ state("TS!Underswap", "v2.0.5")
     string128 text         : 0xD8AB08, 0xE0, 0x48,  0x10, 0xB0, 0x0,  0x0, 0x0;
 }
 
+state("TS!Underswap", "v2.0.6")
+{
+    double kills : 0xB7B040, 0x48, 0x10, 0x180, 0x20;
+
+    float  playerX    : 0xB680E8, 0x0,  0x858, 0x18, 0x68, 0x10,  0xF0;
+    double namePhase  : 0xD8AB08, 0xE0, 0x48,  0x10, 0xE0, 0x0;
+    double menuOption : 0xD8AB08, 0xE0, 0x1A8, 0x48, 0x10, 0x3D0, 0x0;
+    double liftState  : 0xDAB2F0, 0x8,  0x48,  0x10, 0x10, 0x0;
+
+    string8   menuContinue : 0xD8AB08, 0xE0, 0x1A8, 0x48, 0x10,  0xE0, 0x0, 0x8, 0x80, 0x10;
+    string128 text         : 0xD8AB08, 0xE0, 0x48,  0x10, 0x260, 0x0,  0x0, 0x0;
+}
+
 startup
 {
     refreshRate = 30;
@@ -172,13 +185,17 @@ init
             version = "v2.0.5";
             break;
 
+        case "09DEEFDB65EEB16F41FDDDDC03C232FA":
+            version = "v2.0.6";
+            break;
+
         default:
             version = "Unknown";
 
             MessageBox.Show
             (
-                "This version of the TS!Underswap Demo is not supported by the autosplitter.\nIf you are playing an older version, update your game.\nIf not, please wait until the autosplitter receives an update." +
-                "\n\nSupported versions: v1.0.8, v2.0.4, v2.0.5.",
+                "This version of the TS!Underswap Demo is not supported by the autosplitter.\nIf you are playing an older version, update your game.\nIf not, please wait until the autosplitter receives an update.\n\n" +
+                "Supported versions: v1.0.8, v2.0.4, v2.0.5, v2.0.6.",
                 "LiveSplit | TS!Underswap Demo", MessageBoxButtons.OK, MessageBoxIcon.Warning
             );
             break;
@@ -302,7 +319,7 @@ split
                 break;
 
             case 3: // v2_DirtyHacker
-                pass = (current.text == "dogsong"); // This pointer also tracks the current song that's playing if there's no textbox open
+                pass = (old.text == @"* (Click...)" || current.text == "dogsong"); // This pointer also tracks the current song that's playing if there's no textbox open
                 break;
 
             case 4: // Exit_StarlightIsles
