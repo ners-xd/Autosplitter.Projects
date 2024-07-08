@@ -2,7 +2,7 @@
 
 state("Amanda The Adventurer")
 {
-    float velocity : "UnityPlayer.dll", 0x01AF2EC8, 0x38, 0x220, 0x20, 0xD00, 0x0, 0x828, 0xF0; // i had to find a pointer for this, it's impossible to access the player's rigidbody velocity with asl-help
+    float velocity : "UnityPlayer.dll", 0x1AF2EC8, 0x38, 0x220, 0x20, 0xD00, 0x0, 0x828, 0xF0;
 }
 
 startup
@@ -22,13 +22,13 @@ init
     vars.quitToTitle = 0;
     vars.Helper.TryLoad = (Func<dynamic, bool>)(mono =>
     {
-        vars.Helper["sceneLoading"] = mono.Make<int>("SceneLoadManager", "_instance", "sceneLoadCoroutine"); // sometimes bools wouldn't work with these for some reason
-        vars.Helper["fading"]       = mono.Make<int>("PlayerCamera", "_instance", "fadeRoutine");            // so i changed them 4head
+        vars.Helper["sceneLoading"] = mono.Make<int>("SceneLoadManager", "_instance", "sceneLoadCoroutine");
+        vars.Helper["fading"]       = mono.Make<int>("PlayerCamera", "_instance", "fadeRoutine");
         vars.Helper["inCredits"]    = mono.Make<bool>("CreditsMenu", "_instance", 0x10, 0x39);
         vars.Helper["paused"]       = mono.Make<bool>("MenuManager", "_instance", "GameIsPaused");
         
-        vars.Helper["lightOutParticle"] = mono.Make<bool>("GameManager", "_instance", "LightOutParticle", 0x10, 0x56); // used for the monster ending
-        vars.Helper["endCamClamp"]      = mono.Make<float>("PlayerInputController", "_instance", "EndCamClamp"); // used for the meat ending, it's the only place where PlayerInputController.Instance.EndCamClamp is 100 instead of 45
+        vars.Helper["lightOutParticle"] = mono.Make<bool>("GameManager", "_instance", "LightOutParticle", 0x10, 0x56);
+        vars.Helper["endCamClamp"]      = mono.Make<float>("PlayerInputController", "_instance", "EndCamClamp");
         vars.Helper["crouchLerp"]       = mono.Make<float>("PlayerInputController", "_instance", "crouchLerp");
         return true;
     });
@@ -38,7 +38,7 @@ init
 
 start
 {
-    return vars.inGame == 1 && (old.velocity == 0 && current.velocity != 0 || old.crouchLerp == 0 && current.crouchLerp != 0);
+    return (vars.inGame == 1 && (old.velocity == 0 && current.velocity != 0 || old.crouchLerp == 0 && current.crouchLerp != 0));
 }
 
 update
