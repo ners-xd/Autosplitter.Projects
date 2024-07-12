@@ -158,7 +158,7 @@ init
         {"F_Ruins",            new object[] {false,  10,  11, 0}},
         {"F_FiveLights",       new object[] {false,  18,  19, 0}},
         {"F_Decibat",          new object[] {false,  25,  26, 0}},
-        {"F_Dalv",             new object[] {false,  34,  37, 0}},
+        {"F_Dalv",             new object[] {false,  34,  -1, 0}},
         {"F_GoldenPear",       new object[] {false,  -1,  29, 1}},
         {"F_GoldenPearExit",   new object[] {false,  29,  28, 0}},
         {"F_DarkRuins",        new object[] {false,  35,  43, 0}},
