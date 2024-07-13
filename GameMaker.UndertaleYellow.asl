@@ -368,7 +368,7 @@ split
                 break;
 
             case 1: // F_Dalv
-                pass = (current.room == 34);
+                pass = (current.room != 34);
                 break;
 
             case 2: // F_GoldenPear
