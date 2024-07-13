@@ -41,7 +41,7 @@ startup
     settings.Add("F_Ruins",            false, "Exit Regular Ruins");
     settings.Add("F_FiveLights",       false, "Exit the five lights puzzle room");
     settings.Add("F_Decibat",          false, "Exit Decibat room");
-    settings.Add("F_Dalv",             false, "Exit Dalv room");
+    settings.Add("F_Dalv",             false, "Exit Dalv room (either side)");
     settings.Add("F_GoldenPear",       false, "Obtain Golden Pear");
     settings.Add("F_GoldenPearExit",   false, "Exit Golden Pear room");
     settings.Add("F_DarkRuins",        false, "Exit Dark Ruins");
@@ -158,12 +158,12 @@ init
         {"F_Ruins",            new object[] {false,  10,  11, 0}},
         {"F_FiveLights",       new object[] {false,  18,  19, 0}},
         {"F_Decibat",          new object[] {false,  25,  26, 0}},
-        {"F_Dalv",             new object[] {false,  34,  -1, 0}},
-        {"F_GoldenPear",       new object[] {false,  -1,  29, 1}},
+        {"F_Dalv",             new object[] {false,  34,  -1, 1}},
+        {"F_GoldenPear",       new object[] {false,  -1,  29, 2}},
         {"F_GoldenPearExit",   new object[] {false,  29,  28, 0}},
         {"F_DarkRuins",        new object[] {false,  35,  43, 0}},
         {"F_Honeydew",         new object[] {false,  58,  59, 0}},
-        {"F_GoldenCoffee",     new object[] {false,  -1,  63, 2}},
+        {"F_GoldenCoffee",     new object[] {false,  -1,  63, 3}},
         {"F_GoldenCoffeeExit", new object[] {false,  63,  59, 0}},
         {"F_EnterMartlet",     new object[] {false,  70,  71, 0}},
         {"F_ExitMartlet",      new object[] {false,  71,  72, 0}},
@@ -172,9 +172,9 @@ init
         {"F_EnterWildEast",    new object[] {false, 126, 127, 0}},
         {"F_FForCeroba",       new object[] {false, 180, 127, 0}},
         {"F_Starlo",           new object[] {false, 135, 136, 0}},
-        {"F_GoldenCactus",     new object[] {false,  -1,  83, 3}},
+        {"F_GoldenCactus",     new object[] {false,  -1,  83, 4}},
         {"F_GoldenCactusExit", new object[] {false,  83,  82, 0}},
-        {"F_GoldenBandana",    new object[] {false,  -1,  -1, 4}}, // Can be obtained in different rooms depending on the route
+        {"F_GoldenBandana",    new object[] {false,  -1,  -1, 5}}, // Can be obtained in different rooms depending on the route
         {"F_Guardener",        new object[] {false, 191, 190, 0}},
         {"F_GreenhouseSkip",   new object[] {false, 190, 281, 0}},
         {"F_ExitSWElevator",   new object[] {false, 209, 202, 0}},
@@ -186,11 +186,11 @@ init
         {"F_Ceroba1",          new object[] {false, 180, 246, 0}},
         {"F_Ceroba2",          new object[] {false, 180, 250, 0}},
         {"F_Ceroba3",          new object[] {false, 180, 255, 0}},
-        {"F_Neutral",          new object[] {false,  -1, 235, 5}},
-        {"F_Pacifist",         new object[] {false,  -1, 255, 6}},
-        {"F_FPacifist",        new object[] {false,  -1, 180, 7}},
-        {"F_Genocide",         new object[] {false,  -1, 268, 8}},
-        {"F_Rope",             new object[] {false,  -1,  13, 9}}
+        {"F_Neutral",          new object[] {false,  -1, 235, 6}},
+        {"F_Pacifist",         new object[] {false,  -1, 255, 7}},
+        {"F_FPacifist",        new object[] {false,  -1, 180, 8}},
+        {"F_Genocide",         new object[] {false,  -1, 268, 9}},
+        {"F_Rope",             new object[] {false,  -1,  13, 10}}
     };
 
     switch(hash)
@@ -367,39 +367,43 @@ split
                 pass = true;
                 break;
 
-            case 1: // F_GoldenPear
+            case 1: // F_Dalv
+                pass = (current.room == 34);
+                break;
+
+            case 2: // F_GoldenPear
                 pass = (vars.checkItem("G. Pear"));
                 break;
 
-            case 2: // F_GoldenCoffee
+            case 3: // F_GoldenCoffee
                 pass = (vars.checkItem("G. Coffee"));
                 break;
 
-            case 3: // F_GoldenCactus
+            case 4: // F_GoldenCactus
                 pass = (vars.checkItem("G. Cactus"));
                 break;
 
-            case 4: // F_GoldenBandana
+            case 5: // F_GoldenBandana
                 pass = ((current.room == 167 || current.room == 275) && vars.checkItem("G. Bandana"));
                 break;
 
-            case 5: // F_Neutral
+            case 6: // F_Neutral
                 pass = (vars.tempVar == true && old.neutralEndScene == 5 && current.neutralEndScene == 6);
                 break;
 
-            case 6: // F_Pacifist
+            case 7: // F_Pacifist
                 pass = (old.cerobaY <= 387 && current.cerobaY >= 387);
                 break;
 
-            case 7: // F_FPacifist
+            case 8: // F_FPacifist
                 pass = (vars.tempVar == true && old.asgoreFade == 0 && current.asgoreFade == 1);
                 break;
 
-            case 8: // F_Genocide
+            case 9: // F_Genocide
                 pass = (old.genoEndScene == 35 && (current.genoEndScene == 36 || current.genoEndScene == 37)); // Sometimes it goes to 36, sometimes 37 on the same frame
                 break;
 
-            case 9: // F_Rope
+            case 10: // F_Rope
                 pass = (old.ropeWaiter == 3 && current.ropeWaiter == 4);
                 break;
         }
