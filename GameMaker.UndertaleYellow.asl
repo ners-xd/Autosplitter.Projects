@@ -62,6 +62,8 @@ startup
     settings.Add("F_GreenhouseSkip",   false, "Greenhouse Skip");
     settings.SetToolTip("F_GreenhouseSkip", "This autosplit triggers when you exit the room with the savepoint after Guardener\n(most common split location for Greenhouse Skip).");
     settings.Add("F_ExitSWElevator",   false, "Exit Steamworks elevator");
+    settings.Add("F_EnterComputer",    false, "Enter Computer room");
+    settings.Add("F_ExitComputer",     false, "Exit Computer room");
     settings.Add("F_Axis",             false, "Exit Axis room");
     settings.Add("F_Flowey1",          false, "Flowey Flashback (Phase 1 End)");
     settings.Add("F_Zenith1",          false, "Zenith Martlet Flashback (Phase 1 End)");
@@ -155,41 +157,43 @@ init
     vars.splits = new Dictionary<string, object[]>()
     {
         // Object variables in order: done, old room, new room, special condition
-        {"F_Ruins",            new object[] {false,  10,  11, 0}},
-        {"F_FiveLights",       new object[] {false,  18,  19, 0}},
-        {"F_Decibat",          new object[] {false,  25,  26, 0}},
-        {"F_Dalv",             new object[] {false,  34,  -1, 1}},
-        {"F_GoldenPear",       new object[] {false,  -1,  29, 2}},
-        {"F_GoldenPearExit",   new object[] {false,  29,  28, 0}},
-        {"F_DarkRuins",        new object[] {false,  35,  43, 0}},
-        {"F_Honeydew",         new object[] {false,  58,  59, 0}},
-        {"F_GoldenCoffee",     new object[] {false,  -1,  63, 3}},
-        {"F_GoldenCoffeeExit", new object[] {false,  63,  59, 0}},
-        {"F_EnterMartlet",     new object[] {false,  70,  71, 0}},
-        {"F_ExitMartlet",      new object[] {false,  71,  72, 0}},
-        {"F_ExitElevator",     new object[] {false,  93,  94, 0}},
-        {"F_ElBailador",       new object[] {false,  -1, 109, 0}},
-        {"F_EnterWildEast",    new object[] {false, 126, 127, 0}},
-        {"F_FForCeroba",       new object[] {false, 180, 127, 0}},
-        {"F_Starlo",           new object[] {false, 135, 136, 0}},
-        {"F_GoldenCactus",     new object[] {false,  -1,  83, 4}},
-        {"F_GoldenCactusExit", new object[] {false,  83,  82, 0}},
-        {"F_GoldenBandana",    new object[] {false,  -1,  -1, 5}}, // Can be obtained in different rooms depending on the route
-        {"F_Guardener",        new object[] {false, 191, 190, 0}},
-        {"F_GreenhouseSkip",   new object[] {false, 190, 281, 0}},
-        {"F_ExitSWElevator",   new object[] {false, 209, 202, 0}},
-        {"F_Axis",             new object[] {false, 204, 206, 0}},
-        {"F_Flowey1",          new object[] {false, 234, 233, 0}},
-        {"F_Zenith1",          new object[] {false,  -1, 260, 0}},
-        {"F_Zenith2",          new object[] {false, 180, 221, 0}},
-        {"F_NewHome",          new object[] {false, 259, 253, 0}},
-        {"F_Ceroba1",          new object[] {false, 180, 246, 0}},
-        {"F_Ceroba2",          new object[] {false, 180, 250, 0}},
-        {"F_Ceroba3",          new object[] {false, 180, 255, 0}},
-        {"F_Neutral",          new object[] {false,  -1, 235, 6}},
-        {"F_Pacifist",         new object[] {false,  -1, 255, 7}},
-        {"F_FPacifist",        new object[] {false,  -1, 180, 8}},
-        {"F_Genocide",         new object[] {false,  -1, 268, 9}},
+        {"F_Ruins",            new object[] {false,  10,  11,  0}},
+        {"F_FiveLights",       new object[] {false,  18,  19,  0}},
+        {"F_Decibat",          new object[] {false,  25,  26,  0}},
+        {"F_Dalv",             new object[] {false,  34,  -1,  1}},
+        {"F_GoldenPear",       new object[] {false,  -1,  29,  2}},
+        {"F_GoldenPearExit",   new object[] {false,  29,  28,  0}},
+        {"F_DarkRuins",        new object[] {false,  35,  43,  0}},
+        {"F_Honeydew",         new object[] {false,  58,  59,  0}},
+        {"F_GoldenCoffee",     new object[] {false,  -1,  63,  3}},
+        {"F_GoldenCoffeeExit", new object[] {false,  63,  59,  0}},
+        {"F_EnterMartlet",     new object[] {false,  70,  71,  0}},
+        {"F_ExitMartlet",      new object[] {false,  71,  72,  0}},
+        {"F_ExitElevator",     new object[] {false,  93,  94,  0}},
+        {"F_ElBailador",       new object[] {false,  -1, 109,  0}},
+        {"F_EnterWildEast",    new object[] {false, 126, 127,  0}},
+        {"F_FForCeroba",       new object[] {false, 180, 127,  0}},
+        {"F_Starlo",           new object[] {false, 135, 136,  0}},
+        {"F_GoldenCactus",     new object[] {false,  -1,  83,  4}},
+        {"F_GoldenCactusExit", new object[] {false,  83,  82,  0}},
+        {"F_GoldenBandana",    new object[] {false,  -1,  -1,  5}}, // Can be obtained in different rooms depending on the route
+        {"F_Guardener",        new object[] {false, 191, 190,  0}},
+        {"F_GreenhouseSkip",   new object[] {false, 190, 281,  0}},
+        {"F_ExitSWElevator",   new object[] {false, 209, 202,  0}},
+        {"F_EnterComputer",    new object[] {false, 202, 205,  0}},
+        {"F_ExitComputer",     new object[] {false, 205, 203,  0}},
+        {"F_Axis",             new object[] {false, 204, 206,  0}},
+        {"F_Flowey1",          new object[] {false, 234, 233,  0}},
+        {"F_Zenith1",          new object[] {false,  -1, 260,  0}},
+        {"F_Zenith2",          new object[] {false, 180, 221,  0}},
+        {"F_NewHome",          new object[] {false, 259, 253,  0}},
+        {"F_Ceroba1",          new object[] {false, 180, 246,  0}},
+        {"F_Ceroba2",          new object[] {false, 180, 250,  0}},
+        {"F_Ceroba3",          new object[] {false, 180, 255,  0}},
+        {"F_Neutral",          new object[] {false,  -1, 235,  6}},
+        {"F_Pacifist",         new object[] {false,  -1, 255,  7}},
+        {"F_FPacifist",        new object[] {false,  -1, 180,  8}},
+        {"F_Genocide",         new object[] {false,  -1, 268,  9}},
         {"F_Rope",             new object[] {false,  -1,  13, 10}}
     };
 
