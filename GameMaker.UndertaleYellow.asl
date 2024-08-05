@@ -74,7 +74,7 @@ startup
     settings.Add("F_Ceroba3",          false, "End Pacifist Ceroba battle");
     settings.Add("F_Neutral",           true, "Neutral Ending");
     settings.Add("F_Pacifist",          true, "True Pacifist Ending");
-    settings.Add("F_FPacifist",         true, "Flawed Pacifist Ending");
+    settings.Add("F_FPacifist",         true, "Flawed Pacifist Ending (might not always work)");
     settings.Add("F_Genocide",          true, "Genocide Ending");
     settings.Add("F_Rope",              true, "Rope Ending");
 
@@ -372,7 +372,7 @@ split
                 break;
 
             case 1: // F_Dalv
-                pass = (current.room != 34);
+                pass = (current.room != 34 && current.room != 180);
                 break;
 
             case 2: // F_GoldenPear
