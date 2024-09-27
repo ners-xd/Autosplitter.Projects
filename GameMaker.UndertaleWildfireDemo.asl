@@ -44,7 +44,7 @@ init
     {
         case "B99A7306BE170472FABC8554ABE577FD":
             version = "Combat Demo v1.05";
-            vars.currentChallenge = -1;
+            vars.currentChallenge = 0;
             break;
 
         default:
