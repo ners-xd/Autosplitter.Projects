@@ -44,6 +44,7 @@ init
     {
         case "B99A7306BE170472FABC8554ABE577FD":
             version = "Combat Demo v1.05";
+            vars.currentChallenge = -1;
             break;
 
         default:
@@ -58,7 +59,6 @@ init
     }
     print("[Undertale Wildfire Demo] Version: " + version + " (" + hash + ")");
 
-    vars.currentChallenge = -1;
     vars.splits = new Dictionary<string, object[]>()
     {
         // Object variables in order: done, old room, new room, special condition
