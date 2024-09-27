@@ -2,6 +2,7 @@
 
 state("Undertale Wildfire", "Combat Demo v1.05")
 {
+    // Self
     double   menuSelection : 0xE17960, 0x98, 0x48, 0x10, 0x90, 0x0;      // obj_menu.selection
     string16 menuState     : 0xE26E88, 0x18, 0x88, 0x8,  0x0,  0x0, 0x0; // obj_menu.fsm state (SnowState)
 
