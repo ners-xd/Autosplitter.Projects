@@ -2,8 +2,7 @@
 
 state("UNDERTALE KINDRED SPIRITS", "Prologue v0.1.0")
 {
-    // Global
-    int sound : 0xBDB9C8, 0x0, 0x14; // Not really a global variable but it's the best I can describe it; it's the ID of the current sound that's playing (highest priority)
+    int sound : 0xBDB9C8, 0x0, 0x14; // The ID of the current sound that's playing (highest priority)
 
     // Self
     double menuShake  : 0xE3A210, 0x1F0, 0x88,   0x10, 0x48, 0x10, 0xD0, 0x0;       // obj_intromenu0.tab_info.instr.shake_timer
