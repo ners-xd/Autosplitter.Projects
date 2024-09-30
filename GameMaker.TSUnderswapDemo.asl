@@ -1,4 +1,4 @@
-// TS!Underswap Demo Autosplitter by NERS
+// TS!Underswap Autosplitter by NERS
 
 state("TS!Underswap", "v1.0.8")
 {
@@ -51,6 +51,19 @@ state("TS!Underswap", "v2.0.6")
     string128 text         : 0xD8AB08, 0xE0, 0x48,  0x10, 0x260, 0x0,  0x0, 0x0;
 }
 
+state("TS!Underswap", "v2.0.7")
+{
+    double kills : 0xB7B040, 0x48, 0x10, 0x180, 0x20;
+
+    float  playerX    : 0xB680E8, 0x0,  0x858, 0x18, 0x68, 0x10,  0xF0;
+    double namePhase  : 0xD8AB08, 0xE0, 0x48,  0x10, 0xF0, 0x0;
+    double menuOption : 0xD8AB08, 0xE0, 0x1A8, 0x48, 0x10, 0x3D0, 0x0;
+    double liftState  : 0xDAB2F0, 0x8,  0x48,  0x10, 0x10, 0x0;
+
+    string8   menuContinue : 0xD8AB08, 0xE0, 0x1A8, 0x48, 0x10,  0xF0, 0x0, 0x8, 0x80, 0x10;
+    string128 text         : 0xD8AB08, 0xE0, 0x48,  0x10, 0x270, 0x0,  0x0, 0x0;
+}
+
 startup
 {
     refreshRate = 30;
@@ -63,6 +76,9 @@ startup
     settings.Add("Start_StarlightIsles", false, "Start/Reset the timer when entering Starlight Isles");
     settings.SetToolTip("Start_StarlightIsles", "This setting is mainly used for IL (Individual Level) runs.");
     // -------------------------------------------------------------------------------------------
+    settings.Add("Ruined_Home", true, "Ruined Home");
+    settings.CurrentDefaultParent = "Ruined_Home";
+
     settings.Add("Exit_LongHallway",     false, "Exit Long Hallway");
     settings.Add("Exit_TripleFlower",    false, "Exit Triple Flower Puzzle room");
     settings.Add("Exit_RuinedKnights",   false, "Exit Ruined Knights room");
@@ -73,20 +89,27 @@ startup
     settings.Add("Exit_Mettalot",        false, "Exit Mettalot room");
     settings.Add("Exit_RuinedHome",      false, "Exit Ruined Home");
     settings.Add("v1_Ending",             true, "v1.0 Ending");
+    
+    settings.CurrentDefaultParent = null;
     // -------------------------------------------------------------------------------------------
-    settings.Add("Enter_SubDoggo",       false, "Enter Sub-Doggo room");
-    settings.Add("Exit_SubDoggo",        false, "Exit Sub-Doggo room");
-    settings.Add("Exit_Dogi",            false, "Exit Dogi room");
-    settings.Add("Exit_TripleRock",      false, "Exit Triple Rock Puzzle room");
-    settings.Add("Exit_Muffet",          false, "Exit Muffet room");
-    settings.Add("Exit_KoffinKeep",      false, "Exit Koffin Keep");
-    settings.Add("Exit_HarryLarry",      false, "Exit Harry & Larry room");
-    settings.Add("Exit_FerrisWheel",     false, "Exit Ferris Wheel room");
-    settings.Add("Enter_CBArena",        false, "Enter Crossbones arena");
-    settings.Add("Exit_CBArena",         false, "Exit Crossbones arena");
-    settings.Add("v2_DirtyHacker",        true, "v2.0 Dirty Hacker Ending");
-    settings.Add("Exit_StarlightIsles",  false, "Exit Starlight Isles");
-    settings.Add("v2_Ending",             true, "v2.0 Ending");
+    settings.Add("Starlight_Isles", true, "Starlight Isles");
+    settings.CurrentDefaultParent = "Starlight_Isles";
+    
+    settings.Add("Enter_SubDoggo",      false, "Enter Sub-Doggo room");
+    settings.Add("Exit_SubDoggo",       false, "Exit Sub-Doggo room");
+    settings.Add("Exit_Dogi",           false, "Exit Dogi room");
+    settings.Add("Exit_TripleRock",     false, "Exit Triple Rock Puzzle room");
+    settings.Add("Exit_Muffet",         false, "Exit Muffet room");
+    settings.Add("Exit_KoffinKeep",     false, "Exit Koffin Keep");
+    settings.Add("Exit_HarryLarry",     false, "Exit Harry & Larry room");
+    settings.Add("Exit_FerrisWheel",    false, "Exit Ferris Wheel room");
+    settings.Add("Enter_CBArena",       false, "Enter Crossbones arena");
+    settings.Add("Exit_CBArena",        false, "Exit Crossbones arena");
+    settings.Add("v2_DirtyHacker",       true, "v2.0 Dirty Hacker Ending");
+    settings.Add("Exit_StarlightIsles", false, "Exit Starlight Isles");
+    settings.Add("v2_Ending",            true, "v2.0 Ending");
+
+    settings.CurrentDefaultParent = null;
     // -------------------------------------------------------------------------------------------
 
     // Thanks to Ero for this
@@ -140,8 +163,8 @@ init
             ? scanner.Scan(new SigScanTarget(o, sig) { OnFound = (p, s, addr) => addr + p.ReadValue<int>(addr) + 0x4 })
             : scanner.Scan(new SigScanTarget(o, sig) { OnFound = (p, s, addr) => p.ReadPointer(addr) });
 
-        if(ptr == IntPtr.Zero) throw new NullReferenceException("[TS!Underswap Demo] Signature scanning failed");
-        print("[TS!Underswap Demo] Signature found at " + ptr.ToString("X"));
+        if(ptr == IntPtr.Zero) throw new NullReferenceException("[TS!Underswap] Signature scanning failed");
+        print("[TS!Underswap] Signature found at " + ptr.ToString("X"));
         return ptr;
     };
     
@@ -189,18 +212,22 @@ init
             version = "v2.0.6";
             break;
 
+        case "DE22D8A71B7A0D1E411D4F00C8B2DEEA":
+            version = "v2.0.7";
+            break;
+
         default:
             version = "Unknown";
 
             MessageBox.Show
             (
-                "This version of the TS!Underswap Demo is not supported by the autosplitter.\nIf you are playing an older version, update your game.\nIf not, please wait until the autosplitter receives an update.\n\n" +
+                "This version of TS!Underswap is not supported by the autosplitter.\nIf you are playing an older version, update your game.\nIf not, please wait until the autosplitter receives an update.\n\n" +
                 "Supported versions: v1.0.8, v2.0.4, v2.0.5, v2.0.6.",
-                "LiveSplit | TS!Underswap Demo", MessageBoxButtons.OK, MessageBoxIcon.Warning
+                "LiveSplit | TS!Underswap", MessageBoxButtons.OK, MessageBoxIcon.Warning
             );
             break;
     }
-    print("[TS!Underswap Demo] Version: " + version + " (" + hash + ")");
+    print("[TS!Underswap] Version: " + version + " (" + hash + ")");
 
     vars.splits = new Dictionary<string, object[]>()
     {
@@ -267,7 +294,7 @@ onReset
         foreach(string split in vars.splits.Keys) 
             vars.splits[split][0] = false;
         
-        print("[TS!Underswap Demo] All splits have been reset to initial state");
+        print("[TS!Underswap] All splits have been reset to initial state");
     }
 }
 
@@ -283,7 +310,7 @@ update
         if(settings["KillCount"] && old.roomName == "rm_init") // Show the counter on game start
             vars.setText("Kills", 0);
 
-        print("[TS!Underswap Demo] Room: " + old.room + " (" + old.roomName + ")" + " -> " + current.room + " (" + current.roomName + ")");
+        print("[TS!Underswap] Room: " + old.room + " (" + old.roomName + ")" + " -> " + current.room + " (" + current.roomName + ")");
     }
 
     if(settings["KillCount"] && old.kills != current.kills && current.kills % 1 == 0)
@@ -319,7 +346,7 @@ split
                 break;
 
             case 3: // v2_DirtyHacker
-                pass = (old.text == @"* (Click...)" || current.text == "dogsong"); // This pointer also tracks the current song that's playing if there's no textbox open
+                pass = (old.text == @"* (Click...)" || current.text == "dogsong");
                 break;
 
             case 4: // Exit_StarlightIsles
@@ -334,7 +361,7 @@ split
         if(pass)
         {
             vars.splits[splitKey][done] = true;
-            print("[TS!Underswap Demo] Split triggered (" + splitKey + ")");
+            print("[TS!Underswap] Split triggered (" + splitKey + ")");
             return true;
         }
     }
