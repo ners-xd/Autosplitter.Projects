@@ -38,12 +38,12 @@ init
 
     string hash;
     using(var md5 = System.Security.Cryptography.MD5.Create())
-        using(var fs = File.OpenRead(modules.First().FileName)) 
+        using(var fs = File.OpenRead(new FileInfo(module.FileName).DirectoryName + @"\data.win")) 
             hash = string.Concat(md5.ComputeHash(fs).Select(b => b.ToString("X2")));
 
     switch(hash)
     {
-        case "B99A7306BE170472FABC8554ABE577FD":
+        case "4E65843C4FCFB42B965DC790BCA2AA32":
             version = "Combat Demo v1.05";
             vars.currentChallenge = 0;
             break;
