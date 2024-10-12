@@ -16,11 +16,18 @@ state("UNDERTALE KINDRED SPIRITS", "Prologue v0.1.4")
     double menuShake : 0xC07C58, 0x30, 0x1870, 0x0, 0xB0, 0x48, 0x10, 0x130, 0x0;
 }
 
-state("utks-prologue", "Prologue v0.1.5")
+state("utks-prologue", "Prologue v0.1.5-v0.1.54")
 {
     int sound : 0xBDB9C8, 0x0, 0x14;
 
     double menuShake : 0xC07C58, 0x30, 0x1F90, 0x0, 0xB0, 0x48, 0x10, 0x40, 0x0;
+}
+
+state("utks-prologue", "Prologue v0.1.55")
+{
+    int sound : 0xBDB9C8, 0x0, 0x14;
+
+    double menuShake : 0xC07C58, 0x30, 0x1FD0, 0x0, 0xB0, 0x48, 0x10, 0x70, 0x0;
 }
 
 startup
@@ -78,7 +85,11 @@ init
         case "5BD83DD00DA90760A1B088824FB07350": // v0.1.52
         case "95F0F076730DBDFB083519D334470C31": // v0.1.53
         case "8A90A5F8940A4F9B716729D60D39FE54": // v0.1.54
-            version = "Prologue v0.1.5";
+            version = "Prologue v0.1.5-v0.1.54";
+            break;
+        
+        case "C979EADA3C5BC7A6BBD9CDCCEA67990B":
+            version = "Prologue v0.1.55";
             break;
 
         default:
@@ -87,7 +98,7 @@ init
             MessageBox.Show
             (
                 "This version of Undertale Kindred Spirits is not supported by the autosplitter.\nIf you are playing an older version, update your game.\nIf not, please wait until the autosplitter receives an update.\n\n" +
-                "Supported versions: Prologue v0.1.0, v0.1.4-v0.1.54.",
+                "Supported versions: Prologue v0.1.0, v0.1.4-v0.1.55.",
                 "LiveSplit | Undertale Kindred Spirits", MessageBoxButtons.OK, MessageBoxIcon.Warning
             );
             break;
@@ -110,7 +121,8 @@ start
             return (current.roomName == "room_introtitle" && ((old.menuShake == 0 && current.menuShake > 0 && current.menuShake % 1 == 0) || (old.menuShake2 == 0 && current.menuShake2 > 0 && current.menuShake2 % 1 == 0)));
 
         case "Prologue v0.1.4":
-        case "Prologue v0.1.5":
+        case "Prologue v0.1.5-v0.1.54":
+        case "Prologue v0.1.55":
             return (current.roomName == "room_introtitle" && old.menuShake == 0 && current.menuShake > 0 && current.menuShake % 1 == 0);
     }
 }
@@ -123,7 +135,8 @@ reset
             return (current.roomName == "room_introtitle" && ((old.menuShake == 0 && current.menuShake > 0 && current.menuShake % 1 == 0) || (old.menuShake2 == 0 && current.menuShake2 > 0 && current.menuShake2 % 1 == 0)));
 
         case "Prologue v0.1.4":
-        case "Prologue v0.1.5":
+        case "Prologue v0.1.5-v0.1.54":
+        case "Prologue v0.1.55":
             return (current.roomName == "room_introtitle" && old.menuShake == 0 && current.menuShake > 0 && current.menuShake % 1 == 0);
     }
 }
