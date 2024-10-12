@@ -16,6 +16,13 @@ state("UNDERTALE KINDRED SPIRITS", "Prologue v0.1.4")
     double menuShake : 0xC07C58, 0x30, 0x1870, 0x0, 0xB0, 0x48, 0x10, 0x130, 0x0;
 }
 
+state("utks-prologue", "Prologue v0.1.5")
+{
+    int sound : 0xBDB9C8, 0x0, 0x14;
+
+    double menuShake : 0xC07C58, 0x30, 0x1F90, 0x0, 0xB0, 0x48, 0x10, 0x40, 0x0;
+}
+
 startup
 {
     refreshRate = 30;
@@ -38,7 +45,18 @@ init
         print("[Undertale Kindred Spirits] Signature found at " + ptr.ToString("X"));
         return ptr;
     };
+    IntPtr ptrRoomArray = scan(5, "74 0C 48 8B 05 ?? ?? ?? ?? 48 8B 04 D0");
     vars.ptrRoomID = scan(9, "48 8B 05 ?? ?? ?? ?? 89 3D ?? ?? ?? ??");
+
+    vars.getRoomName = (Func<string>)(() =>
+    {
+        IntPtr arrayMain = game.ReadPointer(ptrRoomArray);
+        if(arrayMain == IntPtr.Zero) return string.Empty;
+
+        IntPtr arrayItem = game.ReadPointer(arrayMain + game.ReadValue<int>((IntPtr)vars.ptrRoomID) * 8);
+        if(arrayItem == IntPtr.Zero) return string.Empty;
+        return game.ReadString(arrayItem, 64);
+    });
 
     string hash;
     using(var md5 = System.Security.Cryptography.MD5.Create())
@@ -55,13 +73,17 @@ init
             version = "Prologue v0.1.4";
             break;
 
+        case "390757428E23FC559C09A5857985FD52":
+            version = "Prologue v0.1.5";
+            break;
+
         default:
             version = "Unknown";
 
             MessageBox.Show
             (
                 "This version of Undertale Kindred Spirits is not supported by the autosplitter.\nIf you are playing an older version, update your game.\nIf not, please wait until the autosplitter receives an update.\n\n" +
-                "Supported versions: Prologue v0.1.0, v0.1.4.",
+                "Supported versions: Prologue v0.1.0, v0.1.4, v0.1.5.",
                 "LiveSplit | Undertale Kindred Spirits", MessageBoxButtons.OK, MessageBoxIcon.Warning
             );
             break;
@@ -71,8 +93,8 @@ init
     vars.splits = new Dictionary<string, object[]>()
     {
         // Object variables in order: done, old room, new room, special condition
-        {"P_TekiLomax", new object[] {false, 13, 14, 0}},
-        {"P_Ending",    new object[] {false, -1, 30, 1}}
+        {"P_TekiLomax", new object[] {false, "room_rtown_dumpster", "room_thouse_fireplace", 0}},
+        {"P_Ending",    new object[] {false, null,                  "room_slevel0_0",        1}}
     };
 }
 
@@ -81,10 +103,11 @@ start
     switch(version)
     {
         case "Prologue v0.1.0":
-            return (current.room == 28 && ((old.menuShake == 0 && current.menuShake > 0 && current.menuShake % 1 == 0) || (old.menuShake2 == 0 && current.menuShake2 > 0 && current.menuShake2 % 1 == 0)));
+            return (current.roomName == "room_introtitle" && ((old.menuShake == 0 && current.menuShake > 0 && current.menuShake % 1 == 0) || (old.menuShake2 == 0 && current.menuShake2 > 0 && current.menuShake2 % 1 == 0)));
 
         case "Prologue v0.1.4":
-            return (current.room == 28 && old.menuShake == 0 && current.menuShake > 0 && current.menuShake % 1 == 0);
+        case "Prologue v0.1.5":
+            return (current.roomName == "room_introtitle" && old.menuShake == 0 && current.menuShake > 0 && current.menuShake % 1 == 0);
     }
 }
 
@@ -93,10 +116,11 @@ reset
     switch(version)
     {
         case "Prologue v0.1.0":
-            return (current.room == 28 && ((old.menuShake == 0 && current.menuShake > 0 && current.menuShake % 1 == 0) || (old.menuShake2 == 0 && current.menuShake2 > 0 && current.menuShake2 % 1 == 0)));
+            return (current.roomName == "room_introtitle" && ((old.menuShake == 0 && current.menuShake > 0 && current.menuShake % 1 == 0) || (old.menuShake2 == 0 && current.menuShake2 > 0 && current.menuShake2 % 1 == 0)));
 
         case "Prologue v0.1.4":
-            return (current.room == 28 && old.menuShake == 0 && current.menuShake > 0 && current.menuShake % 1 == 0);
+        case "Prologue v0.1.5":
+            return (current.roomName == "room_introtitle" && old.menuShake == 0 && current.menuShake > 0 && current.menuShake % 1 == 0);
     }
 }
 
@@ -117,8 +141,9 @@ update
         return false;
 
     current.room = game.ReadValue<int>((IntPtr)vars.ptrRoomID);
+    current.roomName = vars.getRoomName();
     if(old.room != current.room)
-        print("[Undertale Kindred Spirits] Room: " + old.room + " -> " + current.room);
+        print("[Undertale Kindred Spirits] Room: " + old.room + " (" + old.roomName + ")" + " -> " + current.room + " (" + current.roomName + ")");
 }
 
 split
@@ -131,8 +156,8 @@ split
     foreach(string splitKey in vars.splits.Keys)
     {
         if((!settings[splitKey] || vars.splits[splitKey][done]) ||
-           (vars.splits[splitKey][oldRoom] != -1 && old.room != vars.splits[splitKey][oldRoom]) ||
-           (vars.splits[splitKey][newRoom] != -1 && current.room != vars.splits[splitKey][newRoom])) continue;
+           (vars.splits[splitKey][oldRoom] != null && old.roomName != vars.splits[splitKey][oldRoom]) ||
+           (vars.splits[splitKey][newRoom] != null && current.roomName != vars.splits[splitKey][newRoom])) continue;
 
         bool pass = false;
         switch((int)vars.splits[splitKey][condition])
@@ -142,7 +167,7 @@ split
                 break;
 
             case 1:
-                pass = (old.sound == 5 && current.sound == 10);
+                pass = (old.sound == 5 && (current.sound == 10 || current.sound == 11));
                 break;
         }
 
