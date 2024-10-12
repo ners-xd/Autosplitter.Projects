@@ -23,7 +23,7 @@ state("utks-prologue", "Prologue v0.1.5-v0.1.54")
     double menuShake : 0xC07C58, 0x30, 0x1F90, 0x0, 0xB0, 0x48, 0x10, 0x40, 0x0;
 }
 
-state("utks-prologue", "Prologue v0.1.55")
+state("utks-prologue", "Prologue v0.1.55/v0.1.56")
 {
     int sound : 0xBDB9C8, 0x0, 0x14;
 
@@ -88,8 +88,9 @@ init
             version = "Prologue v0.1.5-v0.1.54";
             break;
         
-        case "C979EADA3C5BC7A6BBD9CDCCEA67990B":
-            version = "Prologue v0.1.55";
+        case "C979EADA3C5BC7A6BBD9CDCCEA67990B": // v0.1.55
+        case "AB954B95FC2E34C1F1217808836E98E7": // v0.1.56
+            version = "Prologue v0.1.55/v0.1.56";
             break;
 
         default:
@@ -122,7 +123,7 @@ start
 
         case "Prologue v0.1.4":
         case "Prologue v0.1.5-v0.1.54":
-        case "Prologue v0.1.55":
+        case "Prologue v0.1.55/v0.1.56":
             return (current.roomName == "room_introtitle" && old.menuShake == 0 && current.menuShake > 0 && current.menuShake % 1 == 0);
     }
 }
@@ -136,7 +137,7 @@ reset
 
         case "Prologue v0.1.4":
         case "Prologue v0.1.5-v0.1.54":
-        case "Prologue v0.1.55":
+        case "Prologue v0.1.55/v0.1.56":
             return (current.roomName == "room_introtitle" && old.menuShake == 0 && current.menuShake > 0 && current.menuShake % 1 == 0);
     }
 }
