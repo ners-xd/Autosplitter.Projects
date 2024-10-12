@@ -222,7 +222,7 @@ init
             MessageBox.Show
             (
                 "This version of TS!Underswap is not supported by the autosplitter.\nIf you are playing an older version, update your game.\nIf not, please wait until the autosplitter receives an update.\n\n" +
-                "Supported versions: v1.0.8, v2.0.4, v2.0.5, v2.0.6.",
+                "Supported versions: v1.0.8, v2.0.4-v2.0.7.",
                 "LiveSplit | TS!Underswap", MessageBoxButtons.OK, MessageBoxIcon.Warning
             );
             break;
