@@ -30,6 +30,13 @@ state("utks-prologue", "Prologue v0.1.55/v0.1.56")
     double menuShake : 0xC07C58, 0x30, 0x1FD0, 0x0, 0xB0, 0x48, 0x10, 0x70, 0x0;
 }
 
+state("utks-prologue", "Prologue v0.1.57")
+{
+    int sound : 0xBDB9C8, 0x0, 0x14;
+
+    double menuShake : 0xC07C58, 0x30, 0x2370, 0x0, 0xB0, 0x48, 0x10, 0x20, 0x0;
+}
+
 startup
 {
     refreshRate = 30;
@@ -37,7 +44,7 @@ startup
     settings.Add("Prologue", true, "Prologue");
     settings.CurrentDefaultParent = "Prologue";
     settings.Add("P_TekiLomax", false, "Exit Teki & Lomax room");
-    settings.Add("P_Ending",     true, "Ending");
+    settings.Add("P_Ending",     true, "Ending (Enter Sewers)");
     settings.CurrentDefaultParent = null;
 }
 
@@ -92,6 +99,10 @@ init
         case "AB954B95FC2E34C1F1217808836E98E7": // v0.1.56
             version = "Prologue v0.1.55/v0.1.56";
             break;
+        
+        case "E4F648E702FBA1667727BBA7BE6C0C97":
+            version = "Prologue v0.1.57";
+            break;
 
         default:
             version = "Unknown";
@@ -99,7 +110,7 @@ init
             MessageBox.Show
             (
                 "This version of Undertale Kindred Spirits is not supported by the autosplitter.\nIf you are playing an older version, update your game.\nIf not, please wait until the autosplitter receives an update.\n\n" +
-                "Supported versions: Prologue v0.1.0, v0.1.4-v0.1.56.",
+                "Supported versions: Prologue v0.1.0, v0.1.4-v0.1.57.",
                 "LiveSplit | Undertale Kindred Spirits", MessageBoxButtons.OK, MessageBoxIcon.Warning
             );
             break;
@@ -124,6 +135,7 @@ start
         case "Prologue v0.1.4":
         case "Prologue v0.1.5-v0.1.54":
         case "Prologue v0.1.55/v0.1.56":
+        case "Prologue v0.1.57":
             return (current.roomName == "room_introtitle" && old.menuShake == 0 && current.menuShake > 0 && current.menuShake % 1 == 0);
     }
 }
@@ -138,6 +150,7 @@ reset
         case "Prologue v0.1.4":
         case "Prologue v0.1.5-v0.1.54":
         case "Prologue v0.1.55/v0.1.56":
+        case "Prologue v0.1.57":
             return (current.roomName == "room_introtitle" && old.menuShake == 0 && current.menuShake > 0 && current.menuShake % 1 == 0);
     }
 }
