@@ -17,6 +17,14 @@ state("wildfire", "Combat Demo v1.06")
     float playerX : 0xC07C20, 0x0, 0x500, 0x18, 0x58, 0x10, 0xF4;
 }
 
+state("Undertale Wildfire", "Combat Demo v1.07")
+{
+    double   menuSelection : 0xE17960, 0x98, 0x48, 0x10, 0x90, 0x0;
+    string16 menuState     : 0xE26E88, 0x18, 0x88, 0x8,  0x0,  0x0, 0x0;
+
+    float playerX : 0xC07C20, 0x0, 0x500, 0x18, 0x58, 0x10, 0xF4;
+}
+
 startup
 {
     refreshRate = 30;
@@ -72,13 +80,17 @@ init
             version = "Combat Demo v1.06";
             break;
 
+        case "67520D5CB7719007F725C332A1E6FA3B":
+            version = "Combat Demo v1.07";
+            break;
+
         default:
             version = "Unknown";
 
             MessageBox.Show
             (
                 "This version of Undertale Wildfire is not supported by the autosplitter.\nIf you are playing an older version, update your game.\nIf not, please wait until the autosplitter receives an update.\n\n" +
-                "Supported versions: Combat Demo v1.05, v1.06.",
+                "Supported versions: Combat Demo v1.05-v1.07.",
                 "LiveSplit | Undertale Wildfire", MessageBoxButtons.OK, MessageBoxIcon.Warning
             );
             break;
@@ -99,23 +111,15 @@ init
 
 start
 {
-    switch(version)
-    {
-        case "Combat Demo v1.05":
-        case "Combat Demo v1.06":
-            return (current.roomName == "rm_menu" && old.menuState == "challenges" && current.menuState == "fade_challenges" && old.menuSelection <= 1);
-            // Checking for selections 0 and 1 because you can do Down+Z on the same frame while on Back and it counts as starting No challenge while selection is still 0
-    }
+    if(version.StartsWith("Combat Demo"))
+        return (current.roomName == "rm_menu" && old.menuState == "challenges" && current.menuState == "fade_challenges" && old.menuSelection <= 1);
+        // Checking for selections 0 and 1 because you can do Down+Z on the same frame while on Back and it counts as starting No challenge while selection is still 0
 }
 
 reset
 {
-    switch(version)
-    {
-        case "Combat Demo v1.05":
-        case "Combat Demo v1.06":
-            return (current.roomName == "rm_menu" && old.menuState == "challenges" && current.menuState == "fade_challenges" && old.menuSelection <= 1);
-    }
+    if(version.StartsWith("Combat Demo"))
+        return (current.roomName == "rm_menu" && old.menuState == "challenges" && current.menuState == "fade_challenges" && old.menuSelection <= 1);
 }
 
 onReset
