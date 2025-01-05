@@ -1,28 +1,11 @@
 // Undertale Wildfire Autosplitter by NERS
 
-state("wildfire", "Combat Demo v1.05")
+state("Undertale Wildfire", "Combat Demo v1.09")
 {
-    // Self
-    double   menuSelection : 0xE17960, 0x98, 0x48, 0x10, 0x90, 0x0;      // obj_menu.selection
-    string16 menuState     : 0xE26E88, 0x18, 0x88, 0x8,  0x0,  0x0, 0x0; // obj_menu.fsm state (SnowState)
+    double   menuSelection : 0xE28C90, 0x98, 0x48, 0x10, 0x30, 0x0;      // obj_menu.selection
+    string16 menuState     : 0xE383A0, 0x18, 0x88, 0x8,  0x0,  0x0, 0x0; // obj_menu.fsm state (SnowState)
 
-    float playerX : 0xC07C20, 0x0, 0x4F0, 0x18, 0x58, 0x10, 0xF4; // obj_player.x 
-}
-
-state("wildfire", "Combat Demo v1.06")
-{
-    double   menuSelection : 0xE17960, 0x98, 0x48, 0x10, 0x0, 0x0;
-    string16 menuState     : 0xE26E88, 0x18, 0x88, 0x8,  0x0, 0x0, 0x0;
-
-    float playerX : 0xC07C20, 0x0, 0x500, 0x18, 0x58, 0x10, 0xF4;
-}
-
-state("Undertale Wildfire", "Combat Demo v1.07")
-{
-    double   menuSelection : 0xE17960, 0x98, 0x48, 0x10, 0x90, 0x0;
-    string16 menuState     : 0xE26E88, 0x18, 0x88, 0x8,  0x0,  0x0, 0x0;
-
-    float playerX : 0xC07C20, 0x0, 0x500, 0x18, 0x58, 0x10, 0xF4;
+    float playerX : 0xC18F60, 0x0, 0x4B0, 0x18, 0x58, 0x10, 0xF4; // obj_player.x 
 }
 
 startup
@@ -72,16 +55,8 @@ init
 
     switch(hash)
     {
-        case "4E65843C4FCFB42B965DC790BCA2AA32":
-            version = "Combat Demo v1.05";
-            break;
-
-        case "935387274D863DBE49C14919B0A3EC14":
-            version = "Combat Demo v1.06";
-            break;
-
-        case "67520D5CB7719007F725C332A1E6FA3B":
-            version = "Combat Demo v1.07";
+        case "4F5C97EA02ACB19BE5C39242B1E0E45D":
+            version = "Combat Demo v1.09";
             break;
 
         default:
@@ -90,7 +65,7 @@ init
             MessageBox.Show
             (
                 "This version of Undertale Wildfire is not supported by the autosplitter.\nIf you are playing an older version, update your game.\nIf not, please wait until the autosplitter receives an update.\n\n" +
-                "Supported versions: Combat Demo v1.05-v1.07.",
+                "Supported version: Combat Demo v1.09.",
                 "LiveSplit | Undertale Wildfire", MessageBoxButtons.OK, MessageBoxIcon.Warning
             );
             break;

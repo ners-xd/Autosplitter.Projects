@@ -9,27 +9,6 @@ state("UNDERTALE KINDRED SPIRITS", "Prologue v0.1.0")
     double menuShake2 : 0xC07C58, 0x30,  0x1810, 0x0,  0xB0, 0x48, 0x10, 0xD0, 0x0; // This one only works when pressing Reset, the one above only works when pressing Start Game, unsure why v0.1.0 has this issue
 }
 
-state("UNDERTALE KINDRED SPIRITS", "Prologue v0.1.4")
-{
-    int sound : 0xBDB9C8, 0x0, 0x14;
-
-    double menuShake : 0xC07C58, 0x30, 0x1870, 0x0, 0xB0, 0x48, 0x10, 0x130, 0x0;
-}
-
-state("utks-prologue", "Prologue v0.1.5-v0.1.54")
-{
-    int sound : 0xBDB9C8, 0x0, 0x14;
-
-    double menuShake : 0xC07C58, 0x30, 0x1F90, 0x0, 0xB0, 0x48, 0x10, 0x40, 0x0;
-}
-
-state("utks-prologue", "Prologue v0.1.55/v0.1.56")
-{
-    int sound : 0xBDB9C8, 0x0, 0x14;
-
-    double menuShake : 0xC07C58, 0x30, 0x1FD0, 0x0, 0xB0, 0x48, 0x10, 0x70, 0x0;
-}
-
 state("utks-prologue", "Prologue v0.1.57")
 {
     int sound : 0xBDB9C8, 0x0, 0x14;
@@ -82,23 +61,6 @@ init
         case "8CFAD113EE503822CEBED4866DD45CE8":
             version = "Prologue v0.1.0";
             break;
-
-        case "67CE8A88526EC9B35CA531F6C99772EE":
-            version = "Prologue v0.1.4";
-            break;
-
-        case "390757428E23FC559C09A5857985FD52": // v0.1.5
-        case "93DE78103C2F80FCF0965B5F2519DC64": // v0.1.51
-        case "5BD83DD00DA90760A1B088824FB07350": // v0.1.52
-        case "95F0F076730DBDFB083519D334470C31": // v0.1.53
-        case "8A90A5F8940A4F9B716729D60D39FE54": // v0.1.54
-            version = "Prologue v0.1.5-v0.1.54";
-            break;
-        
-        case "C979EADA3C5BC7A6BBD9CDCCEA67990B": // v0.1.55
-        case "AB954B95FC2E34C1F1217808836E98E7": // v0.1.56
-            version = "Prologue v0.1.55/v0.1.56";
-            break;
         
         case "E4F648E702FBA1667727BBA7BE6C0C97":
             version = "Prologue v0.1.57";
@@ -110,7 +72,7 @@ init
             MessageBox.Show
             (
                 "This version of Undertale Kindred Spirits is not supported by the autosplitter.\nIf you are playing an older version, update your game.\nIf not, please wait until the autosplitter receives an update.\n\n" +
-                "Supported versions: Prologue v0.1.0, v0.1.4-v0.1.57.",
+                "Supported versions: Prologue v0.1.0, v0.1.57.",
                 "LiveSplit | Undertale Kindred Spirits", MessageBoxButtons.OK, MessageBoxIcon.Warning
             );
             break;
@@ -132,9 +94,6 @@ start
         case "Prologue v0.1.0":
             return (current.roomName == "room_introtitle" && ((old.menuShake == 0 && current.menuShake > 0 && current.menuShake % 1 == 0) || (old.menuShake2 == 0 && current.menuShake2 > 0 && current.menuShake2 % 1 == 0)));
 
-        case "Prologue v0.1.4":
-        case "Prologue v0.1.5-v0.1.54":
-        case "Prologue v0.1.55/v0.1.56":
         case "Prologue v0.1.57":
             return (current.roomName == "room_introtitle" && old.menuShake == 0 && current.menuShake > 0 && current.menuShake % 1 == 0);
     }
@@ -147,9 +106,6 @@ reset
         case "Prologue v0.1.0":
             return (current.roomName == "room_introtitle" && ((old.menuShake == 0 && current.menuShake > 0 && current.menuShake % 1 == 0) || (old.menuShake2 == 0 && current.menuShake2 > 0 && current.menuShake2 % 1 == 0)));
 
-        case "Prologue v0.1.4":
-        case "Prologue v0.1.5-v0.1.54":
-        case "Prologue v0.1.55/v0.1.56":
         case "Prologue v0.1.57":
             return (current.roomName == "room_introtitle" && old.menuShake == 0 && current.menuShake > 0 && current.menuShake % 1 == 0);
     }
