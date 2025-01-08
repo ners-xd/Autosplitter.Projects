@@ -55,7 +55,7 @@ init
 
     switch(hash)
     {
-        case "E5C16B84B65788551EDF8AAB90834C6F":
+        case "A2339F04EA118F0A43FB70FD9357CBBD":
             version = "Combat Demo v1.10";
             break;
 
