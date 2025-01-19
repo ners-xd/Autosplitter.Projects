@@ -1,19 +1,8 @@
 // Undertale Kindred Spirits Autosplitter by NERS
 
-state("UNDERTALE KINDRED SPIRITS", "Prologue v0.1.0")
+state("utks-prologue", "Prologue v0.1.58")
 {
-    int sound : 0xBDB9C8, 0x0, 0x14; // The ID of the current sound that's playing (highest priority)
-
-    // Self
-    double menuShake  : 0xE3A210, 0x1F0, 0x88,   0x10, 0x48, 0x10, 0xD0, 0x0;       // obj_intromenu0.tab_info.instr.shake_timer
-    double menuShake2 : 0xC07C58, 0x30,  0x1810, 0x0,  0xB0, 0x48, 0x10, 0xD0, 0x0; // This one only works when pressing Reset, the one above only works when pressing Start Game, unsure why v0.1.0 has this issue
-}
-
-state("utks-prologue", "Prologue v0.1.57")
-{
-    int sound : 0xBDB9C8, 0x0, 0x14;
-
-    double menuShake : 0xC07C58, 0x30, 0x2370, 0x0, 0xB0, 0x48, 0x10, 0x20, 0x0;
+    string32 ogg : 0xBED770, 0x88, 0x0, 0x10, 0x0, 0x48;
 }
 
 startup
@@ -23,7 +12,7 @@ startup
     settings.Add("Prologue", true, "Prologue");
     settings.CurrentDefaultParent = "Prologue";
     settings.Add("P_TekiLomax", false, "Exit Teki & Lomax room");
-    settings.Add("P_Ending",     true, "Ending (Enter Sewers)");
+    settings.Add("P_Ending",     true, "Enter Sewers");
     settings.CurrentDefaultParent = null;
 }
 
@@ -57,13 +46,9 @@ init
             hash = string.Concat(md5.ComputeHash(fs).Select(b => b.ToString("X2")));
 
     switch(hash)
-    {
-        case "8CFAD113EE503822CEBED4866DD45CE8":
-            version = "Prologue v0.1.0";
-            break;
-        
-        case "E4F648E702FBA1667727BBA7BE6C0C97":
-            version = "Prologue v0.1.57";
+    {   
+        case "61CF51505FCEDFE686B36A136BA59CB4":
+            version = "Prologue v0.1.58";
             break;
 
         default:
@@ -72,7 +57,7 @@ init
             MessageBox.Show
             (
                 "This version of Undertale Kindred Spirits is not supported by the autosplitter.\nIf you are playing an older version, update your game.\nIf not, please wait until the autosplitter receives an update.\n\n" +
-                "Supported versions: Prologue v0.1.0, v0.1.57.",
+                "Supported version: v0.1.58.",
                 "LiveSplit | Undertale Kindred Spirits", MessageBoxButtons.OK, MessageBoxIcon.Warning
             );
             break;
@@ -91,11 +76,8 @@ start
 {
     switch(version)
     {
-        case "Prologue v0.1.0":
-            return (current.roomName == "room_introtitle" && ((old.menuShake == 0 && current.menuShake > 0 && current.menuShake % 1 == 0) || (old.menuShake2 == 0 && current.menuShake2 > 0 && current.menuShake2 % 1 == 0)));
-
-        case "Prologue v0.1.57":
-            return (current.roomName == "room_introtitle" && old.menuShake == 0 && current.menuShake > 0 && current.menuShake % 1 == 0);
+        case "Prologue v0.1.58":
+            return (current.roomName == "room_introtitle" && old.ogg.StartsWith("mus_menu") && !current.ogg.StartsWith("mus_menu"));
     }
 }
 
@@ -103,11 +85,8 @@ reset
 {
     switch(version)
     {
-        case "Prologue v0.1.0":
-            return (current.roomName == "room_introtitle" && ((old.menuShake == 0 && current.menuShake > 0 && current.menuShake % 1 == 0) || (old.menuShake2 == 0 && current.menuShake2 > 0 && current.menuShake2 % 1 == 0)));
-
-        case "Prologue v0.1.57":
-            return (current.roomName == "room_introtitle" && old.menuShake == 0 && current.menuShake > 0 && current.menuShake % 1 == 0);
+        case "Prologue v0.1.58":
+            return (current.roomName == "room_introtitle" && old.ogg.StartsWith("mus_menu") && !current.ogg.StartsWith("mus_menu"));
     }
 }
 
@@ -154,7 +133,7 @@ split
                 break;
 
             case 1:
-                pass = (old.sound == 5 && (current.sound == 10 || current.sound == 11));
+                pass = (old.ogg != "mus_intronoise" && current.ogg == "mus_intronoise");
                 break;
         }
 
