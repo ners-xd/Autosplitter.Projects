@@ -1,8 +1,9 @@
 // Undertale Kindred Spirits Autosplitter by NERS
 
-state("utks-prologue", "Prologue v0.1.58")
+state("utks-prologue", "Prologue v0.1.599")
 {
-    string32 ogg : 0xBED770, 0x88, 0x0, 0x10, 0x0, 0x48;
+    double   start : 0xC19320, 0x48, 0x10, 0x21B0, 0x0;       // global.temp_startgame
+    string32 sound : 0xBED770, 0x88, 0x0,  0x10,   0x0, 0x48; // Name of the current sound (highest priority)
 }
 
 startup
@@ -47,8 +48,8 @@ init
 
     switch(hash)
     {   
-        case "61CF51505FCEDFE686B36A136BA59CB4":
-            version = "Prologue v0.1.58";
+        case "7F9FA6053FBD1CDAE254512C45851B94":
+            version = "Prologue v0.1.599";
             break;
 
         default:
@@ -57,7 +58,7 @@ init
             MessageBox.Show
             (
                 "This version of Undertale Kindred Spirits is not supported by the autosplitter.\nIf you are playing an older version, update your game.\nIf not, please wait until the autosplitter receives an update.\n\n" +
-                "Supported version: Prologue v0.1.58.",
+                "Supported version: Prologue v0.1.599.",
                 "LiveSplit | Undertale Kindred Spirits", MessageBoxButtons.OK, MessageBoxIcon.Warning
             );
             break;
@@ -74,20 +75,12 @@ init
 
 start
 {
-    switch(version)
-    {
-        case "Prologue v0.1.58":
-            return (current.roomName == "room_introtitle" && old.ogg.StartsWith("mus_menu") && !current.ogg.StartsWith("mus_menu"));
-    }
+    return (current.roomName == "room_introtitle" && old.start == 0 && current.start == 1);
 }
 
 reset
 {
-    switch(version)
-    {
-        case "Prologue v0.1.58":
-            return (current.roomName == "room_introtitle" && old.ogg.StartsWith("mus_menu") && !current.ogg.StartsWith("mus_menu"));
-    }
+    return (current.roomName == "room_introtitle" && old.start == 0 && current.start == 1);
 }
 
 onReset
@@ -133,7 +126,7 @@ split
                 break;
 
             case 1:
-                pass = (old.ogg != "mus_intronoise" && current.ogg == "mus_intronoise");
+                pass = (old.sound != "mus_intronoise" && current.sound == "mus_intronoise");
                 break;
         }
 
