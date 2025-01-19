@@ -57,7 +57,7 @@ init
             MessageBox.Show
             (
                 "This version of Undertale Kindred Spirits is not supported by the autosplitter.\nIf you are playing an older version, update your game.\nIf not, please wait until the autosplitter receives an update.\n\n" +
-                "Supported version: v0.1.58.",
+                "Supported version: Prologue v0.1.58.",
                 "LiveSplit | Undertale Kindred Spirits", MessageBoxButtons.OK, MessageBoxIcon.Warning
             );
             break;
