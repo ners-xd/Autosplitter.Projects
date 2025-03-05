@@ -1,11 +1,11 @@
 // Undertale Wildfire Autosplitter by NERS
 
-state("Undertale Wildfire", "Combat Demo v1.10")
+state("Undertale Wildfire", "Combat Demo v1.11")
 {
     double   menuSelection : 0xE28C90, 0x98, 0x48, 0x10, 0x30, 0x0;      // obj_menu.selection
     string16 menuState     : 0xE383A0, 0x18, 0x88, 0x8,  0x0,  0x0, 0x0; // obj_menu.fsm state (SnowState)
 
-    float playerX : 0xC18F60, 0x0, 0x4B0, 0x18, 0x58, 0x10, 0xF4; // obj_player.x 
+    float playerX : 0xC18F60, 0x0, 0x4A0, 0x18, 0x58, 0x10, 0xF4; // obj_player.x 
 }
 
 startup
@@ -55,8 +55,8 @@ init
 
     switch(hash)
     {
-        case "A2339F04EA118F0A43FB70FD9357CBBD":
-            version = "Combat Demo v1.10";
+        case "395BF917B794A55BB792B4E6B2E2D10F":
+            version = "Combat Demo v1.11";
             break;
 
         default:
@@ -65,7 +65,7 @@ init
             MessageBox.Show
             (
                 "This version of Undertale Wildfire is not supported by the autosplitter.\nIf you are playing an older version, update your game.\nIf not, please wait until the autosplitter receives an update.\n\n" +
-                "Supported version: Combat Demo v1.10.",
+                "Supported version: Combat Demo v1.11.",
                 "LiveSplit | Undertale Wildfire", MessageBoxButtons.OK, MessageBoxIcon.Warning
             );
             break;
