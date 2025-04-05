@@ -36,7 +36,7 @@ startup
     settings.Add("F_KillCount", false, "Show kill count (updates on room changes)");
     settings.SetToolTip("F_KillCount", "A new row will appear on your layout with the current room and area kills.");
 
-    settings.Add("F_StartOnContinue", false, "Start/Reset the timer when loading a save file");
+    settings.Add("F_StartOnContinue", false, "Start/Reset the timer when loading a save file in the first room");
 
     settings.Add("F_Ruins",            false, "Exit Regular Ruins");
     settings.Add("F_FiveLights",       false, "Exit the five lights puzzle room");
@@ -74,7 +74,7 @@ startup
     settings.Add("F_Ceroba3",          false, "End Pacifist Ceroba battle");
     settings.Add("F_Neutral",           true, "Neutral Ending");
     settings.Add("F_Pacifist",          true, "True Pacifist Ending");
-    settings.Add("F_FPacifist",         true, "Flawed Pacifist Ending (might not always work)");
+    settings.Add("F_FPacifist",         true, "Flawed Pacifist Ending");
     settings.Add("F_Genocide",          true, "Genocide Ending");
     settings.Add("F_Rope",              true, "Rope Ending");
 
@@ -243,7 +243,7 @@ start
         return (old.startWaiter == 0 && current.startWaiter == 1);
 
     else
-        return (old.room <= 3 && current.room >= 6 && old.startWaiter == 0 && settings["F_StartOnContinue"]);
+        return (old.room <= 3 && current.room == 6 && old.startWaiter == 0 && settings["F_StartOnContinue"]);
 }
 
 reset
@@ -252,7 +252,7 @@ reset
         return (old.startWaiter == 0 && current.startWaiter == 1);
 
     else
-        return (old.room <= 3 && current.room >= 6 && old.startWaiter == 0 && settings["F_StartOnContinue"]);       
+        return (old.room <= 3 && current.room == 6 && old.startWaiter == 0 && settings["F_StartOnContinue"]);       
 }
 
 onReset
