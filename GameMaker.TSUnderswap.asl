@@ -25,60 +25,32 @@ state("TS!Underswap", "v2.0.4")
     string32 song         : 0xD8AB08, 0xE0, 0x48,  0x10, 0xB0, 0x0,   0x0, 0x0;
 }
 
-state("TS!Underswap", "v2.0.5")
-{
-    double kills : 0xB7B040, 0x48, 0x10, 0x170, 0x20;
-
-    float  playerX    : 0xB680E8, 0x0,  0x868, 0x18, 0x68,  0x10,  0xF0;
-    double namePhase  : 0xD8AB08, 0xE0, 0x48,  0x10, 0x3E0, 0x0;
-    double menuOption : 0xD8AB08, 0xE0, 0x1A8, 0x48, 0x10,  0x3E0, 0x0;
-    double liftState  : 0xDAB2F0, 0x8,  0x48,  0x10, 0x3E0, 0x0;
-
-    string8  menuContinue : 0xD8AB08, 0xE0, 0x1A8, 0x48, 0x10, 0x60, 0x0, 0x8, 0x80, 0x10;
-    string32 song         : 0xD8AB08, 0xE0, 0x48,  0x10, 0xB0, 0x0,  0x0, 0x0;
-}
-
-state("TS!Underswap", "v2.0.6")
+state("TS!Underswap", "v2.0.8")
 {
     double kills : 0xB7B040, 0x48, 0x10, 0x180, 0x20;
 
-    float  playerX    : 0xB680E8, 0x0,  0x858, 0x18, 0x68, 0x10,  0xF0;
-    double namePhase  : 0xD8AB08, 0xE0, 0x48,  0x10, 0xE0, 0x0;
-    double menuOption : 0xD8AB08, 0xE0, 0x1A8, 0x48, 0x10, 0x3D0, 0x0;
-    double liftState  : 0xDAB2F0, 0x8,  0x48,  0x10, 0x10, 0x0;
+    float  playerX    : 0xB680E8, 0x0,  0x858, 0x18, 0x68,  0x10,  0xF0;
+    double namePhase  : 0xD8AB08, 0xE0, 0x48,  0x10, 0xF0,  0x0;
+    double menuOption : 0xD8AB08, 0xE0, 0x1A8, 0x48, 0x10,  0x3D0, 0x0;
+    double liftState  : 0xAE5250, 0xB0, 0x48,  0x10, 0x120, 0x0;
 
-    string8  menuContinue : 0xD8AB08, 0xE0, 0x1A8, 0x48, 0x10, 0xE0, 0x0, 0x8, 0x80, 0x10;
-    string32 song         : 0xD8AB08, 0xE0, 0x48,  0x10, 0xB0, 0x0,  0x0, 0x0;
-}
-
-state("TS!Underswap", "v2.0.7")
-{
-    double kills : 0xB7B040, 0x48, 0x10, 0x180, 0x20;
-
-    float  playerX    : 0xB680E8, 0x0,  0x858, 0x18, 0x68, 0x10,  0xF0;
-    double namePhase  : 0xD8AB08, 0xE0, 0x48,  0x10, 0xF0, 0x0;
-    double menuOption : 0xD8AB08, 0xE0, 0x1A8, 0x48, 0x10, 0x3D0, 0x0;
-    double liftState  : 0xDAB2F0, 0x8,  0x48,  0x10, 0x10, 0x0;
-
-    string8  menuContinue : 0xD8AB08, 0xE0, 0x1A8, 0x48, 0x10, 0xF0, 0x0, 0x8, 0x80, 0x10;
-    string32 song         : 0xD8AB08, 0xE0, 0x48,  0x10, 0xB0, 0x0,  0x0, 0x0;
+    string8  menuContinue : 0xD8AB08, 0xE0, 0x1A8, 0x48, 0x10, 0x210, 0x0, 0x8, 0x80, 0x10;
+    string32 song         : 0xD8AB08, 0xE0, 0x48,  0x10, 0xB0, 0x0,   0x0, 0x0;
 }
 
 startup
 {
     refreshRate = 30;
 
-    // -------------------------------------------------------------------------------------------
     settings.Add("KillCount", false, "Show kill count");
     settings.SetToolTip("KillCount", "A new row will appear on your layout with the total amount of kills\non the current save file.");
-    // -------------------------------------------------------------------------------------------
+
     settings.Add("StartOnContinue",      false, "Start/Reset the timer when loading a save file");
     settings.Add("Start_StarlightIsles", false, "Start/Reset the timer when entering Starlight Isles");
     settings.SetToolTip("Start_StarlightIsles", "This setting is mainly used for IL (Individual Level) runs.");
-    // -------------------------------------------------------------------------------------------
+
     settings.Add("Ruined_Home", true, "Ruined Home");
     settings.CurrentDefaultParent = "Ruined_Home";
-
     settings.Add("Exit_LongHallway",     false, "Exit Long Hallway");
     settings.Add("Exit_TripleFlower",    false, "Exit Triple Flower Puzzle room");
     settings.Add("Exit_RuinedKnights",   false, "Exit Ruined Knights room");
@@ -89,12 +61,10 @@ startup
     settings.Add("Exit_Mettalot",        false, "Exit Mettalot room");
     settings.Add("Exit_RuinedHome",      false, "Exit Ruined Home");
     settings.Add("v1_Ending",             true, "v1.0 Ending");
-    
     settings.CurrentDefaultParent = null;
-    // -------------------------------------------------------------------------------------------
+    
     settings.Add("Starlight_Isles", true, "Starlight Isles");
     settings.CurrentDefaultParent = "Starlight_Isles";
-    
     settings.Add("Enter_SubDoggo",      false, "Enter Sub-Doggo room");
     settings.Add("Exit_SubDoggo",       false, "Exit Sub-Doggo room");
     settings.Add("Exit_Dogi",           false, "Exit Dogi room");
@@ -108,9 +78,7 @@ startup
     settings.Add("v2_DirtyHacker",       true, "v2.0 Dirty Hacker Ending");
     settings.Add("Exit_StarlightIsles", false, "Exit Starlight Isles");
     settings.Add("v2_Ending",            true, "v2.0 Ending");
-
     settings.CurrentDefaultParent = null;
-    // -------------------------------------------------------------------------------------------
 
     // Thanks to Ero for this
     var cache = new Dictionary<string, LiveSplit.UI.Components.ILayoutComponent>();
@@ -204,16 +172,8 @@ init
             version = "v2.0.4";
             break;
 
-        case "9AA62DA009DF346C43E7B55C912844A2": 
-            version = "v2.0.5";
-            break;
-
-        case "09DEEFDB65EEB16F41FDDDDC03C232FA":
-            version = "v2.0.6";
-            break;
-
-        case "DE22D8A71B7A0D1E411D4F00C8B2DEEA":
-            version = "v2.0.7";
+        case "47531919D1B83B43AEE93E80347119C0":
+            version = "v2.0.8";
             break;
 
         default:
@@ -222,7 +182,7 @@ init
             MessageBox.Show
             (
                 "This version of TS!Underswap is not supported by the autosplitter.\nIf you are playing an older version, update your game.\nIf not, please wait until the autosplitter receives an update.\n\n" +
-                "Supported versions: v1.0.8, v2.0.4-v2.0.7.",
+                "Supported versions: v1.0.8, v2.0.4, v2.0.8.",
                 "LiveSplit | TS!Underswap", MessageBoxButtons.OK, MessageBoxIcon.Warning
             );
             break;
@@ -264,7 +224,7 @@ start
     if(current.roomName == "rm_menu_start" || current.roomName == "rm_load")
     {
         if(current.menuOption == 1)
-            return (old.menuContinue == "Continue" && current.menuContinue == null && settings["StartOnContinue"]);
+            return (old.menuContinue != null && current.menuContinue == null && settings["StartOnContinue"]);
         
         return (old.namePhase != 3 && current.namePhase == 3);
     }
@@ -278,7 +238,7 @@ reset
     if(current.roomName == "rm_menu_start" || current.roomName == "rm_load")
     {
         if(current.menuOption == 1)
-            return (old.menuContinue == "Continue" && current.menuContinue == null && settings["StartOnContinue"]);
+            return (old.menuContinue != null && current.menuContinue == null && settings["StartOnContinue"]);
         
         return (old.namePhase != 3 && current.namePhase == 3);
     }
