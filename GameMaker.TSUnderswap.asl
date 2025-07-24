@@ -25,7 +25,7 @@ state("TS!Underswap", "v2.0.4")
     string32 song         : 0xD8AB08, 0xE0, 0x48,  0x10, 0xB0, 0x0,   0x0, 0x0;
 }
 
-state("TS!Underswap", "v2.0.8")
+state("TS!Underswap", "v2.0.9")
 {
     double kills : 0xB7B040, 0x48, 0x10, 0x180, 0x20;
 
@@ -34,7 +34,7 @@ state("TS!Underswap", "v2.0.8")
     double menuOption : 0xD8AB08, 0xE0, 0x1A8, 0x48, 0x10,  0x3D0, 0x0;
     double liftState  : 0xAE5250, 0xB0, 0x48,  0x10, 0x120, 0x0;
 
-    string8  menuContinue : 0xD8AB08, 0xE0, 0x1A8, 0x48, 0x10, 0x210, 0x0, 0x8, 0x80, 0x10;
+    string8  menuContinue : 0xD8AB08, 0xE0, 0x1A8, 0x48, 0x10, 0x2D0, 0x0, 0x8, 0x80, 0x10;
     string32 song         : 0xD8AB08, 0xE0, 0x48,  0x10, 0xB0, 0x0,   0x0, 0x0;
 }
 
@@ -173,7 +173,7 @@ init
             break;
 
         case "47531919D1B83B43AEE93E80347119C0":
-            version = "v2.0.8";
+            version = "v2.0.9";
             break;
 
         default:
@@ -182,7 +182,7 @@ init
             MessageBox.Show
             (
                 "This version of TS!Underswap is not supported by the autosplitter.\nIf you are playing an older version, update your game.\nIf not, please wait until the autosplitter receives an update.\n\n" +
-                "Supported versions: v1.0.8, v2.0.4, v2.0.8.",
+                "Supported versions: v1.0.8, v2.0.4, v2.0.9.",
                 "LiveSplit | TS!Underswap", MessageBoxButtons.OK, MessageBoxIcon.Warning
             );
             break;
