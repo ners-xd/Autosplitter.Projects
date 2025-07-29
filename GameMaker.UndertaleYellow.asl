@@ -15,14 +15,14 @@ state("Undertale Yellow", "v1.0")
     float cerobaY : 0xA60DA0, 0x8, 0x90, 0x8, 0x68, 0x10, 0xEC; // obj_ceroba_npc.y
 }
 
-state("Undertale Yellow", "v1.1")
+state("Undertale Yellow", "v1.1 / v1.2.1")
 {
-    double dialogue : 0x82FC70, 0x48, 0x10, 0x390, 0xA0; 
+    double dialogue : 0x82FC70, 0x48, 0x10, 0x390, 0xA0;
 
-    double startWaiter     : 0xA3FD40, 0xD8,  0x48,  0x10, 0xE0,  0x0;                        
-    double neutralEndScene : 0xA3FD40, 0x1A0, 0x760, 0x88, 0x70,  0x38,  0x48,  0x10, 0x60, 0x0;  
+    double startWaiter     : 0xA3FD40, 0xD8,  0x48,  0x10, 0xE0,  0x0;
+    double neutralEndScene : 0xA3FD40, 0x1A0, 0x760, 0x88, 0x70,  0x38,  0x48,  0x10, 0x60, 0x0;
     double asgoreFade      : 0xA3FD40, 0x178, 0x70,  0x38, 0x198, 0x1A0, 0x1A0, 0x48, 0x10, 0xE0, 0x0;
-    double genoEndScene    : 0xA3FD40, 0x1A0, 0x4F0, 0x70, 0x38,  0x48,  0x10,  0x60, 0x0;             
+    double genoEndScene    : 0xA3FD40, 0x1A0, 0x4F0, 0x70, 0x38,  0x48,  0x10,  0x60, 0x0;       
     double ropeWaiter      : 0xA3FD40, 0x1A0, 0x1B0, 0x90, 0x70,  0x38,  0x48,  0x10, 0xE0, 0x0;
 
     float cerobaY : 0xA60DA0, 0x8, 0x90, 0x8, 0x68, 0x10, 0xEC;
@@ -60,7 +60,7 @@ startup
     settings.Add("F_GoldenBandana",    false, "Obtain Golden Bandana");
     settings.Add("F_Guardener",        false, "Exit Guardener room");
     settings.Add("F_GreenhouseSkip",   false, "Greenhouse Skip");
-    settings.SetToolTip("F_GreenhouseSkip", "This autosplit triggers when you exit the room with the savepoint after Guardener\n(most common split location for Greenhouse Skip).");
+     settings.SetToolTip("F_GreenhouseSkip", "This autosplit triggers when you exit the room with the save point after Guardener\n(most common split location for Greenhouse Skip).");
     settings.Add("F_ExitSWElevator",   false, "Exit Steamworks elevator");
     settings.Add("F_EnterComputer",    false, "Enter Computer room");
     settings.Add("F_ExitComputer",     false, "Exit Computer room");
@@ -212,7 +212,7 @@ init
             break;
 
         case "2610A3F58304DE377DA56C221FC68D6B":
-            version = "v1.1";
+            version = "v1.1 / v1.2.1";
 
             vars.checkItem = (Func<string, bool>)((itemName) => 
             {
@@ -347,8 +347,8 @@ update
         print("[Undertale Yellow] Room: " + old.room + " -> " + current.room);
     }
 
-    if(current.room == 235 && current.neutralEndScene == 4 && current.dialogue == 1 && settings["F_Neutral"] && vars.tempVar == false) // Entered the cutscene at the end of Neutral
-        vars.tempVar = true; // Added for the ending autosplit check because neutralEndScene takes random values in the Flowey battle and makes the split trigger
+    if(current.room == 235 && current.neutralEndScene == 4 && current.dialogue == 1 && settings["F_Neutral"] && vars.tempVar == false)
+        vars.tempVar = true; // Added for the ending autosplit check because neutralEndScene takes random values in the Flowey battle and would make the split trigger
 }
 
 split
@@ -404,11 +404,11 @@ split
                 break;
 
             case 9: // F_Genocide
-                pass = (old.genoEndScene == 35 && (current.genoEndScene == 36 || current.genoEndScene == 37)); // Sometimes it goes to 36, sometimes 37 on the same frame
+                pass = (old.genoEndScene == 35 && (current.genoEndScene == 36 || current.genoEndScene == 37));
                 break;
 
             case 10: // F_Rope
-                pass = (old.ropeWaiter == 3 && current.ropeWaiter == 4);
+                pass = (old.ropeWaiter == 3 && current.ropeWaiter != 3);
                 break;
         }
 
