@@ -101,7 +101,7 @@ startup
         {"pure_zone3",           new object[] {false,  -1, 292,  1,  2, 12, -1, -1}},
         {"chapter2",             new object[] {false,  -1, 293,  6,  3,  6, -1, -1}},
         {"chapter1",             new object[] {false,  -1, 340,  1,  6,  1, -1, -1}},
-        {"ending",               new object[] {false, 999,  -1, -1, -1, -1, -1, -1}}  // Handled manually in split{}
+        {"ending",               new object[] {false, 999,  -1, -1, -1, -1, -1, -1}} // Handled manually in split{}
     };
 }
 
@@ -180,7 +180,7 @@ split
            (vars.splits[splitKey][reqPage] != -1 && current.eventPage != vars.splits[splitKey][reqPage]) ||
            (vars.splits[splitKey][minLine] != -1 && (current.eventLine < vars.splits[splitKey][minLine] || current.eventLine > 200)) ||
            (vars.splits[splitKey][reqBattle] != -1 && current.battleID != vars.splits[splitKey][reqBattle]) ||
-           (vars.splits[splitKey][reqCh3] != -1 && current.ch3Ended != vars.splits[splitKey][reqCh3]))  continue;
+           (vars.splits[splitKey][reqCh3] != -1 && current.ch3Ended != vars.splits[splitKey][reqCh3])) continue;
 
         if(splitKey == "alma_second_half" && current.eventLine != 4 && current.eventLine != 5) // Condition for this one because the line goes to 9 if you press No
             return false;
@@ -190,4 +190,5 @@ split
         return true;
     }
 }
+
 
