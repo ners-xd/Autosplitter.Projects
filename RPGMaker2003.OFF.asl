@@ -1,4 +1,5 @@
 // OFF Autosplitter by NERS
+// Thanks to KyoshiCadre for all the room and event numbers
 
 state("RPG_RT")
 {
@@ -72,7 +73,7 @@ startup
         {"alma_first_half",      new object[] {false,  56,  57,  -1, -1, -1,   -1}},
         {"alma_second_half",     new object[] {false,  68,  69,  -1, -1, -1,   -1}},
         {"zone1",                new object[] {false,  69,  70,  -1, -1, -1,   -1}},
-        {"card_puzzle",          new object[] {false,  -1, 114, 167,  1,  0,   -1}},
+        {"card_puzzle",          new object[] {false, 114, 112,  -1, -1, -1,   -1}},
         {"valerie",              new object[] {false, 117, 116,  -1, -1, -1,   -1}},
         {"zacharie_photo",       new object[] {false, 999,  -1,  -1, -1, -1,   -1}}, // Handled manually in split{}
         {"park",                 new object[] {false, 136, 134,  -1, -1, -1,   -1}},
