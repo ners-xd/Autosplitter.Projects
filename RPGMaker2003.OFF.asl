@@ -178,7 +178,7 @@ split
            (vars.splits[splitKey][newMap] != -1 && current.map != vars.splits[splitKey][newMap]) ||
            (vars.splits[splitKey][reqID] != -1 && current.eventID != vars.splits[splitKey][reqID]) ||
            (vars.splits[splitKey][reqPage] != -1 && current.eventPage != vars.splits[splitKey][reqPage]) ||
-           (vars.splits[splitKey][minLine] != -1 && (current.eventLine < vars.splits[splitKey][minLine] || current.eventLine > 200)) ||
+           (vars.splits[splitKey][minLine] != -1 && (current.eventLine < vars.splits[splitKey][minLine] || current.eventLine > 60)) || // The event pointers sometimes become garbage values, so this is for safety
            (vars.splits[splitKey][reqBattle] != -1 && current.battleID != vars.splits[splitKey][reqBattle]) ||
            (vars.splits[splitKey][reqCh3] != -1 && current.ch3Ended != vars.splits[splitKey][reqCh3])) continue;
 
@@ -190,5 +190,6 @@ split
         return true;
     }
 }
+
 
 
