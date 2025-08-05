@@ -108,7 +108,7 @@ start
 
 reset
 {
-    if(old.map == 0 && current.map == 9)
+    if(current.map == 9 && current.eventID == 1 && current.eventPage == 1 && old.eventLine < 2 && current.eventLine >= 2)
     {
         print("[OFF] Timer automatically reset");
         return true;
