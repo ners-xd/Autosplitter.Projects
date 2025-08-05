@@ -69,39 +69,39 @@ startup
     vars.splits = new Dictionary<string, object[]>()
     {
         // Object variables in order: done, old map, new map, event id, event page, minimum event line, battle id, ch3 end state
-        {"zone0",                new object[] {false,  -1,   8,   1,  2, 12, -1, -1}},
-        {"enter_mines",          new object[] {false,  19,  20,  -1, -1, -1, -1, -1}},
-        {"mines",                new object[] {false,  23,  25,  -1, -1, -1, -1, -1}},
-        {"barn",                 new object[] {false,  28,  27,  -1, -1, -1, -1, -1}},
-        {"enter_postal_service", new object[] {false,  -1,  34,   4,  1, 47, -1, -1}},
-        {"postal_service",       new object[] {false,  46,  47,  -1, -1, -1, -1, -1}},
-        {"alma_first_half",      new object[] {false,  56,  57,  -1, -1, -1, -1, -1}},
-        {"alma_second_half",     new object[] {false,  -1,  68,   4,  0,  4, -1, -1}},
-        {"zone1",                new object[] {false,  69,  70,  -1, -1, -1, -1, -1}},
-        {"card_puzzle",          new object[] {false, 114, 112,  -1, -1, -1, -1, -1}},
-        {"valerie",              new object[] {false, 117, 116,  -1, -1, -1, -1, -1}},
-        {"zacharie_photo",       new object[] {false, 999,  -1,  -1, -1, -1, -1, -1}}, // Handled manually in split{}
-        {"park",                 new object[] {false, 136, 134,  -1, -1, -1, -1, -1}},
-        {"pure_zone1",           new object[] {false,  -1, 101,   1,  2, 12, -1, -1}},
-        {"sugar",                new object[] {false, 152, 151,  -1, -1, -1, -1, -1}},
-        {"residential",          new object[] {false, 145, 115,  -1, -1, -1, -1, -1}},
-        {"enter_japhet",         new object[] {false,  -1, 162,   5, 11, 60,  8, -1}},
-        {"zone2",                new object[] {false, 162,  70,  -1, -1, -1, -1, -1}},
-        {"area1",                new object[] {false,  -1, 205,   5,  0,  5, -1, -1}},
-        {"area2",                new object[] {false,  -1, 212,   5,  0, 16, -1, -1}},
-        {"area3",                new object[] {false,  -1, 214,   3,  0,  5, -1, -1}},
-        {"elsen_fight",          new object[] {false, 234, 213,  -1, -1, -1, -1, -1}},
-        {"area4",                new object[] {false, 235, 213,  -1, -1, -1, -1, -1}},
-        {"enoch",                new object[] {false, 213,   2,  -1, -1, -1, -1, -1}},
-        {"chapter5",             new object[] {false,  -1, 293,   6,  1,  0, -1,  0}},
-        {"chapter4",             new object[] {false,  -1, 293,   6,  6,  0, -1, -1}},
-        {"chapter3",             new object[] {false,  -1, 293,   6,  1,  0, -1, 10}},
-        {"exit_the_room",        new object[] {false,  -1, 293,   1,  2, 12, -1, -1}},
-        {"pure_zone2",           new object[] {false,  -1, 197,   1,  2, 12, -1, -1}},
-        {"pure_zone3",           new object[] {false,  -1, 292,   1,  2, 12, -1, -1}},
-        {"chapter2",             new object[] {false,  -1, 293,   6,  3,  6, -1, -1}},
-        {"chapter1",             new object[] {false,  -1, 340,   1,  6,  1, -1, -1}},
-        {"ending",               new object[] {false, 999,  -1,  -1, -1, -1, -1, -1}}  // Handled manually in split{}
+        {"zone0",                new object[] {false,  -1,   8,  1,  2, 12, -1, -1}},
+        {"enter_mines",          new object[] {false,  19,  20, -1, -1, -1, -1, -1}},
+        {"mines",                new object[] {false,  23,  25, -1, -1, -1, -1, -1}},
+        {"barn",                 new object[] {false,  28,  27, -1, -1, -1, -1, -1}},
+        {"enter_postal_service", new object[] {false,  -1,  34,  4,  1, 47, -1, -1}},
+        {"postal_service",       new object[] {false,  46,  47, -1, -1, -1, -1, -1}},
+        {"alma_first_half",      new object[] {false,  56,  57, -1, -1, -1, -1, -1}},
+        {"alma_second_half",     new object[] {false,  -1,  68,  4,  0,  4, -1, -1}},
+        {"zone1",                new object[] {false,  69,  70, -1, -1, -1, -1, -1}},
+        {"card_puzzle",          new object[] {false, 114, 112, -1, -1, -1, -1, -1}},
+        {"valerie",              new object[] {false, 117, 116, -1, -1, -1, -1, -1}},
+        {"zacharie_photo",       new object[] {false, 999,  -1, -1, -1, -1, -1, -1}}, // Handled manually in split{}
+        {"park",                 new object[] {false, 136, 134, -1, -1, -1, -1, -1}},
+        {"pure_zone1",           new object[] {false,  -1, 101,  1,  2, 12, -1, -1}},
+        {"sugar",                new object[] {false, 152, 151, -1, -1, -1, -1, -1}},
+        {"residential",          new object[] {false, 145, 115, -1, -1, -1, -1, -1}},
+        {"enter_japhet",         new object[] {false,  -1, 162,  5, 11, 60,  8, -1}},
+        {"zone2",                new object[] {false, 162,  70, -1, -1, -1, -1, -1}},
+        {"area1",                new object[] {false,  -1, 205,  5,  0,  5, -1, -1}},
+        {"area2",                new object[] {false,  -1, 212,  5,  0, 16, -1, -1}},
+        {"area3",                new object[] {false,  -1, 214,  3,  0,  5, -1, -1}},
+        {"elsen_fight",          new object[] {false, 234, 213, -1, -1, -1, -1, -1}},
+        {"area4",                new object[] {false, 235, 213, -1, -1, -1, -1, -1}},
+        {"enoch",                new object[] {false, 213,   2, -1, -1, -1, -1, -1}},
+        {"chapter5",             new object[] {false,  -1, 293,  6,  1,  0, -1,  0}},
+        {"chapter4",             new object[] {false,  -1, 293,  6,  6,  0, -1, -1}},
+        {"chapter3",             new object[] {false,  -1, 293,  6,  1,  0, -1, 10}},
+        {"exit_the_room",        new object[] {false,  -1, 293,  1,  2, 12, -1, -1}},
+        {"pure_zone2",           new object[] {false,  -1, 197,  1,  2, 12, -1, -1}},
+        {"pure_zone3",           new object[] {false,  -1, 292,  1,  2, 12, -1, -1}},
+        {"chapter2",             new object[] {false,  -1, 293,  6,  3,  6, -1, -1}},
+        {"chapter1",             new object[] {false,  -1, 340,  1,  6,  1, -1, -1}},
+        {"ending",               new object[] {false, 999,  -1, -1, -1, -1, -1, -1}}  // Handled manually in split{}
     };
 }
 
@@ -190,3 +190,4 @@ split
         return true;
     }
 }
+
