@@ -7,6 +7,7 @@ state("RPG_RT")
     int eventID     : 0xD202C, 0x4, 0x8, 0x4, 0x0, 0x1C;
     int eventPage   : 0xD202C, 0x4, 0x8, 0x4, 0x0, 0x14, 0x4, 0x4, 0x0, 0x10;
     int eventLine   : 0xD202C, 0x4, 0x8, 0x4, 0x0, 0x18;
+    int ch3Ended    : 0xD2014, 0x60;
     int battleID    : 0xD202C, 0x54;
     int battleEnded : 0xD2070, 0x7C, 0x14;
     int batterHP    : 0xD2008, 0xAC, 0x1C, 0x0, 0x14;
@@ -20,6 +21,7 @@ state("Sauvegarde_RPG_RT")
     int eventID     : 0xD202C, 0x4, 0x8, 0x4, 0x0, 0x1C;
     int eventPage   : 0xD202C, 0x4, 0x8, 0x4, 0x0, 0x14, 0x4, 0x4, 0x0, 0x10;
     int eventLine   : 0xD202C, 0x4, 0x8, 0x4, 0x0, 0x18;
+    int ch3Ended    : 0xD2014, 0x60;
     int battleID    : 0xD202C, 0x54;
     int battleEnded : 0xD2070, 0x7C, 0x14;
     int batterHP    : 0xD2008, 0xAC, 0x1C, 0x0, 0x14;
@@ -56,44 +58,50 @@ startup
     settings.Add("chapter5", false, "Chapter 5");
     settings.Add("chapter4", false, "Chapter 4");
     settings.Add("chapter3", false, "Chapter 3");
+    settings.Add("exit_the_room", false, "Exit The Room");
+    settings.Add("pure_zone2", false, "Pure Zone 2");
+    settings.Add("pure_zone3", false, "Pure Zone 3");
     settings.Add("chapter2", false, "Chapter 2");
     settings.Add("chapter1", false, "Chapter 1");
-    settings.Add("ending", false, "Ending (Adversaries purified)");
+    settings.Add("ending", false, "Ending");
 
     vars.offset = new Stopwatch();
     vars.splits = new Dictionary<string, object[]>()
     {
-        // Object variables in order: done, old map, new map, event id, event page, minimum event line, trigger delay (in milliseconds)
-        {"zone0",                new object[] {false,  -1,   8,   1,  2, 12,   -1}},
-        {"enter_mines",          new object[] {false,  19,  20,  -1, -1, -1,   -1}},
-        {"mines",                new object[] {false,  23,  25,  -1, -1, -1,   -1}},
-        {"barn",                 new object[] {false,  28,  27,  -1, -1, -1,   -1}},
-        {"enter_postal_service", new object[] {false,  -1,  34,   4,  1, 47,   -1}},
-        {"postal_service",       new object[] {false,  46,  47,  -1, -1, -1,   -1}},
-        {"alma_first_half",      new object[] {false,  56,  57,  -1, -1, -1,   -1}},
-        {"alma_second_half",     new object[] {false,  68,  69,  -1, -1, -1,   -1}},
-        {"zone1",                new object[] {false,  69,  70,  -1, -1, -1,   -1}},
-        {"card_puzzle",          new object[] {false, 114, 112,  -1, -1, -1,   -1}},
-        {"valerie",              new object[] {false, 117, 116,  -1, -1, -1,   -1}},
-        {"zacharie_photo",       new object[] {false, 999,  -1,  -1, -1, -1,   -1}}, // Handled manually in split{}
-        {"park",                 new object[] {false, 136, 134,  -1, -1, -1,   -1}},
-        {"pure_zone1",           new object[] {false,  -1, 101,   1,  1, 12,   -1}},
-        {"sugar",                new object[] {false, 152, 151,  -1, -1, -1,   -1}},
-        {"residential",          new object[] {false, 145, 115,  -1, -1, -1,   -1}},
-        {"enter_japhet",         new object[] {false,  -1, 162,   5,  1, 60, 1000}},
-        {"zone2",                new object[] {false, 162,  70,  -1, -1, -1,   -1}},
-        {"area1",                new object[] {false,  -1, 205,   5,  1,  5,   -1}},
-        {"area2",                new object[] {false,  -1, 212,   5,  1, 16,   -1}},
-        {"area3",                new object[] {false,  -1, 214,   3,  4,  5,   -1}},
-        {"elsen_fight",          new object[] {false, 234, 213,  -1, -1, -1,   -1}},
-        {"area4",                new object[] {false, 235, 213,  -1, -1, -1,   -1}},
-        {"enoch",                new object[] {false, 213,   2,  -1, -1, -1,   -1}},
-        {"chapter5",             new object[] {false,  -1, 293,   6,  3,  0,   -1}},
-        {"chapter4",             new object[] {false,  -1, 293,   6,  5,  0,   -1}},
-        {"chapter3",             new object[] {false,  -1, 293,   6,  7,  0,   -1}},
-        {"chapter2",             new object[] {false,  -1, 293,   6,  9,  5,   -1}},
-        {"chapter1",             new object[] {false,  -1, 340,   1,  1,  0,   -1}},
-        {"ending",               new object[] {false, 999,  -1,  -1, -1, -1,   -1}}  // Handled manually in split{}
+        // Object variables in order: done, old map, new map, event id, event page, minimum event line, battle id, ch3 end state
+        {"zone0",                new object[] {false,  -1,   8,   1,  2, 12, -1, -1}},
+        {"enter_mines",          new object[] {false,  19,  20,  -1, -1, -1, -1, -1}},
+        {"mines",                new object[] {false,  23,  25,  -1, -1, -1, -1, -1}},
+        {"barn",                 new object[] {false,  28,  27,  -1, -1, -1, -1, -1}},
+        {"enter_postal_service", new object[] {false,  -1,  34,   4,  1, 47, -1, -1}},
+        {"postal_service",       new object[] {false,  46,  47,  -1, -1, -1, -1, -1}},
+        {"alma_first_half",      new object[] {false,  56,  57,  -1, -1, -1, -1, -1}},
+        {"alma_second_half",     new object[] {false,  -1,  68,   4,  0,  4, -1, -1}},
+        {"zone1",                new object[] {false,  69,  70,  -1, -1, -1, -1, -1}},
+        {"card_puzzle",          new object[] {false, 114, 112,  -1, -1, -1, -1, -1}},
+        {"valerie",              new object[] {false, 117, 116,  -1, -1, -1, -1, -1}},
+        {"zacharie_photo",       new object[] {false, 999,  -1,  -1, -1, -1, -1, -1}}, // Handled manually in split{}
+        {"park",                 new object[] {false, 136, 134,  -1, -1, -1, -1, -1}},
+        {"pure_zone1",           new object[] {false,  -1, 101,   1,  2, 12, -1, -1}},
+        {"sugar",                new object[] {false, 152, 151,  -1, -1, -1, -1, -1}},
+        {"residential",          new object[] {false, 145, 115,  -1, -1, -1, -1, -1}},
+        {"enter_japhet",         new object[] {false,  -1, 162,   5, 11, 60,  8, -1}},
+        {"zone2",                new object[] {false, 162,  70,  -1, -1, -1, -1, -1}},
+        {"area1",                new object[] {false,  -1, 205,   5,  0,  5, -1, -1}},
+        {"area2",                new object[] {false,  -1, 212,   5,  0, 16, -1, -1}},
+        {"area3",                new object[] {false,  -1, 214,   3,  0,  5, -1, -1}},
+        {"elsen_fight",          new object[] {false, 234, 213,  -1, -1, -1, -1, -1}},
+        {"area4",                new object[] {false, 235, 213,  -1, -1, -1, -1, -1}},
+        {"enoch",                new object[] {false, 213,   2,  -1, -1, -1, -1, -1}},
+        {"chapter5",             new object[] {false,  -1, 293,   6,  1,  0, -1,  0}},
+        {"chapter4",             new object[] {false,  -1, 293,   6,  6,  0, -1, -1}},
+        {"chapter3",             new object[] {false,  -1, 293,   6,  1,  0, -1, 10}},
+        {"exit_the_room",        new object[] {false,  -1, 293,   1,  2, 12, -1, -1}},
+        {"pure_zone2",           new object[] {false,  -1, 197,   1,  2, 12, -1, -1}},
+        {"pure_zone3",           new object[] {false,  -1, 292,   1,  2, 12, -1, -1}},
+        {"chapter2",             new object[] {false,  -1, 293,   6,  3,  6, -1, -1}},
+        {"chapter1",             new object[] {false,  -1, 340,   1,  6,  1, -1, -1}},
+        {"ending",               new object[] {false, 999,  -1,  -1, -1, -1, -1, -1}}  // Handled manually in split{}
     };
 }
 
@@ -139,20 +147,29 @@ split
         return true;
     }
 
-    else if(settings["ending"] && current.map == 347 && ((current.battleID == 2 && current.batterHP > 0) || (current.battleID == 5 && current.judgeHP > 0)) && old.battleEnded == 0 && current.battleEnded == 1)
+    else if(settings["ending"] && current.map == 347 && current.battleEnded == 1)
     {
-        vars.splits["ending"][0] = true;
-        print("[OFF] Split triggered (ending)");
-        return true;
+        if(!vars.offset.IsRunning && ((current.battleID == 2 && current.batterHP > 0) || (current.battleID == 5 && current.judgeHP > 0)) && old.battleEnded == 0)
+        {
+            vars.offset.Start();
+        }
+        else if(vars.offset.ElapsedMilliseconds >= 150)
+        {
+            vars.offset.Reset();
+            vars.splits["ending"][0] = true;
+            print("[OFF] Split triggered (ending)");
+            return true;
+        }
     }
 
-    int done    = 0,
-        oldMap  = 1,
-        newMap  = 2,
-        reqID   = 3,
-        reqPage = 4,
-        minLine = 5,
-        delay   = 6;
+    int done      = 0,
+        oldMap    = 1,
+        newMap    = 2,
+        reqID     = 3,
+        reqPage   = 4,
+        minLine   = 5,
+        reqBattle = 6,
+        reqCh3    = 7;
 
     foreach(string splitKey in vars.splits.Keys)
     {
@@ -161,22 +178,13 @@ split
            (vars.splits[splitKey][newMap] != -1 && current.map != vars.splits[splitKey][newMap]) ||
            (vars.splits[splitKey][reqID] != -1 && current.eventID != vars.splits[splitKey][reqID]) ||
            (vars.splits[splitKey][reqPage] != -1 && current.eventPage != vars.splits[splitKey][reqPage]) ||
-           (vars.splits[splitKey][minLine] != -1 && (current.eventLine < vars.splits[splitKey][minLine] || current.eventLine > 200))) continue;
+           (vars.splits[splitKey][minLine] != -1 && (current.eventLine < vars.splits[splitKey][minLine] || current.eventLine > 200)) ||
+           (vars.splits[splitKey][reqBattle] != -1 && current.battleID != vars.splits[splitKey][reqBattle]) ||
+           (vars.splits[splitKey][reqCh3] != -1 && current.ch3Ended != vars.splits[splitKey][reqCh3]))  continue;
 
-        if(vars.splits[splitKey][delay] > -1)
-        {
-            if(!vars.offset.IsRunning)
-            {
-                vars.offset.Start();
-                continue;
-            }
-            else if(vars.offset.ElapsedMilliseconds < vars.splits[splitKey][delay])
-            {
-                continue;
-            }
-        }
+        if(splitKey == "alma_second_half" && current.eventLine != 4 && current.eventLine != 5) // Condition for this one because the line goes to 9 if you press No
+            return false;
 
-        vars.offset.Reset();
         vars.splits[splitKey][done] = true;
         print("[OFF] Split triggered (" + splitKey + ")");
         return true;
