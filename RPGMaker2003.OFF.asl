@@ -76,7 +76,7 @@ startup
         {"enter_postal_service", new object[] {false,  -1,  34,  4,  1, 47, -1, -1}},
         {"postal_service",       new object[] {false,  46,  47, -1, -1, -1, -1, -1}},
         {"alma_first_half",      new object[] {false,  56,  57, -1, -1, -1, -1, -1}},
-        {"alma_second_half",     new object[] {false,  -1,  68,  4,  0,  4, -1, -1}},
+        {"alma_second_half",     new object[] {false,  68,  69, -1, -1, -1, -1, -1}},
         {"zone1",                new object[] {false,  69,  70, -1, -1, -1, -1, -1}},
         {"card_puzzle",          new object[] {false, 114, 112, -1, -1, -1, -1, -1}},
         {"valerie",              new object[] {false, 117, 116, -1, -1, -1, -1, -1}},
@@ -182,11 +182,9 @@ split
            (vars.splits[splitKey][reqBattle] != -1 && current.battleID != vars.splits[splitKey][reqBattle]) ||
            (vars.splits[splitKey][reqCh3] != -1 && current.ch3Ended != vars.splits[splitKey][reqCh3])) continue;
 
-        if(splitKey == "alma_second_half" && current.eventLine != 4 && current.eventLine != 5) // Condition for this one because the line goes to 9 if you press No
-            return false;
-
         vars.splits[splitKey][done] = true;
         print("[OFF] Split triggered (" + splitKey + ")");
         return true;
     }
 }
+
