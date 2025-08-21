@@ -14,7 +14,14 @@ startup
     settings.CurrentDefaultParent = "Prologue";
     settings.Add("P_TekiLomax", false, "Exit Teki & Lomax room");
     settings.Add("P_Ending",     true, "Enter Sewers");
-    settings.CurrentDefaultParent = null;
+
+    vars.splits = new Dictionary<string, Func<dynamic, dynamic, bool>>()
+    {
+        // org = original (equivalent to old), cur = current (can't use the same names)
+        {"P_TekiLomax", (org, cur) => org.roomName == "room_rtown_dumpster" && cur.roomName == "room_thouse_fireplace"},
+        {"P_Ending",    (org, cur) => cur.roomName == "room_slevel0_0" && org.sound != "mus_intronoise" && cur.sound == "mus_intronoise"}
+    };
+    vars.completedSplits = new HashSet<string>();
 }
 
 init
@@ -41,11 +48,14 @@ init
         return game.ReadString(arrayItem, 64);
     });
 
-    string hash;
-    using(var md5 = System.Security.Cryptography.MD5.Create())
-        using(var fs = File.OpenRead(new FileInfo(module.FileName).DirectoryName + @"\data.win")) 
-            hash = string.Concat(md5.ComputeHash(fs).Select(b => b.ToString("X2")));
-
+    string hash = "Invalid hash";
+    string dataFile = new FileInfo(module.FileName).DirectoryName + @"\data.win";
+    if(File.Exists(dataFile))
+    {
+        using(var md5 = System.Security.Cryptography.MD5.Create())
+            using(var fs = File.OpenRead(dataFile))
+                hash = string.Concat(md5.ComputeHash(fs).Select(b => b.ToString("X2")));
+    }
     switch(hash)
     {   
         case "A9E06F91612061574C863847E31F3681":
@@ -58,19 +68,14 @@ init
             MessageBox.Show
             (
                 "This version of Undertale Kindred Spirits is not supported by the autosplitter.\nIf you are playing an older version, update your game.\nIf not, please wait until the autosplitter receives an update.\n\n" +
+
+                "Make sure the data file is named \"data.win\".\n" +
                 "Supported version: Prologue v0.1.5999.",
                 "LiveSplit | Undertale Kindred Spirits", MessageBoxButtons.OK, MessageBoxIcon.Warning
             );
             break;
     }
     print("[Undertale Kindred Spirits] Version: " + version + " (" + hash + ")");
-
-    vars.splits = new Dictionary<string, object[]>()
-    {
-        // Object variables in order: done, old room, new room, special condition
-        {"P_TekiLomax", new object[] {false, "room_rtown_dumpster", "room_thouse_fireplace", 0}},
-        {"P_Ending",    new object[] {false, null,                  "room_slevel0_0",        1}}
-    };
 }
 
 start
@@ -85,13 +90,8 @@ reset
 
 onReset
 {
-    if(game != null)
-    {
-        foreach(string split in vars.splits.Keys) 
-            vars.splits[split][0] = false;
-        
-        print("[Undertale Kindred Spirits] All splits have been reset to initial state");
-    }
+    vars.completedSplits.Clear();
+    print("[Undertale Kindred Spirits] All splits have been reset to initial state");
 }
 
 update
@@ -107,34 +107,14 @@ update
 
 split
 {
-    int done      = 0,
-        oldRoom   = 1,
-        newRoom   = 2,
-        condition = 3;
-
-    foreach(string splitKey in vars.splits.Keys)
+    foreach(var split in vars.splits)
     {
-        if((!settings[splitKey] || vars.splits[splitKey][done]) ||
-           (vars.splits[splitKey][oldRoom] != null && old.roomName != vars.splits[splitKey][oldRoom]) ||
-           (vars.splits[splitKey][newRoom] != null && current.roomName != vars.splits[splitKey][newRoom])) continue;
+        if(!settings[split.Key] || 
+           vars.completedSplits.Contains(split.Key) ||
+           !split.Value(old, current)) continue;
 
-        bool pass = false;
-        switch((int)vars.splits[splitKey][condition])
-        {
-            case 0:
-                pass = true;
-                break;
-
-            case 1:
-                pass = (old.sound != "mus_intronoise" && current.sound == "mus_intronoise");
-                break;
-        }
-
-        if(pass)
-        {   
-            vars.splits[splitKey][done] = true;
-            print("[Undertale Kindred Spirits] Split triggered (" + splitKey + ")");
-            return true;
-        }
+        vars.completedSplits.Add(split.Key);
+        print("[Undertale Kindred Spirits] Split triggered (" + split.Key + ")");
+        return true;
     }
 }

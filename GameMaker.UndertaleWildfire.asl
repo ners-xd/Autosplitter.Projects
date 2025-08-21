@@ -11,6 +11,7 @@ state("Undertale Wildfire", "Combat Demo v1.12")
 startup
 {
     refreshRate = 30;
+    vars.currentChallenge = 0;
 
     settings.Add("Combat_Demo", true, "Combat Demo");
     settings.CurrentDefaultParent = "Combat_Demo";
@@ -19,7 +20,17 @@ startup
     settings.Add("C_StressHurts", false, "Stress Hurts");
     settings.Add("C_Patience",    false, "Patience");
     settings.Add("C_OneHitWonder", true, "One Hit Wonder");
-    settings.CurrentDefaultParent = null;
+
+    vars.splits = new Dictionary<string, Func<dynamic, dynamic, bool>>()
+    {
+        // org = original (equivalent to old), cur = current (can't use the same names)
+        {"C_Nochallenge",  (org, cur) => cur.roomName == "rm_trail_anser_quigley" && cur.playerX >= 969 && vars.currentChallenge == 1},
+        {"C_Trinketless",  (org, cur) => cur.roomName == "rm_trail_anser_quigley" && cur.playerX >= 969 && vars.currentChallenge == 2},
+        {"C_StressHurts",  (org, cur) => cur.roomName == "rm_trail_anser_quigley" && cur.playerX >= 969 && vars.currentChallenge == 3},
+        {"C_Patience",     (org, cur) => cur.roomName == "rm_trail_anser_quigley" && cur.playerX >= 969 && vars.currentChallenge == 4},
+        {"C_OneHitWonder", (org, cur) => cur.roomName == "rm_trail_anser_quigley" && cur.playerX >= 969 && vars.currentChallenge == 5}
+    };
+    vars.completedSplits = new HashSet<string>();
 }
 
 init
@@ -48,11 +59,14 @@ init
         return game.ReadString(arrayItem, 64);
     });
 
-    string hash;
-    using(var md5 = System.Security.Cryptography.MD5.Create())
-        using(var fs = File.OpenRead(new FileInfo(module.FileName).DirectoryName + @"\data.win")) 
-            hash = string.Concat(md5.ComputeHash(fs).Select(b => b.ToString("X2")));
-
+    string hash = "Invalid hash";
+    string dataFile = new FileInfo(module.FileName).DirectoryName + @"\data.win";
+    if(File.Exists(dataFile))
+    {
+        using(var md5 = System.Security.Cryptography.MD5.Create())
+            using(var fs = File.OpenRead(dataFile))
+                hash = string.Concat(md5.ComputeHash(fs).Select(b => b.ToString("X2")));
+    }
     switch(hash)
     {
         case "B4E7CF47487D009E18B9ACC3851EB888":
@@ -65,23 +79,19 @@ init
             MessageBox.Show
             (
                 "This version of Undertale Wildfire is not supported by the autosplitter.\nIf you are playing an older version, update your game.\nIf not, please wait until the autosplitter receives an update.\n\n" +
+
+                "Make sure the data file is named \"data.win\".\n" +
                 "Supported version: Combat Demo v1.12.",
                 "LiveSplit | Undertale Wildfire", MessageBoxButtons.OK, MessageBoxIcon.Warning
             );
             break;
     }
     print("[Undertale Wildfire] Version: " + version + " (" + hash + ")");
+}
 
+exit
+{
     vars.currentChallenge = 0;
-    vars.splits = new Dictionary<string, object[]>()
-    {
-        // Object variables in order: done, old room, new room, special condition
-        {"C_Nochallenge",  new object[] {false, null, "rm_trail_anser_quigley", 1}},
-        {"C_Trinketless",  new object[] {false, null, "rm_trail_anser_quigley", 2}},
-        {"C_StressHurts",  new object[] {false, null, "rm_trail_anser_quigley", 3}},
-        {"C_Patience",     new object[] {false, null, "rm_trail_anser_quigley", 4}},
-        {"C_OneHitWonder", new object[] {false, null, "rm_trail_anser_quigley", 5}}
-    };
 }
 
 start
@@ -99,13 +109,8 @@ reset
 
 onReset
 {
-    if(game != null)
-    {
-        foreach(string split in vars.splits.Keys) 
-            vars.splits[split][0] = false;
-        
-        print("[Undertale Wildfire] All splits have been reset to initial state");
-    }
+    vars.completedSplits.Clear();
+    print("[Undertale Wildfire] All splits have been reset to initial state");
 }
 
 update
@@ -130,39 +135,14 @@ update
 
 split
 {
-    int done      = 0,
-        oldRoom   = 1,
-        newRoom   = 2,
-        condition = 3;
-
-    foreach(string splitKey in vars.splits.Keys)
+    foreach(var split in vars.splits)
     {
-        if((!settings[splitKey] || vars.splits[splitKey][done]) ||
-           (vars.splits[splitKey][oldRoom] != null && old.roomName != vars.splits[splitKey][oldRoom]) ||
-           (vars.splits[splitKey][newRoom] != null && current.roomName != vars.splits[splitKey][newRoom])) continue;
+        if(!settings[split.Key] || 
+           vars.completedSplits.Contains(split.Key) ||
+           !split.Value(old, current)) continue;
 
-        bool pass = false;
-        int specialCondition = vars.splits[splitKey][condition];
-        switch(specialCondition)
-        {
-            case 0:
-                pass = true;
-                break;
-
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-                pass = (current.playerX >= 969 && vars.currentChallenge == specialCondition);
-                break;
-        }
-
-        if(pass)
-        {   
-            vars.splits[splitKey][done] = true;
-            print("[Undertale Wildfire] Split triggered (" + splitKey + ")");
-            return true;
-        }
+        vars.completedSplits.Add(split.Key);
+        print("[Undertale Wildfire] Split triggered (" + split.Key + ")");
+        return true;
     }
 }

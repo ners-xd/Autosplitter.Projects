@@ -30,13 +30,14 @@ state("Undertale Yellow", "v1.1 / v1.2.1")
 
 startup
 {
-    refreshRate  = 30;
+    refreshRate = 30;
+    vars.killRoom = 0;
     vars.tempVar = false;
 
     settings.Add("F_KillCount", false, "Show kill count (updates on room changes)");
-    settings.SetToolTip("F_KillCount", "A new row will appear on your layout with the current room and area kills.");
+     settings.SetToolTip("F_KillCount", "A new row will appear on your layout with the current room and area kills.");
 
-    settings.Add("F_StartOnContinue", false, "Start/Reset the timer when loading a save file in the first room");
+    settings.Add("F_StartOnContinue", false, "Start / Reset the timer when loading a save file in the first room");
 
     settings.Add("F_Ruins",            false, "Exit Regular Ruins");
     settings.Add("F_FiveLights",       false, "Exit the five lights puzzle room");
@@ -66,7 +67,7 @@ startup
     settings.Add("F_ExitComputer",     false, "Exit Computer room");
     settings.Add("F_Axis",             false, "Exit Axis room");
     settings.Add("F_Flowey1",          false, "Flowey Flashback (Phase 1 End)");
-    settings.Add("F_Zenith1",          false, "Zenith Martlet Flashback (Phase 1 End)");
+    settings.Add("F_Zenith1",          false, "Zenith Martlet Flashback (Phase 1 End) / Zenith Warp");
     settings.Add("F_Zenith2",          false, "End Zenith Martlet battle");
     settings.Add("F_NewHome",          false, "Enter New Home");
     settings.Add("F_Ceroba1",          false, "Ceroba Flashback 1");
@@ -77,6 +78,50 @@ startup
     settings.Add("F_FPacifist",         true, "Flawed Pacifist Ending");
     settings.Add("F_Genocide",          true, "Genocide Ending");
     settings.Add("F_Rope",              true, "Rope Ending");
+
+    vars.splits = new Dictionary<string, Func<dynamic, dynamic, bool>>()
+    {
+        // org = original (equivalent to old), cur = current (can't use the same names)
+        {"F_Ruins",            (org, cur) => org.room == 10 && cur.room == 11},
+        {"F_FiveLights",       (org, cur) => org.room == 18 && cur.room == 19},
+        {"F_Decibat",          (org, cur) => org.room == 25 && cur.room == 26},
+        {"F_Dalv",             (org, cur) => org.room == 34 && (cur.room == 31 || cur.room == 37)},
+        {"F_GoldenPear",       (org, cur) => cur.room == 29 && vars.checkItem("G. Pear")},
+        {"F_GoldenPearExit",   (org, cur) => org.room == 29 && cur.room == 28},
+        {"F_DarkRuins",        (org, cur) => org.room == 35 && cur.room == 43},
+        {"F_Honeydew",         (org, cur) => org.room == 58 && cur.room == 59},
+        {"F_GoldenCoffee",     (org, cur) => cur.room == 63 && vars.checkItem("G. Coffee")},
+        {"F_GoldenCoffeeExit", (org, cur) => org.room == 63 && cur.room == 59},
+        {"F_EnterMartlet",     (org, cur) => org.room == 70 && cur.room == 71},
+        {"F_ExitMartlet",      (org, cur) => org.room == 71 && cur.room == 72},
+        {"F_ExitElevator",     (org, cur) => org.room == 93 && cur.room == 94},
+        {"F_ElBailador",       (org, cur) => org.room == 108 && cur.room == 109},
+        {"F_EnterWildEast",    (org, cur) => org.room == 126 && cur.room == 127},
+        {"F_FForCeroba",       (org, cur) => org.room == 180 && cur.room == 127},
+        {"F_Starlo",           (org, cur) => org.room == 135 && cur.room == 136},
+        {"F_GoldenCactus",     (org, cur) => cur.room == 83 && vars.checkItem("G. Cactus")},
+        {"F_GoldenCactusExit", (org, cur) => org.room == 83 && cur.room == 82},
+        {"F_GoldenBandana",    (org, cur) => (cur.room == 167 || cur.room == 275) && vars.checkItem("G. Bandana")},
+        {"F_Guardener",        (org, cur) => org.room == 191 && cur.room == 190},
+        {"F_GreenhouseSkip",   (org, cur) => org.room == 190 && cur.room == 281},
+        {"F_ExitSWElevator",   (org, cur) => org.room == 209 && cur.room == 202},
+        {"F_EnterComputer",    (org, cur) => org.room == 202 && cur.room == 205},
+        {"F_ExitComputer",     (org, cur) => org.room == 205 && cur.room == 203},
+        {"F_Axis",             (org, cur) => org.room == 204 && cur.room == 206},
+        {"F_Flowey1",          (org, cur) => org.room == 234 && cur.room == 233},
+        {"F_Zenith1",          (org, cur) => (org.room == 72 || org.room == 180) && cur.room == 260},
+        {"F_Zenith2",          (org, cur) => org.room == 180 && cur.room == 221},
+        {"F_NewHome",          (org, cur) => org.room == 259 && cur.room == 253},
+        {"F_Ceroba1",          (org, cur) => org.room == 180 && cur.room == 246},
+        {"F_Ceroba2",          (org, cur) => org.room == 180 && cur.room == 250},
+        {"F_Ceroba3",          (org, cur) => org.room == 180 && cur.room == 255},
+        {"F_Neutral",          (org, cur) => cur.room == 235 && vars.tempVar == true && org.neutralEndScene == 5 && cur.neutralEndScene == 6},
+        {"F_Pacifist",         (org, cur) => cur.room == 255 && org.cerobaY <= 387 && cur.cerobaY >= 387},
+        {"F_FPacifist",        (org, cur) => cur.room == 180 && vars.tempVar == true && org.asgoreFade == 0 && cur.asgoreFade == 1},
+        {"F_Genocide",         (org, cur) => cur.room == 268 && org.genoEndScene == 35 && (cur.genoEndScene == 36 || cur.genoEndScene == 37)},
+        {"F_Rope",             (org, cur) => cur.room == 13 && org.ropeWaiter == 3 && cur.ropeWaiter != 3}
+    };
+    vars.completedSplits = new HashSet<string>();
 
     // Thanks to Ero for this
     var cache = new Dictionary<string, LiveSplit.UI.Components.ILayoutComponent>();
@@ -106,22 +151,22 @@ startup
     });
 
     vars.killTextKey = "Kills (Room | Area)";
-    vars.dontUpdate = new HashSet<int> { 180, 182, 185, 246, 250 }; // Battle room, shops, game over screen, Chujin's bedroom, Chujin's basement
+    vars.dontUpdate = new HashSet<int> {180, 182, 185, 246, 250}; // Battle room, shops, game over screen, Chujin's bedroom, Chujin's basement
     vars.areas = new List<Tuple<int, int, int, int>>
     {
         // Min room, max room, area, max kills per room
         Tuple.Create(13,   42, 1, 5), // Dark Ruins
         Tuple.Create(43,   72, 2, 5), // Snowdin
         Tuple.Create(77,  140, 3, 3), // Dunes
-        Tuple.Create(241, 252, 3, 3), //
-        Tuple.Create(276, 276, 3, 3), //
-        Tuple.Create(283, 283, 3, 3), //
+        Tuple.Create(241, 252, 3, 3),
+        Tuple.Create(276, 276, 3, 3),
+        Tuple.Create(283, 283, 3, 3),
         Tuple.Create(141, 177, 4, 3), // Steamworks
-        Tuple.Create(187, 209, 4, 3), //
-        Tuple.Create(220, 220, 4, 3), //
-        Tuple.Create(237, 240, 4, 3), //
-        Tuple.Create(275, 275, 4, 3), //
-        Tuple.Create(277, 281, 4, 3)  //
+        Tuple.Create(187, 209, 4, 3),
+        Tuple.Create(220, 220, 4, 3),
+        Tuple.Create(237, 240, 4, 3),
+        Tuple.Create(275, 275, 4, 3),
+        Tuple.Create(277, 281, 4, 3)
     };
 }
 
@@ -133,15 +178,11 @@ shutdown
 exit
 {
     vars.removeAllTexts();
+    vars.killRoom = 0;
 }
 
 init
 {
-    string hash;
-    using(var md5 = System.Security.Cryptography.MD5.Create())
-        using(var fs = File.OpenRead(modules.First().FileName)) 
-            hash = string.Concat(md5.ComputeHash(fs).Select(b => b.ToString("X2")));
-
     var module = modules.First();
     var scanner = new SignatureScanner(game, module.BaseAddress, module.ModuleMemorySize);
     Func<int, string, IntPtr> scan = (o, sig) =>
@@ -153,49 +194,10 @@ init
     };
     vars.ptrRoomID = scan(6, "48 ?? ?? ?? 3B 35 ?? ?? ?? ?? 41 ?? ?? ?? 49 ?? ?? E8 ?? ?? ?? ?? FF");
 
-    vars.killRoom = 0;
-    vars.splits = new Dictionary<string, object[]>()
-    {
-        // Object variables in order: done, old room, new room, special condition
-        {"F_Ruins",            new object[] {false,  10,  11,  0}},
-        {"F_FiveLights",       new object[] {false,  18,  19,  0}},
-        {"F_Decibat",          new object[] {false,  25,  26,  0}},
-        {"F_Dalv",             new object[] {false,  34,  -1,  1}},
-        {"F_GoldenPear",       new object[] {false,  -1,  29,  2}},
-        {"F_GoldenPearExit",   new object[] {false,  29,  28,  0}},
-        {"F_DarkRuins",        new object[] {false,  35,  43,  0}},
-        {"F_Honeydew",         new object[] {false,  58,  59,  0}},
-        {"F_GoldenCoffee",     new object[] {false,  -1,  63,  3}},
-        {"F_GoldenCoffeeExit", new object[] {false,  63,  59,  0}},
-        {"F_EnterMartlet",     new object[] {false,  70,  71,  0}},
-        {"F_ExitMartlet",      new object[] {false,  71,  72,  0}},
-        {"F_ExitElevator",     new object[] {false,  93,  94,  0}},
-        {"F_ElBailador",       new object[] {false,  -1, 109,  0}},
-        {"F_EnterWildEast",    new object[] {false, 126, 127,  0}},
-        {"F_FForCeroba",       new object[] {false, 180, 127,  0}},
-        {"F_Starlo",           new object[] {false, 135, 136,  0}},
-        {"F_GoldenCactus",     new object[] {false,  -1,  83,  4}},
-        {"F_GoldenCactusExit", new object[] {false,  83,  82,  0}},
-        {"F_GoldenBandana",    new object[] {false,  -1,  -1,  5}}, // Can be obtained in different rooms depending on the route
-        {"F_Guardener",        new object[] {false, 191, 190,  0}},
-        {"F_GreenhouseSkip",   new object[] {false, 190, 281,  0}},
-        {"F_ExitSWElevator",   new object[] {false, 209, 202,  0}},
-        {"F_EnterComputer",    new object[] {false, 202, 205,  0}},
-        {"F_ExitComputer",     new object[] {false, 205, 203,  0}},
-        {"F_Axis",             new object[] {false, 204, 206,  0}},
-        {"F_Flowey1",          new object[] {false, 234, 233,  0}},
-        {"F_Zenith1",          new object[] {false,  -1, 260,  0}},
-        {"F_Zenith2",          new object[] {false, 180, 221,  0}},
-        {"F_NewHome",          new object[] {false, 259, 253,  0}},
-        {"F_Ceroba1",          new object[] {false, 180, 246,  0}},
-        {"F_Ceroba2",          new object[] {false, 180, 250,  0}},
-        {"F_Ceroba3",          new object[] {false, 180, 255,  0}},
-        {"F_Neutral",          new object[] {false,  -1, 235,  6}},
-        {"F_Pacifist",         new object[] {false,  -1, 255,  7}},
-        {"F_FPacifist",        new object[] {false,  -1, 180,  8}},
-        {"F_Genocide",         new object[] {false,  -1, 268,  9}},
-        {"F_Rope",             new object[] {false,  -1,  13, 10}}
-    };
+    string hash = "Invalid hash";
+    using(var md5 = System.Security.Cryptography.MD5.Create())
+        using(var fs = File.OpenRead(modules.First().FileName)) 
+            hash = string.Concat(md5.ComputeHash(fs).Select(b => b.ToString("X2")));
 
     switch(hash)
     {
@@ -228,7 +230,9 @@ init
 
             MessageBox.Show
             (
-                "This version of Undertale Yellow is currently not supported by the autosplitter.\nPlease wait until it receives an update.",
+                "This version of Undertale Yellow is currently not supported by the autosplitter.\n\n" +
+
+                "Supported versions: Full Game v1.0, v1.1, v1.2.1.",
                 "LiveSplit | Undertale Yellow", MessageBoxButtons.OK, MessageBoxIcon.Warning
             );
             break;
@@ -258,14 +262,8 @@ reset
 onReset
 {
     vars.tempVar = false;
-
-    if(game != null)
-    {
-        foreach(string split in vars.splits.Keys) 
-            vars.splits[split][0] = false;
-        
-        print("[Undertale Yellow] All splits have been reset to initial state");
-    }
+    vars.completedSplits.Clear();
+    print("[Undertale Yellow] All splits have been reset to initial state");
 }
 
 update
@@ -353,70 +351,14 @@ update
 
 split
 {
-    int done      = 0,
-        oldRoom   = 1,
-        newRoom   = 2,
-        condition = 3;
-
-    foreach(string splitKey in vars.splits.Keys)
+    foreach(var split in vars.splits)
     {
-        if((!settings[splitKey] || vars.splits[splitKey][done]) ||
-           (vars.splits[splitKey][oldRoom] != -1 && old.room != vars.splits[splitKey][oldRoom]) ||
-           (vars.splits[splitKey][newRoom] != -1 && current.room != vars.splits[splitKey][newRoom])) continue;
+        if(!settings[split.Key] || 
+           vars.completedSplits.Contains(split.Key) ||
+           !split.Value(old, current)) continue;
 
-        bool pass = false;
-        switch((int)vars.splits[splitKey][condition])
-        {
-            case 0:
-                pass = true;
-                break;
-
-            case 1: // F_Dalv
-                pass = (current.room != 34 && current.room != 180);
-                break;
-
-            case 2: // F_GoldenPear
-                pass = (vars.checkItem("G. Pear"));
-                break;
-
-            case 3: // F_GoldenCoffee
-                pass = (vars.checkItem("G. Coffee"));
-                break;
-
-            case 4: // F_GoldenCactus
-                pass = (vars.checkItem("G. Cactus"));
-                break;
-
-            case 5: // F_GoldenBandana
-                pass = ((current.room == 167 || current.room == 275) && vars.checkItem("G. Bandana"));
-                break;
-
-            case 6: // F_Neutral
-                pass = (vars.tempVar == true && old.neutralEndScene == 5 && current.neutralEndScene == 6);
-                break;
-
-            case 7: // F_Pacifist
-                pass = (old.cerobaY <= 387 && current.cerobaY >= 387);
-                break;
-
-            case 8: // F_FPacifist
-                pass = (vars.tempVar == true && old.asgoreFade == 0 && current.asgoreFade == 1);
-                break;
-
-            case 9: // F_Genocide
-                pass = (old.genoEndScene == 35 && (current.genoEndScene == 36 || current.genoEndScene == 37));
-                break;
-
-            case 10: // F_Rope
-                pass = (old.ropeWaiter == 3 && current.ropeWaiter != 3);
-                break;
-        }
-
-        if(pass)
-        {   
-            vars.splits[splitKey][done] = true;
-            print("[Undertale Yellow] Split triggered (" + splitKey + ")");
-            return true;
-        }
+        vars.completedSplits.Add(split.Key);
+        print("[Undertale Yellow] Split triggered (" + split.Key + ")");
+        return true;
     }
 }
