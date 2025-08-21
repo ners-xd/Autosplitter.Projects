@@ -40,7 +40,7 @@ startup
     settings.Add("zone1",                false, "Zone 1");
     settings.Add("card_puzzle",          false, "Card Puzzle (Exit from the LEFT tile)");
     settings.Add("valerie",              false, "Valerie");
-    settings.Add("zacharie_photo",       false, "Open The Zacharie Park Photo");
+    settings.Add("zacharie_photo",       false, "Open The Zacharie Rollercoaster Photo");
     settings.Add("park",                 false, "Park");
     settings.Add("pure_zone1",           false, "Pure Zone 1");
     settings.Add("sugar",                false, "Sugar");
@@ -164,3 +164,4 @@ split
         return true;
     }
 }
+
