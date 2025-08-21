@@ -361,5 +361,4 @@ split
         print("[Undertale Yellow] Split triggered (" + split.Key + ")");
         return true;
     }
-
 }
