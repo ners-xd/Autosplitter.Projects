@@ -115,9 +115,9 @@ startup
         {"F_Ceroba1",          (org, cur) => org.room == 180 && cur.room == 246},
         {"F_Ceroba2",          (org, cur) => org.room == 180 && cur.room == 250},
         {"F_Ceroba3",          (org, cur) => org.room == 180 && cur.room == 255},
-        {"F_Neutral",          (org, cur) => cur.room == 235 && vars.tempVar == true && org.neutralEndScene == 5 && cur.neutralEndScene == 6},
+        {"F_Neutral",          (org, cur) => cur.room == 235 && org.neutralEndScene == 5 && cur.neutralEndScene == 6 && vars.tempVar},
         {"F_Pacifist",         (org, cur) => cur.room == 255 && org.cerobaY <= 387 && cur.cerobaY >= 387},
-        {"F_FPacifist",        (org, cur) => cur.room == 180 && vars.tempVar == true && org.asgoreFade == 0 && cur.asgoreFade == 1},
+        {"F_FPacifist",        (org, cur) => cur.room == 180 && org.asgoreFade == 0 && cur.asgoreFade == 1 && vars.tempVar},
         {"F_Genocide",         (org, cur) => cur.room == 268 && org.genoEndScene == 35 && (cur.genoEndScene == 36 || cur.genoEndScene == 37)},
         {"F_Rope",             (org, cur) => cur.room == 13 && org.ropeWaiter == 3 && cur.ropeWaiter != 3}
     };
@@ -274,7 +274,7 @@ update
     current.room = game.ReadValue<int>((IntPtr)vars.ptrRoomID);
     if(old.room != current.room)
     {
-        if(old.room == 269 && current.room == 180 && settings["F_FPacifist"] && vars.tempVar == false) // Entered the Flawed Pacifist Asgore battle
+        if(old.room == 269 && current.room == 180 && settings["F_FPacifist"] && !vars.tempVar) // Entered the Flawed Pacifist Asgore battle
             vars.tempVar = true; // Added for the ending autosplit check because room 180 is used for every battle, so this is mainly just to be safe 
 
         if(settings["F_KillCount"] && !vars.dontUpdate.Contains(current.room))
@@ -345,7 +345,7 @@ update
         print("[Undertale Yellow] Room: " + old.room + " -> " + current.room);
     }
 
-    if(current.room == 235 && current.neutralEndScene == 4 && current.dialogue == 1 && settings["F_Neutral"] && vars.tempVar == false)
+    if(current.room == 235 && current.neutralEndScene == 4 && current.dialogue == 1 && settings["F_Neutral"] && !vars.tempVar)
         vars.tempVar = true; // Added for the ending autosplit check because neutralEndScene takes random values in the Flowey battle and would make the split trigger
 }
 
@@ -361,4 +361,5 @@ split
         print("[Undertale Yellow] Split triggered (" + split.Key + ")");
         return true;
     }
+
 }
