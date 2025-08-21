@@ -1,4 +1,4 @@
-// OFF Autosplitter by NERS
+// OFF (2008) Autosplitter by NERS
 // Thanks to KyoshiCadre for all the room and event numbers
 
 state("RPG_RT")
@@ -29,39 +29,39 @@ state("Sauvegarde_RPG_RT")
 
 startup
 {
-    settings.Add("zone0", false, "Zone 0");
-    settings.Add("enter_mines", false, "Enter Mines");
-    settings.Add("mines", false, "Mines");
-    settings.Add("barn", false, "Barn");
+    settings.Add("zone0",                false, "Zone 0");
+    settings.Add("enter_mines",          false, "Enter Mines");
+    settings.Add("mines",                false, "Mines");
+    settings.Add("barn",                 false, "Barn");
     settings.Add("enter_postal_service", false, "Enter Postal Service");
-    settings.Add("postal_service", false, "Postal Service");
-    settings.Add("alma_first_half", false, "Alma First Half");
-    settings.Add("alma_second_half", false, "Alma Second Half");
-    settings.Add("zone1", false, "Zone 1");
-    settings.Add("card_puzzle", false, "Card Puzzle (Exit from the LEFT tile)");
-    settings.Add("valerie", false, "Valerie");
-    settings.Add("zacharie_photo", false, "Open The Zacharie Park Photo");
-    settings.Add("park", false, "Park");
-    settings.Add("pure_zone1", false, "Pure Zone 1");
-    settings.Add("sugar", false, "Sugar");
-    settings.Add("residential", false, "Residential");
-    settings.Add("enter_japhet", false, "Enter Japhet");
-    settings.Add("zone2", false, "Zone 2");
-    settings.Add("area1", false, "Area 1");
-    settings.Add("area2", false, "Area 2");
-    settings.Add("area3", false, "Area 3");
-    settings.Add("elsen_fight", false, "Elsen Fight");
-    settings.Add("area4", false, "Area 4");
-    settings.Add("enoch", false, "Enoch");
-    settings.Add("chapter5", false, "Chapter 5");
-    settings.Add("chapter4", false, "Chapter 4");
-    settings.Add("chapter3", false, "Chapter 3");
-    settings.Add("exit_the_room", false, "Exit The Room");
-    settings.Add("pure_zone2", false, "Pure Zone 2");
-    settings.Add("pure_zone3", false, "Pure Zone 3");
-    settings.Add("chapter2", false, "Chapter 2");
-    settings.Add("chapter1", false, "Chapter 1");
-    settings.Add("ending", false, "Ending");
+    settings.Add("postal_service",       false, "Postal Service");
+    settings.Add("alma_first_half",      false, "Alma First Half");
+    settings.Add("alma_second_half",     false, "Alma Second Half");
+    settings.Add("zone1",                false, "Zone 1");
+    settings.Add("card_puzzle",          false, "Card Puzzle (Exit from the LEFT tile)");
+    settings.Add("valerie",              false, "Valerie");
+    settings.Add("zacharie_photo",       false, "Open The Zacharie Park Photo");
+    settings.Add("park",                 false, "Park");
+    settings.Add("pure_zone1",           false, "Pure Zone 1");
+    settings.Add("sugar",                false, "Sugar");
+    settings.Add("residential",          false, "Residential");
+    settings.Add("enter_japhet",         false, "Enter Japhet");
+    settings.Add("zone2",                false, "Zone 2");
+    settings.Add("area1",                false, "Area 1");
+    settings.Add("area2",                false, "Area 2");
+    settings.Add("area3",                false, "Area 3");
+    settings.Add("elsen_fight",          false, "Elsen Fight");
+    settings.Add("area4",                false, "Area 4");
+    settings.Add("enoch",                false, "Enoch");
+    settings.Add("chapter5",             false, "Chapter 5");
+    settings.Add("chapter4",             false, "Chapter 4");
+    settings.Add("chapter3",             false, "Chapter 3");
+    settings.Add("exit_the_room",        false, "Exit The Room");
+    settings.Add("pure_zone2",           false, "Pure Zone 2");
+    settings.Add("pure_zone3",           false, "Pure Zone 3");
+    settings.Add("chapter2",             false, "Chapter 2");
+    settings.Add("chapter1",             false, "Chapter 1");
+    settings.Add("ending",                true, "Ending");
 
     vars.tempVar = false;
     vars.offset = new Stopwatch();
@@ -92,9 +92,9 @@ startup
         {"elsen_fight",          (org, cur) => org.map == 234 && cur.map == 213},
         {"area4",                (org, cur) => org.map == 235 && cur.map == 213},
         {"enoch",                (org, cur) => org.map == 213 && cur.map == 2},
-        {"chapter5",             (org, cur) => cur.map == 293 && cur.eventID == 6 && cur.eventPage == 1 && org.eventLine < 1 && cur.eventLine >= 1 && vars.tempVar == false},
+        {"chapter5",             (org, cur) => cur.map == 293 && cur.eventID == 6 && cur.eventPage == 1 && org.eventLine < 1 && cur.eventLine >= 1 && !vars.tempVar},
         {"chapter4",             (org, cur) => cur.map == 293 && cur.eventID == 6 && cur.eventPage == 6 && org.eventLine < 1 && cur.eventLine >= 1},
-        {"chapter3",             (org, cur) => cur.map == 293 && cur.eventID == 6 && cur.eventPage == 1 && org.eventLine < 1 && cur.eventLine >= 1 && vars.tempVar == true},
+        {"chapter3",             (org, cur) => cur.map == 293 && cur.eventID == 6 && cur.eventPage == 1 && org.eventLine < 1 && cur.eventLine >= 1 && vars.tempVar},
         {"exit_the_room",        (org, cur) => cur.map == 293 && cur.eventID == 1 && cur.eventPage == 2 && org.eventLine < 12 && cur.eventLine >= 12},
         {"pure_zone2",           (org, cur) => cur.map == 197 && cur.eventID == 1 && cur.eventPage == 2 && org.eventLine < 12 && cur.eventLine >= 12},
         {"pure_zone3",           (org, cur) => cur.map == 292 && cur.eventID == 1 && cur.eventPage == 2 && org.eventLine < 12 && cur.eventLine >= 12},
