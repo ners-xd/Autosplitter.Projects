@@ -72,7 +72,7 @@ startup
         {"enter_mines",          (org, cur) => org.map == 19 && cur.map == 20},
         {"mines",                (org, cur) => org.map == 23 && cur.map == 25},
         {"barn",                 (org, cur) => org.map == 28 && cur.map == 27},
-        {"enter_postal_service", (org, cur) => cur.map == 34 && cur.eventID == 4 && cur.eventPage == 1 && org.eventLine < 47 && cur.eventLine >= 47 && cur.eventLine <= 50},
+        {"enter_postal_service", (org, cur) => cur.map == 34 && cur.eventID == 4 && cur.eventPage == 1 && org.eventLine < 47 && cur.eventLine == 47},
         {"postal_service",       (org, cur) => org.map == 46 && cur.map == 47},
         {"alma_first_half",      (org, cur) => org.map == 56 && cur.map == 57},
         {"alma_second_half",     (org, cur) => cur.map == 68 && (cur.eventID == 3 || cur.eventID == 4) && cur.eventPage == 0 && org.eventLine < 4 && (cur.eventLine == 4 || cur.eventLine == 5)},
@@ -86,8 +86,8 @@ startup
         {"residential",          (org, cur) => org.map == 145 && cur.map == 115},
         {"enter_japhet",         (org, cur) => cur.map == 162 && org.battleID != 8 && cur.battleID == 8},
         {"zone2",                (org, cur) => org.map == 162 && cur.map == 70},
-        {"area1",                (org, cur) => cur.map == 205 && cur.eventID == 5 && cur.eventPage == 0 && org.eventLine < 5 && cur.eventLine >= 5},
-        {"area2",                (org, cur) => cur.map == 212 && cur.eventID == 5 && cur.eventPage == 0 && org.eventLine < 16 && cur.eventLine >= 16},
+        {"area1",                (org, cur) => cur.map == 205 && cur.eventID == 5 && cur.eventPage == 0 && org.eventLine < 5 && cur.eventLine == 5},
+        {"area2",                (org, cur) => cur.map == 212 && cur.eventID == 5 && cur.eventPage == 0 && org.eventLine < 16 && cur.eventLine == 16},
         {"area3",                (org, cur) => cur.map == 214 && cur.eventID == 3 && cur.eventPage == 0 && org.eventLine < 5 && cur.eventLine == 5},
         {"elsen_fight",          (org, cur) => org.map == 234 && cur.map == 213},
         {"area4",                (org, cur) => org.map == 235 && cur.map == 213},
@@ -164,4 +164,3 @@ split
         return true;
     }
 }
-
