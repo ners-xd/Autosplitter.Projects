@@ -1,25 +1,25 @@
 // Undertale Kindred Spirits Autosplitter by NERS
 
-state("utks-prologue", "Prologue v0.1.5999")
+state("utks-prologue", "Prologue v0.1.6")
 {
-    double   start : 0xC19320, 0x48, 0x10, 0x21B0, 0x0;       // global.temp_startgame
-    string32 sound : 0xBED770, 0x88, 0x0,  0x10,   0x0, 0x48; // Name of the current sound (highest priority)
+    double start : 0x76CA40, 0x48, 0x10, 0x6C0, 0x10; // global.temp_startgame
 }
 
 startup
 {
     refreshRate = 30;
+    vars.offset = new Stopwatch();
 
     settings.Add("Prologue", true, "Prologue");
     settings.CurrentDefaultParent = "Prologue";
-    settings.Add("P_TekiLomax", false, "Exit Teki & Lomax room");
+    settings.Add("P_TekiLomax", false, "Exit Teki & Lomax battle room");
     settings.Add("P_Ending",     true, "Enter Sewers");
 
     vars.splits = new Dictionary<string, Func<dynamic, dynamic, bool>>()
     {
         // org = original (equivalent to old), cur = current (can't use the same names)
         {"P_TekiLomax", (org, cur) => org.roomName == "room_rtown_dumpster" && cur.roomName == "room_thouse_fireplace"},
-        {"P_Ending",    (org, cur) => cur.roomName == "room_slevel0_0" && org.sound != "mus_intronoise" && cur.sound == "mus_intronoise"}
+        {"P_Ending",    (org, cur) => cur.roomName == "room_slevel0_0" && vars.offset.IsRunning && vars.offset.ElapsedMilliseconds >= 5000}
     };
     vars.completedSplits = new HashSet<string>();
 }
@@ -58,8 +58,8 @@ init
     }
     switch(hash)
     {   
-        case "A9E06F91612061574C863847E31F3681":
-            version = "Prologue v0.1.5999";
+        case "15C7B846456B1C83EDEF8C3B4FB48AFC":
+            version = "Prologue v0.1.6";
             break;
 
         default:
@@ -70,7 +70,7 @@ init
                 "This version of Undertale Kindred Spirits is not supported by the autosplitter.\nIf you are playing an older version, update your game.\nIf not, please wait until the autosplitter receives an update.\n\n" +
 
                 "Make sure the data file is named \"data.win\".\n" +
-                "Supported version: Prologue v0.1.5999.",
+                "Supported version: Prologue v0.1.6.",
                 "LiveSplit | Undertale Kindred Spirits", MessageBoxButtons.OK, MessageBoxIcon.Warning
             );
             break;
@@ -91,6 +91,7 @@ reset
 onReset
 {
     vars.completedSplits.Clear();
+    vars.offset.Reset();
     print("[Undertale Kindred Spirits] All splits have been reset to initial state");
 }
 
@@ -101,8 +102,14 @@ update
 
     current.room = game.ReadValue<int>((IntPtr)vars.ptrRoomID);
     current.roomName = vars.getRoomName();
+
     if(old.room != current.room)
+    {
         print("[Undertale Kindred Spirits] Room: " + old.room + " (" + old.roomName + ")" + " -> " + current.room + " (" + current.roomName + ")");
+
+        if(old.roomName == "room_rtown_sewerentry" && current.roomName == "room_slevel0_0" && !vars.offset.IsRunning)
+            vars.offset.Start();
+    }
 }
 
 split
@@ -113,6 +120,7 @@ split
            vars.completedSplits.Contains(split.Key) ||
            !split.Value(old, current)) continue;
 
+        vars.offset.Reset();
         vars.completedSplits.Add(split.Key);
         print("[Undertale Kindred Spirits] Split triggered (" + split.Key + ")");
         return true;
