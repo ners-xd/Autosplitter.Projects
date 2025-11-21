@@ -15,7 +15,7 @@ state("Undertale Yellow", "v1.0")
     float cerobaY : 0xA60DA0, 0x8, 0x90, 0x8, 0x68, 0x10, 0xEC; // obj_ceroba_npc.y
 }
 
-state("Undertale Yellow", "v1.1 / v1.2.1")
+state("Undertale Yellow", "v1.1 - v1.2.2")
 {
     double dialogue : 0x82FC70, 0x48, 0x10, 0x390, 0xA0;
 
@@ -214,7 +214,7 @@ init
             break;
 
         case "2610A3F58304DE377DA56C221FC68D6B":
-            version = "v1.1 / v1.2.1";
+            version = "v1.1 - v1.2.2";
 
             vars.checkItem = (Func<string, bool>)((itemName) => 
             {
@@ -232,7 +232,7 @@ init
             (
                 "This version of Undertale Yellow is currently not supported by the autosplitter.\n\n" +
 
-                "Supported versions: Full Game v1.0, v1.1, v1.2.1.",
+                "Supported versions: Full Game v1.0 - v1.2.2.",
                 "LiveSplit | Undertale Yellow", MessageBoxButtons.OK, MessageBoxIcon.Warning
             );
             break;
