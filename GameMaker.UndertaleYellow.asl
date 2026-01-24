@@ -39,6 +39,9 @@ startup
 
     settings.Add("F_StartOnContinue", false, "Start / Reset the timer when loading a save file in the first room");
 
+    settings.Add("F_SplitOnce", true, "Only trigger splits once");
+     settings.SetToolTip("F_SplitOnce", "Only trigger autosplits once per run.\n\nDisable this if you are running a category where\nyou go through the same areas multiple times.");
+
     settings.Add("F_Ruins",            false, "Exit Regular Ruins");
     settings.Add("F_FiveLights",       false, "Exit the five lights puzzle room");
     settings.Add("F_Decibat",          false, "Exit Decibat room");
@@ -354,7 +357,7 @@ split
     foreach(var split in vars.splits)
     {
         if(!settings[split.Key] || 
-           vars.completedSplits.Contains(split.Key) ||
+           (settings["F_SplitOnce"] && vars.completedSplits.Contains(split.Key)) ||
            !split.Value(old, current)) continue;
 
         vars.completedSplits.Add(split.Key);
