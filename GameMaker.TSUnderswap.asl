@@ -25,7 +25,7 @@ state("TS!Underswap", "v2.0.4")
     string32 song         : 0xD8AB08, 0xE0, 0x48,  0x10, 0xB0, 0x0,   0x0, 0x0; // Name of the current song
 }
 
-state("TS!Underswap", "v2.1.1")
+state("TS!Underswap", "v2.1.2")
 {
     double kills : 0x7776E0, 0x8, 0x10, 0x1D10, 0x10;
 
@@ -204,8 +204,8 @@ init
             version = "v2.0.4";
             break;
 
-        case "A00D2A5C3F307DCC66472D2659722CEE":
-            version = "v2.1.1";
+        case "146E737AB9F3B7C5902FA6F3DA7F7F53":
+            version = "v2.1.2";
             break;
 
         default:
@@ -215,7 +215,7 @@ init
             (
                 "This version of TS!Underswap is not supported by the autosplitter.\nIf you are playing an older version, update your game.\nIf not, please wait until the autosplitter receives an update.\n\n" +
 
-                "Supported versions: v1.0.8, v2.0.4, v2.1.1.",
+                "Supported versions: v1.0.8, v2.0.4, v2.1.2.",
                 "LiveSplit | TS!Underswap", MessageBoxButtons.OK, MessageBoxIcon.Warning
             );
             break;
