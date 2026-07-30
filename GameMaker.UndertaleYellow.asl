@@ -28,6 +28,19 @@ state("Undertale Yellow", "v1.1 - v1.2.2")
     float cerobaY : 0xA60DA0, 0x8, 0x90, 0x8, 0x68, 0x10, 0xEC;
 }
 
+state("Undertale Yellow", "v1.3.0")
+{
+    double dialogue : 0x82FC70, 0x48, 0x10, 0x390, 0xA0;
+
+    double startWaiter     : 0xA3FD40, 0xD8,  0x48,  0x10, 0x10,  0x0;
+    double neutralEndScene : 0xA3FD40, 0x1A0, 0x580, 0x88, 0x70,  0x38,  0x48,  0x10, 0x60, 0x0;
+    double asgoreFade      : 0xA3FD40, 0x178, 0x70,  0x38, 0x198, 0x1A0, 0x1A0, 0x48, 0x10, 0xE0, 0x0;
+    double genoEndScene    : 0xA3FD40, 0x1A0, 0x440, 0x70, 0x38,  0x48,  0x10,  0x60, 0x0;
+    double ropeWaiter      : 0xA3FD40, 0x1A0, 0x1B0, 0x90, 0x70,  0x38,  0x48,  0x10, 0x10, 0x0;
+
+    float cerobaY : 0xA60DA0, 0x8, 0x90, 0x8, 0x68, 0x10, 0xEC;
+}
+
 startup
 {
     refreshRate = 30;
@@ -228,6 +241,18 @@ init
             });
             break;
 
+        case "AB10B798104E294F36ACA7CAD0F77C6D":
+            version = "v1.3.0";
+
+            vars.checkItem = (Func<string, bool>)((itemName) => 
+            {
+                for(int i = 1; i <= 8; i++)
+                    if(new DeepPointer(0x82FC70, 0x48, 0x10, 0x390, 0x20, 0x90, (0x10 * i), 0x0, 0x0).DerefString(game, 32) == itemName) return true;
+                
+                return false;
+            });
+            break;
+
         default:
             version = "Unknown";
 
@@ -235,7 +260,7 @@ init
             (
                 "This version of Undertale Yellow is currently not supported by the autosplitter.\n\n" +
 
-                "Supported versions: Full Game v1.0 - v1.2.2.",
+                "Supported versions: Full Game v1.0 - v1.3.0.",
                 "LiveSplit | Undertale Yellow", MessageBoxButtons.OK, MessageBoxIcon.Warning
             );
             break;
@@ -247,7 +272,7 @@ init
 start
 {
     if(current.room == 2 || current.room == 3)
-        return (old.startWaiter == 0 && current.startWaiter == 1);
+        return ((old.startWaiter == 0 || old.startWaiter == 2) && current.startWaiter == 1);
 
     else
         return (old.room <= 3 && current.room == 6 && old.startWaiter == 0 && settings["F_StartOnContinue"]);
@@ -256,7 +281,7 @@ start
 reset
 {
     if(current.room == 2 || current.room == 3)
-        return (old.startWaiter == 0 && current.startWaiter == 1);
+        return ((old.startWaiter == 0 || old.startWaiter == 2) && current.startWaiter == 1);
 
     else
         return (old.room <= 3 && current.room == 6 && old.startWaiter == 0 && settings["F_StartOnContinue"]);       
